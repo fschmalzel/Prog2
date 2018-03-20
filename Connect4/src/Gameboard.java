@@ -4,8 +4,8 @@ public class Gameboard {
 	private char[][] board;
 	private final int length;
 	private final int height;
-	public static final int DEFAULT_LENGTH = 5;
-	public static final int DEFAULT_HEIGHT = 5;
+	private static final int DEFAULT_LENGTH = 5;
+	private static final int DEFAULT_HEIGHT = 5;
 	
 	public Gameboard(int length, int height)
 	{
@@ -33,7 +33,7 @@ public class Gameboard {
 	public int insert(int n, char player) {
 		
 		if (n < 1 || n > board.length)
-			return -1;
+			return -2;
 		
 		n = n - 1;
 		int runner = height-1;
@@ -50,14 +50,31 @@ public class Gameboard {
 		
 		board[n][runner] = player;
 		
-		if (hasWon(n, runner)) {
+		if (hasWon(n, runner, player)) {
 			return 1;
 		}
 		
-		return 0;
+		for (int i = 0; i < board.length; i++) {
+			if (board[i][0] == '.')
+				return 0;
+		}
+		
+		return -3;
 	}
 	
-	private boolean hasWon(int column, int row) {
+	private boolean hasWon(int column, int row, char player) {
+		
+		int count = 1;
+		int runner = row + 1;
+		while ( board[column][runner] == player && runner < board[0].length) {
+			count++;
+			runner++;
+			if (count == 4)
+				return true;
+		}
+		
+		
+		
 		return false;
 		//TODO check
 	}

@@ -17,7 +17,7 @@ public class InOut {
 		} while (i <= '0' || i > '9');
 		
 		i -= '0';
-		
+		System.out.println();
 		return i;
 		
 	}
@@ -56,6 +56,10 @@ public class InOut {
 	
 	public static void winMsg(char player) {
 		System.out.println(player + "won!");
+	}
+	
+	public static void drawMsg() {
+		System.out.println("It's a draw!");
 	}
 
 }
