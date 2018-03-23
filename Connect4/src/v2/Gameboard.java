@@ -1,3 +1,4 @@
+package v2;
 
 public class Gameboard {
 	
@@ -9,7 +10,7 @@ public class Gameboard {
 	
 	public Gameboard(int length, int height)
 	{
-		if(length < 0 || height < 0) {
+		if(length < 4 || height < 4) {
 			this.length = DEFAULT_LENGTH;
 			this.height = DEFAULT_HEIGHT;
 		}
@@ -90,9 +91,50 @@ public class Gameboard {
 				return true;
 		}
 		
+		count = 1;
+		runner = -1;
+		// links oben
+		while (runner+row >= 0 && runner+column >= 0 && board[runner+column][runner+row] == player) {
+			count++;
+			runner--;
+			if (count == 4)
+				return true;
+		}
+		
+		//rechts unten
+		runner = 1;
+		while (runner+column < board.length && runner+row < board[0].length && board[runner+column][runner+row] == player) {
+			count++;
+			runner++;
+			if (count == 4)
+				return true;
+		}
+		
+		count = 1;
+		runner = 1;
+		//links unten
+		// column -> 0
+		// row -> board[0].length
+		while(row+runner < board[0].length && column-runner >= 0 && board[column-runner][row+runner] == player) {
+			count++;
+			runner++;
+			if (count == 4)
+				return true;
+		}
+		
+		//rechts oben
+		// column -> length
+		// row -> 0
+		runner = 1;
+		while (row-runner >= 0 && column+runner < board.length && board[column+runner][row-runner] == player) {
+			count++;
+			runner++;
+			if (count == 4)
+				return true;
+		}
+		
 		
 		return false;
-		//TODO check
 	}
 	
 	public char[][] getBoardArray() {
