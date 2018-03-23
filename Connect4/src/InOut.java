@@ -55,7 +55,7 @@ public class InOut {
 	}
 	
 	public static void winMsg(char player) {
-		System.out.println(player + "won!");
+		System.out.println(player + " won!");
 	}
 	
 	public static void drawMsg() {

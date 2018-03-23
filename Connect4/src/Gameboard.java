@@ -66,13 +66,29 @@ public class Gameboard {
 		
 		int count = 1;
 		int runner = row + 1;
-		while ( board[column][runner] == player && runner < board[0].length) {
+		while ( runner < board[0].length && board[column][runner] == player) {	//Player won 4 connect below
 			count++;
 			runner++;
 			if (count == 4)
 				return true;
 		}
 		
+		count = 1;
+		runner = column + 1;
+		while ( runner < board.length && board[runner][row] == player) {	//Player won 4 connect right
+			count++;
+			runner++;
+			if (count == 4)
+				return true;
+		}
+		
+		runner = column - 1;
+		while ( runner >= 0 && board[runner][row] == player) {	//Player won 4 connect left
+			count++;
+			runner--;
+			if (count == 4)
+				return true;
+		}
 		
 		
 		return false;
