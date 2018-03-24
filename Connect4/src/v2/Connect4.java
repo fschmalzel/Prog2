@@ -11,7 +11,12 @@ public class Connect4 {
 			if (args[0].startsWith("-ai=")) {
 				String aiString = args[0].substring(4).toLowerCase();
 				switch(aiString) {
-				
+				case "artur":
+					ai = new ArturAI();
+					break;
+				case "felix":
+					ai = new FelixAI();
+					break;
 				default:
 				case "random":
 					ai = new RandomAI();
@@ -32,15 +37,18 @@ public class Connect4 {
 		boolean finished = false;
 		Gameboard board = new Gameboard(width,height);
 		
+		int column = 0;
 		do {
 			
 			int code;
 			// Get input
 			if (currPlayer == 'o' && ai != null) {
+				ai.playerMove(column);
 				code = board.insert(ai.getInt(board.getBoardArray(), currPlayer), currPlayer);
 			} else {
 				InOut.draw(board.getBoardArray());
-				code = board.insert(InOut.getInt(), currPlayer);
+				column = InOut.getInt();
+				code = board.insert(column, currPlayer);
 			}
 			
 			// Check for special events
@@ -66,6 +74,7 @@ public class Connect4 {
 				finished = true;
 				break;
 			}
+
 			
 			// Switch players
 			if (currPlayer == 'x') 
@@ -74,41 +83,6 @@ public class Connect4 {
 				currPlayer = 'x';
 			
 		} while (!finished);
-		
-		
-		
-//		while (true) {
-//			int code;
-//			if (currPlayer == 'o' && ai != null) {
-//				code = board.insert(ai.getInt(board.getBoardArray(), currPlayer), currPlayer);
-//			} else {
-//				InOut.draw(board.getBoardArray());
-//				code = board.insert(InOut.getInt(), currPlayer);
-//			}
-//			
-//			
-//			if (code == -2) {
-//				InOut.errorTooBig();
-//				continue;
-//			} else if (code == -1) {
-//				InOut.errorFull();
-//				continue;
-//			} else if ( code == 1) {
-//				InOut.draw(board.getBoardArray());
-//				InOut.winMsg(currPlayer);
-//				break;
-//			} else if (code == -3) {
-//				InOut.draw(board.getBoardArray());
-//				InOut.drawMsg();
-//				break;
-//			}
-//			
-//			if (currPlayer == 'x') 
-//				currPlayer = 'o';
-//			else
-//				currPlayer = 'x';
-//			
-//		}
 		
 	}
 

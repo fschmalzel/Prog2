@@ -24,4 +24,5 @@ hs_err_pid*
 .metadata/
 .recommenders/
 *.lck
-*.bak_000f
+
+*.bak_*
