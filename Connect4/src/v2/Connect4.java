@@ -9,11 +9,14 @@ public class Connect4 {
 		
 		if (args.length > 0) {
 			if (args[0].startsWith("-ai=")) {
-				String aiString = args[0].substring(4);
-				if (aiString.equalsIgnoreCase("random"))
+				String aiString = args[0].substring(4).toLowerCase();
+				switch(aiString) {
+				
+				default:
+				case "random":
 					ai = new RandomAI();
-				else
-					ai = new RandomAI();
+					break;
+				}
 					
 			}
 		}
@@ -60,6 +63,7 @@ public class Connect4 {
 				// End of game, so we draw the board and finish the loop
 				InOut.draw(board.getBoardArray());
 				InOut.drawMsg();
+				finished = true;
 				break;
 			}
 			
