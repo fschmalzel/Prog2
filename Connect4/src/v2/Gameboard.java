@@ -31,15 +31,15 @@ public class Gameboard {
 		}
 	}
 	
-	public int insert(int n, char player) {
+	public int insert(int column, char player) {
 		
-		if (n < 1 || n > board.length)
+		if (column < 1 || column > board.length)
 			return -2;
 		
-		n = n - 1;
+		column = column - 1;
 		int runner = height-1;
 		
-		while (board[n][runner] != '.') {
+		while (board[column][runner] != '.') {
 			
 			runner--;
 			
@@ -49,9 +49,9 @@ public class Gameboard {
 			
 		}
 		
-		board[n][runner] = player;
+		board[column][runner] = player;
 		
-		if (hasWon(n, runner, player)) {
+		if (hasWon(column, runner, player)) {
 			return 1;
 		}
 		

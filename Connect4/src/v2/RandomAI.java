@@ -2,7 +2,7 @@ package v2;
 
 import java.util.Random;
 
-public class randomAi implements AI {
+public class RandomAI implements AI {
 	
 	private static Random rand = new Random();
 	
