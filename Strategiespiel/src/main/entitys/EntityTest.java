@@ -63,17 +63,17 @@ public class EntityTest {
 		GoodBeast b2 = new GoodBeast(2, new XY(4, 5));
 		Entity e2 = b2;
 		
-		System.out.println(b.equalType(e));
-		System.out.println(e.equalType(b));
+		System.out.println(b.isSameType(e));
+		System.out.println(e.isSameType(b));
 		
-		System.out.println(b2.equalType(e));
-		System.out.println(e.equalType(b2));
+		System.out.println(b2.isSameType(e));
+		System.out.println(e.isSameType(b2));
 		
-		System.out.println(b.equalType(b2));
-		System.out.println(b2.equalType(b));
+		System.out.println(b.isSameType(b2));
+		System.out.println(b2.isSameType(b));
 		
-		System.out.println(e.equalType(e2));
-		System.out.println(e2.equalType(e));
+		System.out.println(e.isSameType(e2));
+		System.out.println(e2.isSameType(e));
 		
 	}
 

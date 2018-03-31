@@ -39,10 +39,8 @@ abstract class Entity {
 		return id;
 	}
 	
-	public boolean equalType(Entity e) {
-		
+	public boolean isSameType(Entity e) {
 		return this.getClass().equals(e.getClass());
-		
 	}
 	
 	
