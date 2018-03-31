@@ -1,10 +1,10 @@
 package main;
 
-public class Wall extends Entity{
+public class BadPlant extends Entity{
 	
 	private static final int DEFAULT_ENERGY = -10;
 	
-	public Wall(int id, XY xy) {
+	public BadPlant(int id, XY xy) {
 		super(id, DEFAULT_ENERGY, xy);
 	}
 
