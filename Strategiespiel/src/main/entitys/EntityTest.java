@@ -5,10 +5,56 @@ import main.XY;
 public class EntityTest {
 
 	public static void main(String[] args) {
-		EntitySet es = new EntitySet();
-
 		
+		entitySetTest();
+//		playerInputTest();
+//		randomMovementTest();
+//		equalTypeTest();
 
+	}
+	
+	private static void entitySetTest() {
+		EntitySet es = new EntitySet();
+		
+		Entity e = new BadPlant(4, 3, 4);
+		
+		es.insert(new GoodBeast(1, 3, 4));
+		es.insert(new BadBeast(2, 3, 4));
+		es.insert(new GoodPlant(3, 4, 4));
+		es.insert(e);
+		es.insert(new HandOperatedMasterSquirrel(5, 3, 4));
+		
+		System.out.println(es);
+		
+		es.nextStep();
+
+		System.out.println(es);
+		System.out.println("Deleting: " + e);
+		es.remove(e);
+
+		System.out.println(es);
+		
+		es.nextStep();
+
+		System.out.println(es);
+	}
+	
+	private static void playerInputTest() {
+		Entity e = new HandOperatedMasterSquirrel(1, 5, 5);
+		System.out.println(e);
+		while (true) {
+			e.nextStep();
+			System.out.println(e);
+		}
+	}
+	
+	private static void randomMovementTest() {
+		Entity e = new GoodBeast(1, 3, 4);
+		for (int i = 0; i < 10; i++) {
+			System.out.println(e);
+			e.nextStep();
+		}
+		System.out.println(e);
 	}
 	
 	private static void equalTypeTest() {

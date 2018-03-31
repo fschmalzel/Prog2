@@ -17,8 +17,22 @@ public class EntitySet {
 		for(int i = 0; i < entityArray.length; i++)
 			if(entityArray[i] == null) {
 				entityArray[i] = e;
-				break;
+				return;
 			}
+		
+		int i = entityArray.length;
+		resize();
+		entityArray[i] = e;
+		
+	}
+	
+	private void resize() {
+		Entity[] newEntityArray = new Entity[entityArray.length*2];
+		
+		for (int i = 0; i < entityArray.length; i++)
+			newEntityArray[i] = entityArray[i];
+		
+		entityArray = newEntityArray;
 	}
 	
 	public void remove(Entity e) {
@@ -29,19 +43,34 @@ public class EntitySet {
 			}
 	}
 	
-	public String toString(){
+	public String toString() {
+		int n = 1;
 		String s = "Content of set: ";
 		for(int i = 0; i < entityArray.length; i++)
 			if(entityArray[i] != null) {
-				s += "\n" + entityArray[i];
+				s += "\n\t" + n++ + ": " + entityArray[i];
 			}
 		return s;
 	}
 	
 	public void nextStep() {
-		for(int i = 0; i < entityArray.length; i++)
-			if(entityArray[i] != null) {
-				entityArray[i].nextStep();
+		for(int i = 0; i < entityArray.length; i++) {
+			Entity e = entityArray[i];
+			if(e != null) {
+				e.nextStep();
+				if (e instanceof Squirrel) {
+					checkCollisionWithGoodPlant((Squirrel) e);
+				}
 			}
+		}
+	}
+
+	private void checkCollisionWithGoodPlant(Squirrel s) {
+		for (Entity e2 : entityArray) {
+			if (e2 instanceof GoodPlant && e2.getXY().equals(s.getXY())) {
+				s.updateEnergy(e2.getEnergy());
+				remove(e2);
+			}
+		}
 	}
 }

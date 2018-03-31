@@ -20,6 +20,11 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 		 * 4O5
 		 * 678
 		 */
+		System.out.println("Where do you want to go?\n"
+				+ "123\n"
+				+ "4S5\n"
+				+ "678\n"
+				+ "> ");
 		
 		int i;
 		

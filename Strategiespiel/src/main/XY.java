@@ -20,8 +20,8 @@ public class XY {
 		int x, y;
 		
 		do {
-			x = rand.nextInt(2) - 1;
-			y = rand.nextInt(2) - 1;
+			x = rand.nextInt(3) - 1;
+			y = rand.nextInt(3) - 1;
 		} while(x == 0 && y == 0);
 		
 		return new XY(x, y);
@@ -40,4 +40,7 @@ public class XY {
 		return "(" + x + "|" + y + ")";
 	}
 	
+	public boolean equals(XY xy2) {
+		return x == xy2.x && y == xy2.y;
+	}
 }
