@@ -1,4 +1,6 @@
-package main;
+package main.entitys;
+
+import main.XY;
 
 public class Wall extends Entity{
 	
@@ -8,4 +10,10 @@ public class Wall extends Entity{
 		super(id, DEFAULT_ENERGY, xy);
 	}
 
+	@Override
+	public void nextStep() {}
+
+	public String toString() {
+		return "Wall" + super.toString();
+	}
 }
