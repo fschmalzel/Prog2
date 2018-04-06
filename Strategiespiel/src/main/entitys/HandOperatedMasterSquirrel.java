@@ -15,11 +15,6 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
 	@Override
 	void nextStep() {
-		/*
-		 * 123
-		 * 4O5
-		 * 678
-		 */
 		System.out.println("Where do you want to go?\n"
 				+ "123\n"
 				+ "4S5\n"
