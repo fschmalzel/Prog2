@@ -16,13 +16,13 @@ public class Test {
 	private static void entitySetTest() {
 		EntitySet es = new EntitySet();
 		
-		Entity e = new BadPlant(4, 3, 4);
+		Entity e = new BadPlant(3, 4);
 		
-		es.insert(new GoodBeast(1, 3, 4));
-		es.insert(new BadBeast(2, 3, 4));
-		es.insert(new GoodPlant(3, 4, 4));
+		es.insert(new GoodBeast(3, 4));
+		es.insert(new BadBeast(3, 4));
+		es.insert(new GoodPlant(4, 4));
 		es.insert(e);
-		es.insert(new HandOperatedMasterSquirrel(5, 3, 4));
+		es.insert(new HandOperatedMasterSquirrel(3, 4));
 		
 		System.out.println(es);
 		
@@ -40,7 +40,7 @@ public class Test {
 	}
 	
 	private static void playerInputTest() {
-		Entity e = new HandOperatedMasterSquirrel(1, 5, 5);
+		Entity e = new HandOperatedMasterSquirrel(5, 5);
 		System.out.println(e);
 		while (true) {
 			e.nextStep();
@@ -49,7 +49,7 @@ public class Test {
 	}
 	
 	private static boolean randomMovementTest() {
-		Entity e = new GoodBeast(1, 3, 4);
+		Entity e = new GoodBeast(3, 4);
 		XY prev;
 		for (int i = 0; i < 10; i++) {
 			prev = e.getXY();
@@ -62,10 +62,10 @@ public class Test {
 	}
 	
 	private static int isSameTypeTest() {
-		BadBeast b1 = new BadBeast(0, 2, 3);
-		BadBeast b2 = new BadBeast(1, 6, 1);
+		BadBeast b1 = new BadBeast(2, 3);
+		BadBeast b2 = new BadBeast(6, 1);
 		
-		GoodBeast g1 = new GoodBeast(2, 5, 4);
+		GoodBeast g1 = new GoodBeast(5, 4);
 		
 		Entity eb1 = (Entity) b1;
 		Entity eb2 = (Entity) b2;

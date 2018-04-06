@@ -6,11 +6,11 @@ import main.XY;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
-	public HandOperatedMasterSquirrel(int id, XY xy) {
-		super(id, xy);
+	public HandOperatedMasterSquirrel(XY xy) {
+		super(xy);
 	}
-	public HandOperatedMasterSquirrel(int id, int x, int y) {
-		super(id, x, y);
+	public HandOperatedMasterSquirrel(int x, int y) {
+		super(x, y);
 	}
 
 	@Override

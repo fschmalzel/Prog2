@@ -6,13 +6,13 @@ public class MiniSquirrel extends Squirrel {
 	
 	private final int masterID;
 	
-	public MiniSquirrel(int id, int energy, XY xy, int masterID) {
-		super(id, energy, xy);
+	public MiniSquirrel(int energy, XY xy, int masterID) {
+		super(energy, xy);
 		this.masterID = masterID;
 	}
 	
-	public MiniSquirrel(int id, int energy, int x, int y, int masterID) {
-		super(id, energy, x, y);
+	public MiniSquirrel(int energy, int x, int y, int masterID) {
+		super(energy, x, y);
 		this.masterID = masterID;
 	}
 

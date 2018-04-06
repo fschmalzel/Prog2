@@ -6,15 +6,16 @@ abstract class Entity {
 	private final int id;
 	private int energy;
 	private XY xy;
+	private static int lastID = 0;
 	
-	public Entity(int id, int energy, XY xy) {
-		this.id = id;
+	public Entity(int energy, XY xy) {
+		this.id = lastID++;
 		this.energy = energy;
 		this.xy = xy;
 	}
 	
-	public Entity(int id, int energy, int x, int y) {
-		this(id, energy, new XY(x, y));
+	public Entity(int energy, int x, int y) {
+		this(energy, new XY(x, y));
 	}
 	
 	abstract void nextStep();

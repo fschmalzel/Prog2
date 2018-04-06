@@ -6,12 +6,12 @@ public class BadBeast extends Entity {
 	
 	private static final int DEFAULT_ENERGY = -150;
 	
-	public BadBeast(int id, XY xy) {
-		super(id, DEFAULT_ENERGY, xy);
+	public BadBeast(XY xy) {
+		super(DEFAULT_ENERGY, xy);
 	}
 	
-	public BadBeast(int id, int x, int y) {
-		super(id, DEFAULT_ENERGY, x, y);
+	public BadBeast(int x, int y) {
+		super(DEFAULT_ENERGY, x, y);
 	}
 
 	@Override

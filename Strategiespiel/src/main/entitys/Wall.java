@@ -6,8 +6,12 @@ public class Wall extends Entity{
 	
 	private static final int DEFAULT_ENERGY = -10;
 	
-	public Wall(int id, XY xy) {
-		super(id, DEFAULT_ENERGY, xy);
+	public Wall(XY xy) {
+		super(DEFAULT_ENERGY, xy);
+	}
+	
+	public Wall(int x, int y) {
+		super(DEFAULT_ENERGY, x, y);
 	}
 
 	@Override
