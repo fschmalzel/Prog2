@@ -6,10 +6,10 @@ abstract class Entity {
 	private final int id;
 	private int energy;
 	private XY xy;
-	private static int lastID = 0;
+	private static int lastID = -1;
 	
 	public Entity(int energy, XY xy) {
-		this.id = lastID++;
+		this.id = ++lastID;
 		this.energy = energy;
 		this.xy = xy;
 	}
