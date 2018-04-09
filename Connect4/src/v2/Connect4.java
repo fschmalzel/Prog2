@@ -26,7 +26,7 @@ public class Connect4 {
 			}
 		}
 		
-		play(ai, 3, 1);
+		play(ai, 5, 5);
 		
 	}
 	
