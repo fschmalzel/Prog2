@@ -15,9 +15,12 @@ public class EntitySet {
 
 	public void insert(Entity e) {
 		for(int i = 0; i < entityArray.length; i++)
-			if(entityArray[i] == null) {
-				entityArray[i] = e;
+			if(entityArray[i] == e)
 				return;
+			else
+				if(entityArray[i] == null) {
+					entityArray[i] = e;
+					return;
 			}
 		
 		int i = entityArray.length;
