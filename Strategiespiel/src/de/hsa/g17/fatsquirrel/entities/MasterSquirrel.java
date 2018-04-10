@@ -1,8 +1,9 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.entities;
 
-import main.XY;
+import de.hsa.g17.fatsquirrel.core.Entity;
+import de.hsa.g17.fatsquirrel.core.XY;
 
-abstract class MasterSquirrel extends Squirrel {
+public abstract class MasterSquirrel extends Squirrel {
 	
 	private final static int DEFAULT_ENERGY = 1000;
 	

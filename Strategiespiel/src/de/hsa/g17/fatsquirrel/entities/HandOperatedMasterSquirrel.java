@@ -1,8 +1,8 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.entities;
 
 import java.io.IOException;
 
-import main.XY;
+import de.hsa.g17.fatsquirrel.core.XY;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
 
@@ -14,7 +14,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 	}
 
 	@Override
-	void nextStep() {
+	public void nextStep() {
 		System.out.println("Where do you want to go?\n"
 				+ "123\n"
 				+ "4S5\n"

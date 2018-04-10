@@ -1,6 +1,10 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.core;
 
-import main.XY;
+import de.hsa.g17.fatsquirrel.entities.BadBeast;
+import de.hsa.g17.fatsquirrel.entities.BadPlant;
+import de.hsa.g17.fatsquirrel.entities.GoodBeast;
+import de.hsa.g17.fatsquirrel.entities.GoodPlant;
+import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 
 public class Test {
 

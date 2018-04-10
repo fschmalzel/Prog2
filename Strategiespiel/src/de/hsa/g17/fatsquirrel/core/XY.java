@@ -1,4 +1,4 @@
-package main;
+package de.hsa.g17.fatsquirrel.core;
 
 import java.util.Random;
 

@@ -1,6 +1,7 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.entities;
 
-import main.XY;
+import de.hsa.g17.fatsquirrel.core.Entity;
+import de.hsa.g17.fatsquirrel.core.XY;
 
 public class BadBeast extends Entity {
 	

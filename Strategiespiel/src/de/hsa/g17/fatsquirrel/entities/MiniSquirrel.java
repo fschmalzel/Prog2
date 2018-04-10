@@ -1,6 +1,6 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.entities;
 
-import main.XY;
+import de.hsa.g17.fatsquirrel.core.XY;
 
 public class MiniSquirrel extends Squirrel {
 	
@@ -25,6 +25,6 @@ public class MiniSquirrel extends Squirrel {
 	}
 
 	@Override
-	void nextStep() {}
+	public void nextStep() {}
 	
 }

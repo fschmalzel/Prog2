@@ -1,9 +1,13 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.core;
+
+import de.hsa.g17.fatsquirrel.entities.GoodPlant;
+import de.hsa.g17.fatsquirrel.entities.Squirrel;
 
 public class EntitySet {
 
 	Entity[] entityArray;
 	private static final int DEFAULT_SIZE = 50;
+	private int size = 0;
 	
 	public EntitySet(int size) {
 		entityArray = new Entity[size];
@@ -37,7 +41,7 @@ public class EntitySet {
 		
 		// Einfügen
 		entityArray[index] = e;
-		
+		size++;
 	}
 	
 	private void resize() {
@@ -53,6 +57,7 @@ public class EntitySet {
 		for(int i = 0; i < entityArray.length; i++)
 			if(entityArray[i] == e) {
 				entityArray[i] = null;
+				size--;
 				// Nachdem ersten Gelöschten Element kann aufgehört werden,
 				// da wir keine Duplikate haben
 				break;
@@ -90,5 +95,24 @@ public class EntitySet {
 				remove(e2);
 			}
 		}
+	}
+	
+	public int size() {
+		return size;
+	}
+	
+	public Entity[] toArray() {
+		Entity[] copy = new Entity[size];
+		
+		int index = 0;
+		
+		for (Entity e : entityArray) {
+			if (e != null) {
+				copy[index++] = e;
+			}
+		}
+		
+		return copy;
+		
 	}
 }

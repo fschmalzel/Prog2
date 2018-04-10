@@ -1,8 +1,6 @@
-package main.entitys;
+package de.hsa.g17.fatsquirrel.core;
 
-import main.XY;
-
-abstract class Entity {
+public abstract class Entity {
 	private final int id;
 	private int energy;
 	private XY xy;
@@ -18,7 +16,7 @@ abstract class Entity {
 		this(energy, new XY(x, y));
 	}
 	
-	abstract void nextStep();
+	public abstract void nextStep();
 	
 	public int getEnergy() {
 		return energy;
