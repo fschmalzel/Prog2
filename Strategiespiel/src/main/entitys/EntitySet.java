@@ -15,19 +15,27 @@ public class EntitySet {
 
 	public void insert(Entity e) {
 		
+		// Stelle an der eingefügt wird
 		int index = -1;
 		
 		for(int i = 0; i < entityArray.length; i++)
 			if(entityArray[i] == e)
+				// Falls das Objekt schon im Array vorhanden ist,
+				// wird es nicht eingefügt (Duplikate)
 				return;
 			else if(entityArray[i] == null && index == -1)
+				// Wenn die Stelle im Array leer ist und wir noch
+				// keine Stelle gefunden haben,merken wir uns diese.
 				index = i;
 				
+		// Falls gar keine Stelle gefunden wurde, vergrößern wir das Array und
+		// fügen dann an dieser Stelle ein
 		if (index == -1) {
 			index = entityArray.length;
 			resize();
 		}
 		
+		// Einfügen
 		entityArray[index] = e;
 		
 	}
@@ -45,6 +53,8 @@ public class EntitySet {
 		for(int i = 0; i < entityArray.length; i++)
 			if(entityArray[i] == e) {
 				entityArray[i] = null;
+				// Nachdem ersten Gelöschten Element kann aufgehört werden,
+				// da wir keine Duplikate haben
 				break;
 			}
 	}
@@ -64,6 +74,8 @@ public class EntitySet {
 			Entity e = entityArray[i];
 			if(e != null) {
 				e.nextStep();
+				
+				// Falls e ein Squirrel ist, dann muss auf Kollision geprüft werden
 				if (e instanceof Squirrel) {
 					checkCollisionWithGoodPlant((Squirrel) e);
 				}
