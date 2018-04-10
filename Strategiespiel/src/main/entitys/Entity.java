@@ -44,7 +44,6 @@ abstract class Entity {
 		return this.getClass().equals(e.getClass());
 	}
 	
-	
 	public String toString() {
 		return " with id " + id + " at " + xy.toString() + " with energy " + energy;
 	}

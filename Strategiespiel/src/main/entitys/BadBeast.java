@@ -14,7 +14,6 @@ public class BadBeast extends Entity {
 		super(DEFAULT_ENERGY, x, y);
 	}
 
-	@Override
 	public void nextStep() {
 		this.move(XY.getRandomVector());
 	}

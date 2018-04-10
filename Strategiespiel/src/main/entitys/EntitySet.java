@@ -14,18 +14,21 @@ public class EntitySet {
 	}
 
 	public void insert(Entity e) {
+		
+		int index = -1;
+		
 		for(int i = 0; i < entityArray.length; i++)
 			if(entityArray[i] == e)
 				return;
-			else
-				if(entityArray[i] == null) {
-					entityArray[i] = e;
-					return;
-			}
+			else if(entityArray[i] == null && index == -1)
+				index = i;
+				
+		if (index == -1) {
+			index = entityArray.length;
+			resize();
+		}
 		
-		int i = entityArray.length;
-		resize();
-		entityArray[i] = e;
+		entityArray[index] = e;
 		
 	}
 	
