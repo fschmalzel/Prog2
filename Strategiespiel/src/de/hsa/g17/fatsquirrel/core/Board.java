@@ -59,7 +59,8 @@ public class Board {
 		
 		int x;
 		int y;
-		//TODO Fix
+		//TODO Look for duplicates on the field
+		
 		
 		x = rnd.nextInt(config.getWidth() - 2) + 1;
 		y = rnd.nextInt(config.getHeight() - 2) + 1;
@@ -118,6 +119,7 @@ public class Board {
 //			}
 //		}
 //		return s;
+		
 	}
 	
 	

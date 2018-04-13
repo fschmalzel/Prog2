@@ -14,7 +14,7 @@ public abstract class Entity {
 	private XY xy;
 	private static int lastID = -1;
 	
-	public Entity(int energy, XY xy) {
+	protected Entity(int energy, XY xy) {
 		this.id = ++lastID;
 		this.energy = energy;
 		this.xy = xy;
