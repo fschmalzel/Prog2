@@ -5,7 +5,7 @@ import de.hsa.g17.fatsquirrel.entities.Squirrel;
 
 public class EntitySet {
 
-	Entity[] entityArray;
+	private Entity[] entityArray;
 	private static final int DEFAULT_SIZE = 50;
 	private int size = 0;
 	
@@ -19,11 +19,14 @@ public class EntitySet {
 
 	public void insert(Entity e) {
 		
+		if (e == null)
+			return;
+		
 		// Stelle an der eingefügt wird
 		int index = -1;
 		
 		for(int i = 0; i < entityArray.length; i++)
-			if(entityArray[i] == e)
+			if(e.equals(entityArray[i]))
 				// Falls das Objekt schon im Array vorhanden ist,
 				// wird es nicht eingefügt (Duplikate)
 				return;
@@ -54,11 +57,14 @@ public class EntitySet {
 	}
 	
 	public void remove(Entity e) {
+		if (e == null)
+			return;
+		
 		for(int i = 0; i < entityArray.length; i++)
-			if(entityArray[i] == e) {
+			if(e.equals(entityArray[i])) {
 				entityArray[i] = null;
 				size--;
-				// Nachdem ersten Gelöschten Element kann aufgehört werden,
+				// Nachdem ersten gelöschten Element kann aufgehört werden,
 				// da wir keine Duplikate haben
 				break;
 			}
@@ -89,6 +95,8 @@ public class EntitySet {
 	}
 
 	private void checkCollisionWithGoodPlant(Squirrel s) {
+		// Falls an der Stelle auf die Squirrel gegangen ist ein Entity vom Typ
+		// GoodPlant ist, wird GoodPlant entfernt und dem Squirrel die Energie gegeben
 		for (Entity e2 : entityArray) {
 			if (e2 instanceof GoodPlant && e2.getXY().equals(s.getXY())) {
 				s.updateEnergy(e2.getEnergy());

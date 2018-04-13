@@ -68,8 +68,24 @@ public class Board {
 	}
 	
 	public Entity[][] flatten() {
+		
 		Entity[][] field = new Entity[config.getWidth()][config.getHeight()];
 		
+		if (set == null)
+			return field;
+		
+		Entity[] entityArray = set.toArray();
+		
+		for (Entity e : entityArray) {
+			int x = e.getXY().getX();
+			int y = e.getXY().getY();
+			
+			if (x < config.getWidth() && x > 0 && y < config.getHeight() && y > 0) {
+				field[x][y] = e;
+			}
+		}
+		
+		return field;
 		
 	}
 	

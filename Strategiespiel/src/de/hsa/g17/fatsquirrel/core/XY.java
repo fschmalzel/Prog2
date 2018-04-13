@@ -11,7 +11,7 @@ public class XY {
 		this.y = y;
 	}
 	
-	public XY move(XY vector) {
+	public XY add(XY vector) {
 		return new XY(x + vector.x, y + vector.y);
 	}
 	
