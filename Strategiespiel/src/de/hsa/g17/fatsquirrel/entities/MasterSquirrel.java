@@ -7,7 +7,7 @@ public abstract class MasterSquirrel extends Squirrel {
 	
 	private final static int DEFAULT_ENERGY = 1000;
 	
-	public MasterSquirrel( XY xy) {
+	public MasterSquirrel(XY xy) {
 		super(DEFAULT_ENERGY, xy);
 	}
 	
