@@ -1,8 +1,5 @@
 package de.hsa.g17.fatsquirrel.core;
 
-import de.hsa.g17.fatsquirrel.entities.GoodPlant;
-import de.hsa.g17.fatsquirrel.entities.Squirrel;
-
 public class EntitySet {
 
 	private Entity[] entityArray;
@@ -80,28 +77,11 @@ public class EntitySet {
 		return s;
 	}
 	
-	public void nextStep() {
+	public void nextStep(EntityContext context) {
 		for(int i = 0; i < entityArray.length; i++) {
 			Entity e = entityArray[i];
 			if(e != null) {
-				e.nextStep();
-				
-				// Falls e ein Squirrel ist, dann muss auf Kollision geprüft werden
-				if (e instanceof Squirrel) {
-					checkCollisionWithGoodPlant((Squirrel) e);
-				}
-			}
-		}
-	}
-
-	private void checkCollisionWithGoodPlant(Squirrel s) {
-		// Falls an der Stelle auf die Squirrel gegangen ist ein Entity vom Typ
-		// GoodPlant ist, wird GoodPlant entfernt und dem Squirrel die Energie gegeben
-		// same for wall (without remove)
-		for (Entity e2 : entityArray) {
-			if (e2 instanceof GoodPlant && e2.getXY().equals(s.getXY())) {
-				s.updateEnergy(e2.getEnergy());
-				remove(e2);
+				e.nextStep(context);
 			}
 		}
 	}

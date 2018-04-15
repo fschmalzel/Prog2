@@ -2,6 +2,7 @@ package de.hsa.g17.fatsquirrel.entities;
 
 import java.io.IOException;
 
+import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.XY;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
@@ -11,7 +12,11 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 	}
 
 	@Override
-	public void nextStep() {
+	public void nextStep(EntityContext context) {
+		super.nextStep(context);
+		if (isStunned())
+			return;
+		
 		System.out.println("Where do you want to go?\n"
 				+ "123\n"
 				+ "4S5\n"
@@ -49,8 +54,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 		else
 			y = -1;
 		
-		
-		this.move(new XY(x, y));
+		context.tryMove(this, new XY(x, y));
 		
 	}
 

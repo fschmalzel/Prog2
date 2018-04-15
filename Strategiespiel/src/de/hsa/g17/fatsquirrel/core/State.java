@@ -12,7 +12,7 @@ public class State {
 		//TODO implement
 	}
 	
-	public FlattenedBoard flattenedBoad() {
+	public FlattenedBoard flattenedBoard() {
 		//TODO implement
 		return null;
 	}

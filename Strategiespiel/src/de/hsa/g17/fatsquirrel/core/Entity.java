@@ -24,7 +24,7 @@ public abstract class Entity {
 		this(energy, board.randomCoordinates());
 	}
 	
-	public abstract void nextStep();
+	public abstract void nextStep(EntityContext context);
 	
 	public int getEnergy() {
 		return energy;
@@ -56,27 +56,32 @@ public abstract class Entity {
 		
 		if (e == null)
 			return false;
-		else if(this instanceof BadBeast && e instanceof BadBeast)
-			return true;
-		else if(this instanceof GoodBeast && e instanceof GoodBeast)
-			return true;
-		else if(this instanceof BadPlant && e instanceof BadPlant)
-			return true;
-		else if(this instanceof GoodPlant && e instanceof GoodPlant)
-			return true;
-		else if(this instanceof Wall && e instanceof Wall)
-			return true;
-		else if(this instanceof MasterSquirrel && e instanceof MasterSquirrel)
-			return true;
-		else if(this instanceof MiniSquirrel && e instanceof MiniSquirrel)
-			return true;
 		else
-			return false;
+			return this.getEntityType() == e.getEntityType();
 		
 	}
 	
 	public String toString() {
 		return " with id " + id + " at " + xy.toString() + " with energy " + energy;
+	}
+
+	public EntityType getEntityType() {
+		if (this instanceof BadBeast)
+			return EntityType.BAD_BEAST;
+		else if (this instanceof GoodBeast)
+			return EntityType.GOOD_BEAST;
+		else if (this instanceof BadPlant)
+			return EntityType.BAD_PLANT;
+		else if (this instanceof GoodPlant)
+			return EntityType.GOOD_PLANT;
+		else if (this instanceof Wall)
+			return EntityType.WALL;
+		else if (this instanceof MiniSquirrel)
+			return EntityType.MINI_SQUIRREL;
+		else if (this instanceof MasterSquirrel)
+			return EntityType.MASTER_SQUIRREL;
+		else
+			return EntityType.UNDEFINED;
 	}
 	
 }

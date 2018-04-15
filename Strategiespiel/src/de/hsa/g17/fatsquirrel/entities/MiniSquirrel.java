@@ -1,5 +1,6 @@
 package de.hsa.g17.fatsquirrel.entities;
 
+import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.XY;
 
 public class MiniSquirrel extends Squirrel {
@@ -15,15 +16,23 @@ public class MiniSquirrel extends Squirrel {
 		return masterID;
 	}
 	
+	public void updateEnergy(int energy, EntityContext context) {
+		super.updateEnergy(energy);
+		if(getEnergy() <= 0)
+			context.kill(this);
+	}
+	
 	public String toString() {
 		return "MiniSquirrel" + super.toString();
 	}
 
 	@Override
-	public void nextStep() {
-		this.updateEnergy(-1);
+	public void nextStep(EntityContext context) {
+		super.nextStep(context);
+		if (isStunned())
+			return;
 		
-		if(this.getEnergy() <= 0) {}
+		updateEnergy(-1, context);
 			
 	}
 	

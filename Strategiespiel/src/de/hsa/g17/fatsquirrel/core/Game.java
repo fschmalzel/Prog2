@@ -15,7 +15,7 @@ public abstract class Game {
 	}
 
 	protected void update() {
-		
+		// TODO Implement update
 	}
 
 	protected abstract void processInput();

@@ -28,16 +28,20 @@ public class XY {
 		
 	}
 	
-	public int getX() {
+	public int x() {
 		return x;
 	}
 	
-	public int getY() {
+	public int y() {
 		return y;
 	}
 
 	public String toString() {
 		return "(" + x + "|" + y + ")";
+	}
+	
+	public double distance(XY xy) {
+		return Math.sqrt(Math.pow(x-xy.x, 2) + Math.pow(y-xy.y, 2));
 	}
 	
 	public boolean equals(XY xy2) {
