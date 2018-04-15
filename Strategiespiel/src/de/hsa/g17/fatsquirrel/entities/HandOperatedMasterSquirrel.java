@@ -9,9 +9,6 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 	public HandOperatedMasterSquirrel(XY xy) {
 		super(xy);
 	}
-	public HandOperatedMasterSquirrel(int x, int y) {
-		super(x, y);
-	}
 
 	@Override
 	public void nextStep() {

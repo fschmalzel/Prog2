@@ -20,8 +20,8 @@ public abstract class Entity {
 		this.xy = xy;
 	}
 	
-	public Entity(int energy, int x, int y) {
-		this(energy, new XY(x, y));
+	protected Entity(int energy, Board board) {
+		this(energy, board.randomCoordinates());
 	}
 	
 	public abstract void nextStep();

@@ -7,12 +7,8 @@ public abstract class MasterSquirrel extends Squirrel {
 	
 	private final static int DEFAULT_ENERGY = 1000;
 	
-	public MasterSquirrel(XY xy) {
+	protected MasterSquirrel(XY xy) {
 		super(DEFAULT_ENERGY, xy);
-	}
-	
-	public MasterSquirrel(int x, int y) {
-		super(DEFAULT_ENERGY, x, y);
 	}
 	
 	public boolean isChild(Entity e) {
@@ -26,10 +22,5 @@ public abstract class MasterSquirrel extends Squirrel {
 		
 		return false;
 	}
-	
-//	@Override
-//	public void nextStep(int wait) {
-//		
-//	}
 
 }

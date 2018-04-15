@@ -18,39 +18,29 @@ public class Board {
 		this.config = config;
 		
 		for(int i = 0; i < config.getWidth(); i++) {
-			set.insert(new Wall(i,0));
-			set.insert(new Wall(i, config.getHeight()));
+			set.insert(new Wall(new XY(i,0)));
+			set.insert(new Wall(new XY(i, config.getHeight())));
 		}
 		
 		for(int i = 1; i < config.getHeight()-1; i++) {
-			set.insert(new Wall(0,i));
-			set.insert(new Wall(config.getWidth(), i));
+			set.insert(new Wall(new XY(0,i)));
+			set.insert(new Wall(new XY(config.getWidth(), i)));
 		}
 				
-		for (int i = 0; i < config.getNumBadBeast(); i++) {
-			XY xy = randomCoordinates();
-			set.insert(new BadBeast(xy));	
-		}
+		for (int i = 0; i < config.getNumBadBeast(); i++)
+			set.insert(new BadBeast(this));	
 		
-		for (int i = 0; i < config.getNumGoodBeast(); i++) {
-			XY xy = randomCoordinates();
-			set.insert(new GoodBeast(xy));	
-		}
+		for (int i = 0; i < config.getNumGoodBeast(); i++)
+			set.insert(new GoodBeast(this));
 		
-		for (int i = 0; i < config.getNumBadPlant(); i++) {
-			XY xy = randomCoordinates();
-			set.insert(new BadPlant(xy));	
-		}
+		for (int i = 0; i < config.getNumBadPlant(); i++)
+			set.insert(new BadPlant(this));
 		
-		for (int i = 0; i < config.getNumGoodPlant(); i++) {
-			XY xy = randomCoordinates();
-			set.insert(new GoodPlant(xy));	
-		}
+		for (int i = 0; i < config.getNumGoodPlant(); i++)
+			set.insert(new GoodPlant(this));
 		
-		for (int i = 0; i < config.getNumWall(); i++) {
-			XY xy = randomCoordinates();
-			set.insert(new Wall(xy));	
-		}
+		for (int i = 0; i < config.getNumWall(); i++)
+			set.insert(new Wall(this));
 		
 	}
 	

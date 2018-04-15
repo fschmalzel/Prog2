@@ -10,11 +10,6 @@ public class MiniSquirrel extends Squirrel {
 		super(energy, xy);
 		this.masterID = masterID;
 	}
-	
-	public MiniSquirrel(int energy, int x, int y, int masterID) {
-		super(energy, x, y);
-		this.masterID = masterID;
-	}
 
 	public int getMasterID() {
 		return masterID;
