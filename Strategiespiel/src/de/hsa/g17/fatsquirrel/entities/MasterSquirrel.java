@@ -26,5 +26,10 @@ public abstract class MasterSquirrel extends Squirrel {
 		
 		return false;
 	}
+	
+//	@Override
+//	public void nextStep(int wait) {
+//		
+//	}
 
 }

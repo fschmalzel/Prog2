@@ -55,11 +55,19 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		// TODO getEntityType
 		return null;
 	}
+	
+	@Override
+	public EntityType getEntityType(int x, int y) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 	@Override
 	public XY getSize() {
 		// TODO getSize
 		return null;
 	}
+
 
 }

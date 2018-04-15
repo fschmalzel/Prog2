@@ -97,6 +97,7 @@ public class EntitySet {
 	private void checkCollisionWithGoodPlant(Squirrel s) {
 		// Falls an der Stelle auf die Squirrel gegangen ist ein Entity vom Typ
 		// GoodPlant ist, wird GoodPlant entfernt und dem Squirrel die Energie gegeben
+		// same for wall (without remove)
 		for (Entity e2 : entityArray) {
 			if (e2 instanceof GoodPlant && e2.getXY().equals(s.getXY())) {
 				s.updateEnergy(e2.getEnergy());

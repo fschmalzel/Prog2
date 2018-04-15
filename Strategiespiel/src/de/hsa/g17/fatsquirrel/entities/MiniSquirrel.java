@@ -25,6 +25,11 @@ public class MiniSquirrel extends Squirrel {
 	}
 
 	@Override
-	public void nextStep() {}
+	public void nextStep() {
+		this.updateEnergy(-1);
+		
+		if(this.getEnergy() <= 0) {}
+			
+	}
 	
 }
