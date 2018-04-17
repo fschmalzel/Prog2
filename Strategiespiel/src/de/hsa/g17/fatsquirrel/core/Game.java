@@ -1,9 +1,11 @@
 package de.hsa.g17.fatsquirrel.core;
 
 public abstract class Game {
-
+	
+	State state;
+	
 	Game(State state) {
-		//TODO save state or sth.
+		this.state = state;
 	}
 	
 	public void run() {
@@ -15,7 +17,7 @@ public abstract class Game {
 	}
 
 	protected void update() {
-		// TODO Implement update
+		state.update();
 	}
 
 	protected abstract void processInput();

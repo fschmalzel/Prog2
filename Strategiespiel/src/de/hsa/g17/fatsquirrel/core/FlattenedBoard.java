@@ -109,6 +109,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 				return true;
 			case UNDEFINED:
 				squirrel.move(moveDirection);
+				update();
 				return true;
 			default:
 				return false;
@@ -121,6 +122,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		
 		if (e == null) {
 			goodBeast.move(moveDirection);
+			update();
 			return;
 		}
 		
@@ -140,6 +142,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	
 		if (e == null) {
 			badBeast.move(moveDirection);
+			update();
 			return;
 		}
 		
@@ -160,13 +163,48 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
 	@Override
 	public Squirrel nearestSquirrel(XY pos) {
-		// TODO nearestSquirrel
-		return null;
+		XY size = getSize();
+		
+		int startX = pos.x() - 6;
+		if (startX < 0)
+			startX = 0;
+		
+		int endX = pos.x() + 6;
+		if (endX >= size.x())
+			endX = size.x()-1;
+		
+		
+		int startY = pos.y() - 6;
+		if (startY < 0)
+			startY = 0;
+		
+		int endY = pos.y() + 6;
+		if (endY >= size.y())
+			endY = size.y()-1;
+		
+		Squirrel s = null;
+		
+		for(int x = startX; x <= endX; x++) {
+			for(int y = startY; y <= endY; y++) {
+				Entity e = flatBoard[x][y];
+				if (e != null && e instanceof Squirrel) {
+					if (s == null) {
+						s = (Squirrel) e;
+					} else if (pos.distance(e.getXY()) < pos.distance(s.getXY())){
+						s = (Squirrel) e;
+					}
+				}
+				
+			}
+		}
+		
+		return s;
 	}
 
 	@Override
 	public void kill(Entity entity) {
 		board.remove(entity);
+		update();
 	}
 
 	@Override
@@ -183,6 +221,11 @@ public class FlattenedBoard implements BoardView, EntityContext {
 			entity = new BadBeast(board);
 		
 		board.insert(entity);
+		update();
+	}
+	
+	private void update() {
+		flatBoard = board.flatten();
 	}
 
 	@Override
@@ -193,6 +236,11 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	@Override
 	public XY getSize() {
 		return board.getConfig().getSize();
+	}
+	
+	@Override
+	public MoveCommand getCommand() {
+		return board.getCommand();
 	}
 	
 	private Entity getCollidingEntity(Entity entity, XY moveDirection) {

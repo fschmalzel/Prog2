@@ -9,12 +9,11 @@ public class State {
 	}
 	
 	public void update() {
-		//TODO implement
+		board.update(flattenedBoard());
 	}
 	
 	public FlattenedBoard flattenedBoard() {
-		//TODO implement
-		return null;
+		return new FlattenedBoard(board);
 	}
 
 }

@@ -1,5 +1,7 @@
 package de.hsa.g17.fatsquirrel.core;
 
+import de.hsa.g17.fatsquirrel.entities.Character;
+
 public class EntitySet {
 
 	private Entity[] entityArray;
@@ -80,8 +82,8 @@ public class EntitySet {
 	public void nextStep(EntityContext context) {
 		for(int i = 0; i < entityArray.length; i++) {
 			Entity e = entityArray[i];
-			if(e != null) {
-				e.nextStep(context);
+			if(e != null && e instanceof Character) {
+				((Character) e).nextStep(context);
 			}
 		}
 	}

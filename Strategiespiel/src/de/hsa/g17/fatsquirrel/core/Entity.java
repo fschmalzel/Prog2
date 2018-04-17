@@ -24,8 +24,6 @@ public abstract class Entity {
 		this(energy, board.randomCoordinates());
 	}
 	
-	public abstract void nextStep(EntityContext context);
-	
 	public int getEnergy() {
 		return energy;
 	}

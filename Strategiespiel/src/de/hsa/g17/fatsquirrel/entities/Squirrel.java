@@ -1,10 +1,9 @@
 package de.hsa.g17.fatsquirrel.entities;
 
-import de.hsa.g17.fatsquirrel.core.Entity;
 import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.XY;
 
-public abstract class Squirrel extends Entity {
+public abstract class Squirrel extends Character {
 
 	private int stunnedRounds = 0;
 	
@@ -16,6 +15,7 @@ public abstract class Squirrel extends Entity {
 		stunnedRounds = 3;
 	}
 	
+	@Override
 	public void nextStep(EntityContext context) {
 		if (stunnedRounds > 0)
 			stunnedRounds--;

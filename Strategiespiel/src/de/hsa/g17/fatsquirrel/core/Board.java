@@ -44,18 +44,31 @@ public class Board {
 		
 	}
 	
+	public void update(EntityContext context) {
+		set.nextStep(context);
+	}
+	
 	public XY randomCoordinates() {
 		Random rnd = new Random();
+		int x, y;
+		boolean notFree;
+		XY xy;
 		
-		int x;
-		int y;
-		//TODO Look for duplicates on the field
+		do {
+			notFree = false;
+			
+			x = rnd.nextInt(config.getSize().x() - 2) + 1;
+			y = rnd.nextInt(config.getSize().y() - 2) + 1;
+			
+			xy = new XY(x,y);
+			
+			for (Entity e : set.toArray())
+				if (e.getXY().equals(xy))
+					notFree = true;
+			
+		} while (notFree);
 		
-		
-		x = rnd.nextInt(config.getSize().x() - 2) + 1;
-		y = rnd.nextInt(config.getSize().y() - 2) + 1;
-		
-		return new XY(x,y);
+		return xy;
 	}
 	
 	public Entity[][] flatten() {
@@ -94,34 +107,10 @@ public class Board {
 	
 	public String toString() {
 		return "Num of Entitys: " + numEntity + "\n" + set;
-		
-//		for(int y = 0; y < set[0].length; y++) {
-//			s += "\n";
-//			for(int x = 0; x < set.length; x++) {
-//				char c;
-//				if (set[x][y] instanceof GoodBeast) {
-//					c = 'G';
-//				} else if (set[x][y] instanceof BadBeast) {
-//					c = 'B';
-//				} else if (set[x][y] instanceof GoodPlant) {
-//					c = 'g';
-//				} else if (set[x][y] instanceof BadPlant) {
-//					c = 'b';
-//				} else if (set[x][y] instanceof Wall) {
-//					c = '#';
-//				} else if (set[x][y] instanceof MasterSquirrel) {
-//					c = 'M';
-//				} else if (set[x][y] instanceof MiniSquirrel) {
-//					c = 'm';
-//				} else {
-//					c = '.';
-//				}
-//				
-//				s += c;
-//			}
-//		}
-//		return s;
-		
+	}
+
+	public MoveCommand getCommand() {
+		return ;
 	}
 	
 	
