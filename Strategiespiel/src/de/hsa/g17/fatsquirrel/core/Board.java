@@ -110,7 +110,7 @@ public class Board {
 	}
 
 	public MoveCommand getCommand() {
-		//TODO: 
+		//TODO return Command
 		return ;
 	}
 	
