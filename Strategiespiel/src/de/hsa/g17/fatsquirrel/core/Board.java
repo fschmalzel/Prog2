@@ -19,12 +19,12 @@ public class Board {
 		
 		for(int i = 0; i < config.getSize().x(); i++) {
 			set.insert(new Wall(new XY(i,0)));
-			set.insert(new Wall(new XY(i, config.getSize().y())));
+			set.insert(new Wall(new XY(i, config.getSize().y()-1)));
 		}
 		
 		for(int i = 1; i < config.getSize().y()-1; i++) {
 			set.insert(new Wall(new XY(0,i)));
-			set.insert(new Wall(new XY(config.getSize().x(), i)));
+			set.insert(new Wall(new XY(config.getSize().x()-1, i)));
 		}
 				
 		for (int i = 0; i < config.getNumBadBeast(); i++)
@@ -84,7 +84,7 @@ public class Board {
 			int x = e.getXY().x();
 			int y = e.getXY().y();
 			
-			if (x < config.getSize().x() && x > 0 && y < config.getSize().y() && y > 0) {
+			if (x < config.getSize().x() && x >= 0 && y < config.getSize().y() && y >= 0) {
 				field[x][y] = e;
 			}
 		}
@@ -108,11 +108,5 @@ public class Board {
 	public String toString() {
 		return "Num of Entitys: " + numEntity + "\n" + set;
 	}
-
-	public MoveCommand getCommand() {
-		//TODO return Command
-		return ;
-	}
-	
 	
 }

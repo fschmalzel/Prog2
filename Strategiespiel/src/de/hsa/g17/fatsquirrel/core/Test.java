@@ -1,4 +1,4 @@
-//package de.hsa.g17.fatsquirrel.core;
+package de.hsa.g17.fatsquirrel.core;
 //
 //import de.hsa.g17.fatsquirrel.entities.BadBeast;
 //import de.hsa.g17.fatsquirrel.entities.BadPlant;
@@ -6,7 +6,7 @@
 //import de.hsa.g17.fatsquirrel.entities.GoodPlant;
 //import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 //
-//public class Test {
+public class Test {
 //
 //	public static void main(String[] args) {
 //		
@@ -89,4 +89,4 @@
 //		return 0;
 //	}
 //
-//}
+}

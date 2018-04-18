@@ -2,7 +2,7 @@ package de.hsa.g17.fatsquirrel.core;
 
 public abstract class Game {
 	
-	State state;
+	protected State state;
 	
 	Game(State state) {
 		this.state = state;

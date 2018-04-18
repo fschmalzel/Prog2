@@ -33,7 +33,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 			// TODO check if badbeast died and if it did, then move there
 			return;
 		case MASTER_SQUIRREL:
-			// TODO implement
+			// Nothing happens
 			return;
 		case MINI_SQUIRREL:
 			MiniSquirrel miniSquirrel = (MiniSquirrel) e;
@@ -80,7 +80,6 @@ public class FlattenedBoard implements BoardView, EntityContext {
 			
 			if (miniSquirrel.getMasterID() != miniSquirrel2.getMasterID()) {
 				kill(miniSquirrel);
-				kill(miniSquirrel2);
 			}
 			return;
 			
@@ -230,17 +229,15 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
 	@Override
 	public EntityType getEntityType(XY xy) {
-		return flatBoard[xy.x()][xy.y()].getEntityType();
+		Entity e = flatBoard[xy.x()][xy.y()];
+		if (e == null)
+			return EntityType.UNDEFINED;
+		return e.getEntityType();
 	}
 
 	@Override
 	public XY getSize() {
 		return board.getConfig().getSize();
-	}
-	
-	@Override
-	public MoveCommand getCommand() {
-		return board.getCommand();
 	}
 	
 	private Entity getCollidingEntity(Entity entity, XY moveDirection) {

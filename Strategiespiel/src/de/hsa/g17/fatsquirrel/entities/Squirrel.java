@@ -31,4 +31,10 @@ public abstract class Squirrel extends Character {
 		
 	}
 	
+	public boolean isStunnedNextRound() {
+		if (stunnedRounds > 1)
+			return true;
+		return false;
+	}
+	
 }
