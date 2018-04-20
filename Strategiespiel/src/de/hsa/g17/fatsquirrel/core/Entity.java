@@ -20,10 +20,6 @@ public abstract class Entity {
 		this.xy = xy;
 	}
 	
-	protected Entity(int energy, Board board) {
-		this(energy, board.randomCoordinates());
-	}
-	
 	public int getEnergy() {
 		return energy;
 	}

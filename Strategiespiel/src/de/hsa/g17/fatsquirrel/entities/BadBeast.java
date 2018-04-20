@@ -1,6 +1,5 @@
 package de.hsa.g17.fatsquirrel.entities;
 
-import de.hsa.g17.fatsquirrel.core.Board;
 import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.XY;
 
@@ -14,14 +13,13 @@ public class BadBeast extends Character {
 		super(DEFAULT_ENERGY, xy);
 	}
 	
-	public BadBeast(Board board) {
-		super(DEFAULT_ENERGY, board);
-	}
-	
-	public void bites(EntityContext context) {
+	public boolean bites(EntityContext context) {
 		bites--;
-		if(bites <= 0)
+		if(bites <= 0) {
 			context.killAndReplace(this);
+			return false;
+		}
+		return true;
 	}
 
 	@Override

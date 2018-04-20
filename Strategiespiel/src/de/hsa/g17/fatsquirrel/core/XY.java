@@ -28,6 +28,31 @@ public class XY {
 		
 	}
 	
+	public static XY getRandomCoordinates(XY size, Entity[] entitys) {
+		Random rnd = new Random();
+		
+		boolean notFree;
+		XY xy;
+		
+		do {
+			notFree = false;
+			
+			int x = rnd.nextInt(size.x() - 2) + 1;
+			int y = rnd.nextInt(size.y() - 2) + 1;
+			
+			xy = new XY(x,y);
+			
+			for (Entity e : entitys)
+				if (e.getXY().equals(xy)) {
+					notFree = true;
+					break;
+				}
+			
+		} while (notFree);
+		
+		return xy;
+	}
+	
 	public int x() {
 		return x;
 	}

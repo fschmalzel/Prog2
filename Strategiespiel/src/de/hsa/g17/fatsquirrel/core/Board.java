@@ -1,7 +1,5 @@
 package de.hsa.g17.fatsquirrel.core;
 
-import java.util.Random;
-
 import de.hsa.g17.fatsquirrel.entities.BadBeast;
 import de.hsa.g17.fatsquirrel.entities.BadPlant;
 import de.hsa.g17.fatsquirrel.entities.GoodBeast;
@@ -28,19 +26,19 @@ public class Board {
 		}
 				
 		for (int i = 0; i < config.getNumBadBeast(); i++)
-			set.insert(new BadBeast(this));	
+			set.insert(new BadBeast(XY.getRandomCoordinates(config.getSize(), set.toArray())));	
 		
 		for (int i = 0; i < config.getNumGoodBeast(); i++)
-			set.insert(new GoodBeast(this));
+			set.insert(new GoodBeast(XY.getRandomCoordinates(config.getSize(), set.toArray())));
 		
 		for (int i = 0; i < config.getNumBadPlant(); i++)
-			set.insert(new BadPlant(this));
+			set.insert(new BadPlant(XY.getRandomCoordinates(config.getSize(), set.toArray())));
 		
 		for (int i = 0; i < config.getNumGoodPlant(); i++)
-			set.insert(new GoodPlant(this));
+			set.insert(new GoodPlant(XY.getRandomCoordinates(config.getSize(), set.toArray())));
 		
 		for (int i = 0; i < config.getNumWall(); i++)
-			set.insert(new Wall(this));
+			set.insert(new Wall(XY.getRandomCoordinates(config.getSize(), set.toArray())));
 		
 	}
 	
@@ -48,49 +46,8 @@ public class Board {
 		set.nextStep(context);
 	}
 	
-	public XY randomCoordinates() {
-		Random rnd = new Random();
-		int x, y;
-		boolean notFree;
-		XY xy;
-		
-		do {
-			notFree = false;
-			
-			x = rnd.nextInt(config.getSize().x() - 2) + 1;
-			y = rnd.nextInt(config.getSize().y() - 2) + 1;
-			
-			xy = new XY(x,y);
-			
-			for (Entity e : set.toArray())
-				if (e.getXY().equals(xy))
-					notFree = true;
-			
-		} while (notFree);
-		
-		return xy;
-	}
-	
-	public Entity[][] flatten() {
-		
-		Entity[][] field = new Entity[config.getSize().x()][config.getSize().y()];
-		
-		if (set == null)
-			return field;
-		
-		Entity[] entityArray = set.toArray();
-		
-		for (Entity e : entityArray) {
-			int x = e.getXY().x();
-			int y = e.getXY().y();
-			
-			if (x < config.getSize().x() && x >= 0 && y < config.getSize().y() && y >= 0) {
-				field[x][y] = e;
-			}
-		}
-		
-		return field;
-		
+	public FlattenedBoard flatten() {
+		return new FlattenedBoard(this);
 	}
 	
 	public void remove(Entity e) {
@@ -99,6 +56,10 @@ public class Board {
 	
 	public void insert(Entity e) {
 		set.insert(e);
+	}
+	
+	public Entity[] getEntitys() {
+		return set.toArray();
 	}
 	
 	public BoardConfig getConfig() {

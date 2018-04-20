@@ -16,7 +16,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	
 	public FlattenedBoard(Board board) {
 		this.board = board;
-		flatBoard = board.flatten();
+
+		updateFlatBoard();
 	}
 
 	@Override
@@ -29,8 +30,9 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		switch (e.getEntityType()) {
 		case BAD_BEAST:
 			masterSquirrel.updateEnergy(e.getEnergy());
-			((BadBeast) e).bites(this);
-			// TODO check if badbeast died and if it did, then move there
+			if (!((BadBeast) e).bites(this)) {
+				masterSquirrel.move(moveDirection);
+			}
 			return;
 		case MASTER_SQUIRREL:
 			// Nothing happens
@@ -63,9 +65,12 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		
 		switch (e.getEntityType()) {
 		case BAD_BEAST:
-			miniSquirrel.updateEnergy(e.getEnergy(), this);
-			((BadBeast) e).bites(this);
-			// TODO check if badbeast died and if it did, then move there
+			miniSquirrel.updateEnergy(e.getEnergy());
+			if(miniSquirrel.getEnergy() <= 0)
+				kill(miniSquirrel);
+			if (!((BadBeast) e).bites(this)) {
+				miniSquirrel.move(moveDirection);
+			}
 			return;
 		case MASTER_SQUIRREL:
 			MasterSquirrel masterSquirrel = (MasterSquirrel) e;
@@ -108,7 +113,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 				return true;
 			case UNDEFINED:
 				squirrel.move(moveDirection);
-				update();
+				updateFlatBoard();
 				return true;
 			default:
 				return false;
@@ -121,7 +126,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		
 		if (e == null) {
 			goodBeast.move(moveDirection);
-			update();
+			updateFlatBoard();
 			return;
 		}
 		
@@ -141,7 +146,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	
 		if (e == null) {
 			badBeast.move(moveDirection);
-			update();
+			updateFlatBoard();
 			return;
 		}
 		
@@ -149,12 +154,16 @@ public class FlattenedBoard implements BoardView, EntityContext {
 			return;
 		
 		if (e instanceof Squirrel) {
-			if (e instanceof MiniSquirrel)
-				((MiniSquirrel) e).updateEnergy(badBeast.getEnergy(), this);
-			else if (e instanceof MasterSquirrel)
-				e.updateEnergy(badBeast.getEnergy());
-
-			// TODO check if minisquirrel died and if it did, then move there
+			e.updateEnergy(badBeast.getEnergy());
+			if (e instanceof MiniSquirrel) {
+				if (e.getEnergy() <= 0) {
+					kill(e);
+					badBeast.move(moveDirection);
+					updateFlatBoard();
+				}
+				
+			}
+			
 			badBeast.bites(this);
 		}
 
@@ -203,28 +212,45 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	@Override
 	public void kill(Entity entity) {
 		board.remove(entity);
-		update();
+		updateFlatBoard();
 	}
 
 	@Override
 	public void killAndReplace(Entity entity) {
 		board.remove(entity);
 		
+		BoardConfig config = board.getConfig();
+		Entity[] entitys = board.getEntitys();
+		
 		if (entity instanceof GoodPlant)
-			entity = new GoodPlant(board);
+			entity = new GoodPlant(XY.getRandomCoordinates(config.getSize(), entitys));
 		else if (entity instanceof BadPlant)
-			entity = new BadPlant(board);
+			entity = new BadPlant(XY.getRandomCoordinates(config.getSize(), entitys));
 		else if (entity instanceof GoodBeast)
-			entity = new GoodBeast(board);
+			entity = new GoodBeast(XY.getRandomCoordinates(config.getSize(), entitys));
 		else
-			entity = new BadBeast(board);
+			entity = new BadBeast(XY.getRandomCoordinates(config.getSize(), entitys));
 		
 		board.insert(entity);
-		update();
+		updateFlatBoard();
 	}
 	
-	private void update() {
-		flatBoard = board.flatten();
+	private void updateFlatBoard() {
+		BoardConfig config = board.getConfig();
+		Entity[][] newFlatBoard = new Entity[config.getSize().x()][config.getSize().y()];
+		
+		Entity[] entityArray = board.getEntitys();
+		
+		for (Entity e : entityArray) {
+			int x = e.getXY().x();
+			int y = e.getXY().y();
+			
+			if (x < config.getSize().x() && x >= 0 && y < config.getSize().y() && y >= 0) {
+				newFlatBoard[x][y] = e;
+			}
+		}
+		
+		flatBoard = newFlatBoard;
 	}
 
 	@Override

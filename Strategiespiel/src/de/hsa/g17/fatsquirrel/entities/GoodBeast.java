@@ -1,6 +1,5 @@
 package de.hsa.g17.fatsquirrel.entities;
 
-import de.hsa.g17.fatsquirrel.core.Board;
 import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.XY;
 
@@ -11,10 +10,6 @@ public class GoodBeast extends Character {
 	
 	public GoodBeast(XY xy) {
 		super(DEFAULT_ENERGY, xy);
-	}
-	
-	public GoodBeast(Board board) {
-		super(DEFAULT_ENERGY, board);
 	}
 	
 	@Override

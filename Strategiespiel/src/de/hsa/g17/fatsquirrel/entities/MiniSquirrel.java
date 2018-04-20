@@ -16,12 +16,6 @@ public class MiniSquirrel extends Squirrel {
 		return masterID;
 	}
 	
-	public void updateEnergy(int energy, EntityContext context) {
-		super.updateEnergy(energy);
-		if(getEnergy() <= 0)
-			context.kill(this);
-	}
-	
 	public String toString() {
 		return "MiniSquirrel" + super.toString();
 	}
@@ -32,7 +26,9 @@ public class MiniSquirrel extends Squirrel {
 		if (isStunned())
 			return;
 		
-		updateEnergy(-1, context);
+		updateEnergy(-1);
+		if(getEnergy() <= 0)
+			context.kill(this);
 			
 	}
 	

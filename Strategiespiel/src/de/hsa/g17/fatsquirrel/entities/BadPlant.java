@@ -1,6 +1,5 @@
 package de.hsa.g17.fatsquirrel.entities;
 
-import de.hsa.g17.fatsquirrel.core.Board;
 import de.hsa.g17.fatsquirrel.core.Entity;
 import de.hsa.g17.fatsquirrel.core.XY;
 
@@ -10,10 +9,6 @@ public class BadPlant extends Entity {
 	
 	public BadPlant(XY xy) {
 		super(DEFAULT_ENERGY, xy);
-	}
-	
-	public BadPlant(Board board) {
-		super(DEFAULT_ENERGY, board);
 	}
 
 	public String toString() {
