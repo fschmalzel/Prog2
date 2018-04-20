@@ -99,7 +99,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	private boolean tryMoveSquirrel(Squirrel squirrel, XY moveDirection) {
 		Entity e = getCollidingEntity(squirrel, moveDirection);
 		
-		switch(e == null ? EntityType.UNDEFINED : e.getEntityType()) {
+		switch(e == null ? EntityType.EMPTY : e.getEntityType()) {
 			case BAD_PLANT:
 			case GOOD_PLANT:
 			case GOOD_BEAST:
@@ -111,7 +111,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 				squirrel.stun();
 				squirrel.updateEnergy(e.getEnergy());
 				return true;
-			case UNDEFINED:
+			case EMPTY:
 				squirrel.move(moveDirection);
 				updateFlatBoard();
 				return true;
@@ -257,7 +257,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	public EntityType getEntityType(XY xy) {
 		Entity e = flatBoard[xy.x()][xy.y()];
 		if (e == null)
-			return EntityType.UNDEFINED;
+			return EntityType.EMPTY;
 		return e.getEntityType();
 	}
 

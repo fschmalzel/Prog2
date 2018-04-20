@@ -72,6 +72,10 @@ public class ConsoleUI implements UI {
 				case WALL:
 					c = '#';
 					break;
+				case UNDEFINED:
+					c = '?';
+					break;
+				case EMPTY:
 				default:
 					c = ' ';
 					break;
