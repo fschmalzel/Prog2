@@ -24,33 +24,26 @@ public class CommandScanner {
 	public PrintStream getOutputStream() {
 		return outputStream;
 	}
-	public Command next() {
-		String nameCommand = null;
-		
-		//TODO: Eingabe lesen und alle bis zum Identifizierer lesen (\n & \r hab ich zur sicherheit reingetan)
-		try {
-			while(inputReader.read() != ' ' || inputReader.read() != '\n' || inputReader.read() != '\r')
-				nameCommand += (char)inputReader.read();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		
+	public Command next(String s) {
 		//TODO: Mit den identifizierer erstell ich ein neuen command mit den paramtypen und commandtype (bin mir unsicher ob es mit den enum array so funktioniert)
-		switch(nameCommand) {
+		switch(s) {
 		case "help":
 			command = new Command(commandTypeInfos[0],commandTypeInfos[0].getParamTypes());
 			break;
 		case "exit":
 			command = new Command(commandTypeInfos[1],commandTypeInfos[1].getParamTypes());
 			break;
-		case "addi":
+		case "left":
 			command = new Command(commandTypeInfos[2],commandTypeInfos[2].getParamTypes());
 			break;
-		case "addf":
+		case "right":
 			command = new Command(commandTypeInfos[3],commandTypeInfos[3].getParamTypes());
 			break;
-		case "echo":
+		case "up":
 			command = new Command(commandTypeInfos[4],commandTypeInfos[4].getParamTypes());
+			break;
+		case "down":
+			command = new Command(commandTypeInfos[5],commandTypeInfos[5].getParamTypes());
 			break;
 		default:
 			return null;

@@ -1,6 +1,7 @@
 package de.hasa.g17.fatsquirrel.util.ui.consoletest;
 
 import java.io.BufferedReader;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
@@ -14,8 +15,16 @@ public class MyFavoriteCommandsProcessor {
 		CommandScanner commandScanner = new CommandScanner(MyFavoriteCommandType.values(), inputReader);
 	       
 		while (true) { // the loop over all commands with one input line for every command
-
-			command = commandScanner.next();
+			String s = null;
+			
+			try {
+				s = inputReader.readLine();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			command = commandScanner.next(s);
      //...
 
 			Object[] params = command.getParams();

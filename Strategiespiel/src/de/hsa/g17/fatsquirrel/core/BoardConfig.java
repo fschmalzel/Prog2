@@ -1,7 +1,7 @@
 package de.hsa.g17.fatsquirrel.core;
 
 public class BoardConfig {
-	private final XY size = new XY(60, 30);
+	private final XY size = new XY(30, 15);
 	private final int numBadBeast = 5;
 	private final int numGoodBeast = 5;
 	private final int numGoodPlant = 13;
