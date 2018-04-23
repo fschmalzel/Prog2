@@ -1,31 +1,20 @@
 package de.hasa.g17.fatsquirrel.util.ui.consoletest;
 
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
 
 public class MyFavoriteCommandsProcessor {
 	private PrintStream outputStream = System.out;
-	private  BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-	private Command command;
+	private BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 	
 	public void process() {
-		//TODO: Das hab ich nur kopiert
-		CommandScanner commandScanner = new CommandScanner(MyFavoriteCommandType.values(), inputReader);
+		CommandScanner commandScanner = new CommandScanner(MyFavoriteCommandType.values(), inputReader, outputStream);
 	       
 		while (true) { // the loop over all commands with one input line for every command
-			String s = null;
+			Command command;
 			
-			try {
-				s = inputReader.readLine();
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-			command = commandScanner.next(s);
-     //...
+			command = commandScanner.next();
 
 			Object[] params = command.getParams();
 
@@ -38,12 +27,13 @@ public class MyFavoriteCommandsProcessor {
 		    	help();
 		        break;
 		    case ADDI:
+		    	outputStream.println((Integer) params[0] + (Integer) params[1]);
 		    	break;
 		    case ADDF:
+		    	outputStream.println((Float) params[0] + (Float) params[1]);
 		    	break;
 		    case ECHO:
 		    	break;
-		    	//....
 		    default:
 		    	break;
 		    }
@@ -51,11 +41,16 @@ public class MyFavoriteCommandsProcessor {
 	}
 	
 	private void help() {
+		MyFavoriteCommandType.values();
 		
+		for(CommandTypeInfo cmd : MyFavoriteCommandType.values()) {
+			System.out.println(cmd.getName() + "\t" + cmd.getHelpText());
+		}
 	}
 	
 	public static void main(String[] args) {
-	
+		MyFavoriteCommandsProcessor cmdProc = new MyFavoriteCommandsProcessor();
+		cmdProc.process();
 	}
 
 
