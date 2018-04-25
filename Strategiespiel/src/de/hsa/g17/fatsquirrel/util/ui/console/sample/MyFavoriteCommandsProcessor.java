@@ -1,8 +1,13 @@
-package de.hasa.g17.fatsquirrel.util.ui.consoletest;
+package de.hsa.g17.fatsquirrel.util.ui.console.sample;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
+
+import de.hsa.g17.fatsquirrel.util.ui.console.Command;
+import de.hsa.g17.fatsquirrel.util.ui.console.CommandScanner;
+import de.hsa.g17.fatsquirrel.util.ui.console.CommandTypeInfo;
+import de.hsa.g17.fatsquirrel.util.ui.console.NoSuchCommandException;
 
 public class MyFavoriteCommandsProcessor {
 	private PrintStream outputStream = System.out;
@@ -13,13 +18,17 @@ public class MyFavoriteCommandsProcessor {
 	       
 		while (true) { // the loop over all commands with one input line for every command
 			Command command;
-			
-			command = commandScanner.next();
+			try {
+				command = commandScanner.next();
+			} catch (NoSuchCommandException e){
+				e.printStackTrace(outputStream);
+				continue;
+			}
 
 			Object[] params = command.getParams();
 
 		    MyFavoriteCommandType commandType = (MyFavoriteCommandType) command.getCommandType();
-		     
+		    
 		    switch (commandType) {
 		    case EXIT:
 		    	System.exit(0);
@@ -33,6 +42,9 @@ public class MyFavoriteCommandsProcessor {
 		    	outputStream.println((Float) params[0] + (Float) params[1]);
 		    	break;
 		    case ECHO:
+		    	for (int i = 0; i < (Integer) params[1]; i++) {
+		    		outputStream.println((String) params[0]);
+		    	}
 		    	break;
 		    default:
 		    	break;
@@ -41,11 +53,8 @@ public class MyFavoriteCommandsProcessor {
 	}
 	
 	private void help() {
-		MyFavoriteCommandType.values();
-		
-		for(CommandTypeInfo cmd : MyFavoriteCommandType.values()) {
+		for(CommandTypeInfo cmd : MyFavoriteCommandType.values())
 			System.out.println(cmd.getName() + "\t" + cmd.getHelpText());
-		}
 	}
 	
 	public static void main(String[] args) {

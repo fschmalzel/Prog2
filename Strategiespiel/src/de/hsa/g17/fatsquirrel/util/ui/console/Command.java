@@ -1,4 +1,4 @@
-package de.hasa.g17.fatsquirrel.util.ui.consoletest;
+package de.hsa.g17.fatsquirrel.util.ui.console;
 
 public class Command {
 	private CommandTypeInfo commandType;

@@ -1,5 +1,6 @@
 package de.hsa.g17.fatsquirrel.core;
 
+import de.hsa.g17.fatsquirrel.core.ui.console.ConsoleUI;
 import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.g17.fatsquirrel.entities.MasterSquirrel;
 
@@ -18,8 +19,14 @@ public class GameImpl extends Game {
 	
 	@Override
 	protected void processInput() {
-		if(!masterSquirrel.isStunnedNextRound())
-			masterSquirrel.setMoveCommand(ui.getCommand());
+		MoveCommand cmd;
+		
+		do {
+			cmd = ui.getCommand();
+		} while (cmd == null);
+		
+		masterSquirrel.setMoveCommand(cmd);
+		
 	}
 
 	@Override

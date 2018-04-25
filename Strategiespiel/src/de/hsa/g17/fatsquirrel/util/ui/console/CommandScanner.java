@@ -1,4 +1,4 @@
-package de.hasa.g17.fatsquirrel.util.ui.consoletest;
+package de.hsa.g17.fatsquirrel.util.ui.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -34,7 +34,6 @@ public class CommandScanner {
 		try {
 			input = inputReader.readLine();
 		} catch (IOException e) {
-			e.printStackTrace();
 			// Falls ein Fehler beim Einlesen passiert, fangen wir
 			// diesen ab, und werfen eine ScanException
 			throw new ScanException();
@@ -47,6 +46,7 @@ public class CommandScanner {
 		// Um zu vermeiden das dieses Wort anschließend als Parameter verwertet
 		// wird müssen wir input leeren, da wir alles abgegriffen haben
 		int split = input.indexOf(' ');
+		
 		String name;
 		if (split != -1) {
 			name = input.substring(0, split);
@@ -73,27 +73,19 @@ public class CommandScanner {
 		// Falls kein Befehl gefunden wurde, werfen wir eine
 		// ScanException
 		if (cmd == null)
-			throw new ScanException();
-		
+			throw new NoSuchCommandException();
 		
 		Object[] params = new Object[cmd.getParamTypes().length];
 		
 		
 		// Jetzt gehen wir die Liste an Parametern durch
 		for (int i = 0; i < cmd.getParamTypes().length; i++) {
-			Class<?> paramType = cmd.getParamTypes()[i];
-			
-			// Falls der input leer ist, wir aber noch einen parameter brauchen
-			// haben wir einen Fehlerfall, da zu wenige Werte vom User geliefert wurden
-			// Also ScanException
-			if (input.equalsIgnoreCase(""))
-				throw new ScanException();
 			
 			// Holen uns den jeweiligen Wert des Parameters vom
 			// input wie mit dem namen vorher
 			split = input.indexOf(' ');
 			String param;
-			if (split == -1) {
+			if (split != -1) {
 				param = input.substring(0, split);
 				input = input.substring(split + 1);
 			} else {
@@ -110,10 +102,12 @@ public class CommandScanner {
 			// TODO Funktioniert nur leider nicht ganz, außerdem muss z. B. für Echo 
 			// auch mehrere "Wörter" als ein String zurückgegeben werden
 			// Spezifisch Objekte erzeugen
-			// mit Integer.parseInt(param); z. B:
+			// mit Integer.parseInt(param);
+			
+			Class<?> paramType = cmd.getParamTypes()[i];
 			try {
 				params[i] = paramType.getConstructor(String.class)
-						.newInstance(new Object[] {param});
+						.newInstance(param);
 			} catch (NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
 				// Falls etwas schief geht, gibt es einfach eine ScanException
 				// Falls wir wollen können wir diese Exceptions spezifischer
@@ -130,3 +124,10 @@ public class CommandScanner {
 		return new Command(cmd, params);
 	}
 }
+
+
+
+
+
+
+
