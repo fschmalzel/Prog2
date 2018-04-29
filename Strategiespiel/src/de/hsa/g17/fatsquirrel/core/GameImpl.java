@@ -10,8 +10,9 @@ public class GameImpl extends Game {
 	private MasterSquirrel masterSquirrel;
 	
 	public GameImpl() {
-		super(new State());
-		ui = new ConsoleUI();
+		
+		super(new State(),new ConsoleUI());	
+		//TODO wir hatten hier ein ui erstellt aber warum?
 		masterSquirrel = new HandOperatedMasterSquirrel(
 				XY.getRandomCoordinates(state.getBoard().getConfig().getSize(), state.getBoard().getEntitys()));
 		state.insertMaster(masterSquirrel);

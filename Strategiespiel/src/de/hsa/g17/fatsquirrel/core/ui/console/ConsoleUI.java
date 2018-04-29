@@ -37,7 +37,7 @@ public class ConsoleUI implements UI {
 				System.out.println(cmd.getName() + "\t" + cmd.getHelpText());
 			return null;
 		case MASTER_ENERGY:
-
+			
 			return null;
 		case SPAWN_MINI:
 
