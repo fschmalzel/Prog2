@@ -8,14 +8,20 @@ package de.hsa.g17.fatsquirrel.core;
 //
 public class Test {
 //
-//	public static void main(String[] args) {
-//		
+	private static BoardConfig BoardConfig = new BoardConfig();
+
+	public static void main(String[] args) {
+		
+		Board testBoard = new Board(BoardConfig);
+		System.out.println(testBoard.toString());
+		
+		
 //		System.out.println("randomMovementTest " + (randomMovementTest() ? "successful!" : "failed!"));
 //		System.out.println("isSameTypeTest " + ((isSameTypeTest() == 0) ? "successful!" : "failed!"));
-////		entitySetTest();
-////		playerInputTest();
-//
-//	}
+//		entitySetTest();
+//		playerInputTest();
+
+	}
 //	
 //	private static void entitySetTest() {
 //		EntitySet es = new EntitySet();

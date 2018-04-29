@@ -7,7 +7,6 @@ import de.hsa.g17.fatsquirrel.entities.GoodPlant;
 import de.hsa.g17.fatsquirrel.entities.Wall;
 
 public class Board {
-	private int numEntity;
 	private EntitySet set;
 	private BoardConfig config;
 	
@@ -67,7 +66,7 @@ public class Board {
 	}
 	
 	public String toString() {
-		return "Num of Entitys: " + numEntity + "\n" + set;
+		return "Num of Entitys: " + config.getEntity() + "\n" + set;
 	}
 	
 }

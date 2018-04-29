@@ -7,6 +7,7 @@ public class BoardConfig {
 	private final int numGoodPlant = 13;
 	private final int numBadPlant = 13;
 	private final int numWall = 20;
+	private final int numEntity = numBadBeast + numGoodBeast + numGoodPlant + numBadBeast + numWall;
 	
 	public XY getSize() {
 		return size;
@@ -30,6 +31,10 @@ public class BoardConfig {
 	
 	public int getNumWall() {
 		return numWall;
+	}
+	
+	public int getEntity() {
+		return numEntity;
 	}
 	
 	
