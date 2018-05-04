@@ -1,4 +1,4 @@
-package de.hsa.g17.fatsquirrel.util.ui.console;
+package console.better.ui;
 
 import java.io.BufferedReader;
 import java.io.OutputStream;

@@ -66,7 +66,7 @@ public class Board {
 	}
 	
 	public String toString() {
-		return "Num of Entitys: " + config.getEntity() + "\n" + set;
+		return "Num of Entitys: " + set.getSize() + "\n" + set;
 	}
 	
 }

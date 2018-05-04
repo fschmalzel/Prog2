@@ -1,6 +1,4 @@
-package de.hsa.g17.fatsquirrel.util.ui.console.sample;
-
-import de.hsa.g17.fatsquirrel.util.ui.console.CommandTypeInfo;
+package console.ui;
 
 public enum MyFavoriteCommandType implements CommandTypeInfo{
 	HELP("help", "  * list all commands"),

@@ -2,52 +2,34 @@ package de.hsa.g17.fatsquirrel.core.ui.console;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Method;
 
 import de.hsa.g17.fatsquirrel.core.BoardView;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
 import de.hsa.g17.fatsquirrel.core.UI;
 import de.hsa.g17.fatsquirrel.core.XY;
+import de.hsa.g17.fatsquirrel.util.ui.console.AsCommand;
 import de.hsa.g17.fatsquirrel.util.ui.console.Command;
 import de.hsa.g17.fatsquirrel.util.ui.console.CommandScanner;
-import de.hsa.g17.fatsquirrel.util.ui.console.CommandTypeInfo;
+import de.hsa.g17.fatsquirrel.util.ui.console.UniversalCommandProcessor;
 
-public class ConsoleUI implements UI {
+public class ConsoleUI implements UI, GameCommands {
 
+	private MoveCommand bufferedInput;
+	
 	@Override
 	public MoveCommand getCommand() {
 		
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-
-		CommandScanner scanner = new CommandScanner(GameCommandType.values(), inputReader, System.out);
+		CommandScanner scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
+		do {
+			Command cmd = scanner.next();
+			cmd.execute();
+		} while (bufferedInput == null);
 		
-		Command currcommand = scanner.next();
-		switch ((GameCommandType) currcommand.getCommandType()) {
-		case LEFT:
-			return new MoveCommand(new XY(-1, 0));
-		case RIGHT:
-			return new MoveCommand(new XY(1, 0));
-		case UP:
-			return new MoveCommand(new XY(0, -1));
-		case DOWN:
-			return new MoveCommand(new XY(0, 1));
-		case EXIT:
-			System.exit(0);
-		case HELP:
-			for (CommandTypeInfo cmd : GameCommandType.values())
-				System.out.println(cmd.getName() + "\t" + cmd.getHelpText());
-			return null;
-		case MASTER_ENERGY:
-			
-			return null;
-		case SPAWN_MINI:
-
-			return null;
-		case ALL:
-
-			return null;
-		default:
-			return null;
-		}
+		MoveCommand tmp = bufferedInput;
+		bufferedInput = null;
+		return tmp;
 		
 	}
 
@@ -91,6 +73,62 @@ public class ConsoleUI implements UI {
 			System.out.println();
 		}
 
+	}
+
+	@Override
+	public void help() {
+		Method[] methods = GameCommands.class.getDeclaredMethods();
+		for (Method m : methods) {
+			AsCommand ac = m.getAnnotation(AsCommand.class);
+			if (ac != null)
+				System.out.println(ac.getName() + '\t' + ac.getHelpText());
+		}
+	}
+
+	@Override
+	public void exit() {
+		System.exit(0);
+	}
+
+	@Override
+	public void left() {
+		bufferedInput = new MoveCommand(new XY(-1, 0));
+	}
+
+	@Override
+	public void right() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void up() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void down() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void all() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void masterenergy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void spawnmini(Integer energy, Integer xOffset, Integer yOffset) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

@@ -88,7 +88,7 @@ public class EntitySet {
 		}
 	}
 	
-	public int size() {
+	public int getSize() {
 		return size;
 	}
 	
