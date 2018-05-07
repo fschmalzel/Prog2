@@ -17,9 +17,8 @@ public class Command implements Executable {
 		try {
 			return cmdType.getMethod().invoke(cmdType.getTarget(), params);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			// TODO Exception handling
+			throw new RuntimeException("Error executing command!");
 		}
-		return null;
 	}
 
 }
