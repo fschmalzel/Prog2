@@ -1,7 +1,7 @@
 package de.hsa.g17.fatsquirrel.core;
 
 public interface UI {
-	MoveCommand getCommand();
+	GameCommand getCommand();
 	
 	void render(BoardView view);
 }

@@ -1,15 +1,16 @@
 package de.hsa.g17.fatsquirrel.core;
 
-public class MoveCommand {
-	
-	private XY moveDirection;
+public class MoveCommand extends GameCommand {
+
+	private XY xy;
 	
 	public MoveCommand(XY moveDirection) {
-		this.moveDirection = moveDirection;
+		super(Type.MOVE);
+		this.xy = moveDirection;
 	}
 	
 	public XY getMoveDirection() {
-		return moveDirection;
+		return xy;
 	}
 	
 }

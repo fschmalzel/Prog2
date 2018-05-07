@@ -197,6 +197,14 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		return s;
 	}
 	
+	public boolean tryInsert(Entity e) {
+		XY xy = e.getXY();
+		if(flatBoard[xy.x()][xy.y()] != null)
+			return false;
+		board.insert(e);
+		return true;
+	}
+	
 	private void move(Entity entity, XY moveDirection) {
 		XY xy = entity.getXY();
 		flatBoard[xy.x()][xy.y()] = null;

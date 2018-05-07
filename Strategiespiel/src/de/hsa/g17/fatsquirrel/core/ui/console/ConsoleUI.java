@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 
 import de.hsa.g17.fatsquirrel.core.BoardView;
+import de.hsa.g17.fatsquirrel.core.GameCommand;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
 import de.hsa.g17.fatsquirrel.core.UI;
 import de.hsa.g17.fatsquirrel.core.XY;
@@ -14,22 +15,18 @@ import de.hsa.g17.fatsquirrel.util.ui.console.CommandScanner;
 import de.hsa.g17.fatsquirrel.util.ui.console.UniversalCommandProcessor;
 
 public class ConsoleUI implements UI, GameCommands {
-
-	private MoveCommand bufferedInput;
 	
 	@Override
-	public MoveCommand getCommand() {
+	public GameCommand getCommand() {
 		
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		CommandScanner scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
 		do {
 			Command cmd = scanner.next();
-			cmd.execute();
-		} while (bufferedInput == null);
-		
-		MoveCommand tmp = bufferedInput;
-		bufferedInput = null;
-		return tmp;
+			Object result = cmd.execute();
+			if (result instanceof GameCommand && result != null)
+				return (GameCommand) result;
+		} while (true);
 		
 	}
 
@@ -87,48 +84,43 @@ public class ConsoleUI implements UI, GameCommands {
 
 	@Override
 	public void exit() {
+		System.out.println("Bye bye!");
 		System.exit(0);
 	}
 
 	@Override
-	public void left() {
-		bufferedInput = new MoveCommand(new XY(-1, 0));
+	public MoveCommand left() {
+		return new MoveCommand(new XY(-1, 0));
 	}
 
 	@Override
-	public void right() {
-		// TODO Auto-generated method stub
-		
+	public MoveCommand right() {
+		return new MoveCommand(new XY(1, 0));
 	}
 
 	@Override
-	public void up() {
-		// TODO Auto-generated method stub
-		
+	public MoveCommand up() {
+		return new MoveCommand(new XY(0, -1));
 	}
 
 	@Override
-	public void down() {
-		// TODO Auto-generated method stub
-		
+	public MoveCommand down() {
+		return new MoveCommand(new XY(0, 1));
 	}
 
 	@Override
 	public void all() {
-		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void masterenergy() {
-		// TODO Auto-generated method stub
-		
+	public GameCommand masterenergy() {
+		return new GameCommand(GameCommand.Type.MASTERENERGY);
 	}
 
 	@Override
-	public void spawnmini(Integer energy, Integer xOffset, Integer yOffset) {
-		// TODO Auto-generated method stub
-		
+	public SpawnCommand spawnmini(Integer energy, Integer xOffset, Integer yOffset) {
+		return new SpawnCommand(energy, new XY(xOffset, -yOffset));
 	}
 
 }
