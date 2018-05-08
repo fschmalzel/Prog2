@@ -35,4 +35,5 @@ public interface GameCommands {
 	public SpawnCommand spawnmini(Integer energy, Integer xOffset, Integer yOffset);
 	
 	
+	
 }

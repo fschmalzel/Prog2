@@ -18,5 +18,6 @@ public interface EntityContext {
 	void kill(Entity entity);
 	void killAndReplace(Entity entity);
 	EntityType getEntityType(XY xy);
+	boolean tryInsert(MiniSquirrel s);
 	
 }

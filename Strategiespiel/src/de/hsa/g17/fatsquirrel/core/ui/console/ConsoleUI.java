@@ -13,6 +13,8 @@ import de.hsa.g17.fatsquirrel.core.XY;
 
 public class ConsoleUI implements UI, GameCommands {
 	
+	
+	
 	@Override
 	public GameCommand getCommand() {
 		
