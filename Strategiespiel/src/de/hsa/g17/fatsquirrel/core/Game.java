@@ -5,19 +5,22 @@ public abstract class Game {
 	protected State state;
 	protected UI ui;
 	public static final int FPS = 10;
+	private boolean synchron;
 	
-	Game(State state, UI ui) {
+	Game(State state, UI ui, boolean synchron) {
 		this.state = state;
 		this.ui = ui;
+		this.synchron = synchron;
 	}
 	
 	public void run() {
 	    while (true) {
 	        render();
 	        
-	        try {
-				Thread.sleep(1000/FPS);
-			} catch (InterruptedException e) {}
+	        if(!synchron)
+		        try {
+					Thread.sleep(1000/FPS);
+				} catch (InterruptedException e) {}
 	        
 	        processInput();
 	        update();

@@ -6,6 +6,5 @@ public interface UI {
 	void render(BoardView view);
 
 	void process();
-
 	
 }

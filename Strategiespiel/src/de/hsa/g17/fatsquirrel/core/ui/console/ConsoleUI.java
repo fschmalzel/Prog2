@@ -14,9 +14,19 @@ import de.hsa.g17.fatsquirrel.core.XY;
 public class ConsoleUI implements UI, GameCommands {
 	
 	private GameCommand cmd;
+	private CommandScanner scanner;
+	private boolean synchron;
+	
+	public ConsoleUI(boolean synchron) {
+		this.synchron = synchron;
+		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
+		scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
+	}
 	
 	@Override
 	public GameCommand getCommand() {
+		if (synchron)
+			return getCommandSingleThread();
 		GameCommand tmp = cmd;
 		cmd = null;
 		return tmp;
@@ -26,23 +36,26 @@ public class ConsoleUI implements UI, GameCommands {
 	@Override
 	public void process() {
 		
-		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-		CommandScanner scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
 		while(true) {
-			Command cmd;
-			
-			try {
-				cmd = scanner.next();
-			} catch (NoSuchCommandException e) {
-				System.out.println("Befehl \"" +  e.getMessage() + "\" nicht bekannt!");
-				continue;
-			}
-			
-			Object result = cmd.execute();
-			if (result instanceof GameCommand && result != null)
-				this.cmd = (GameCommand) result;
+			this.cmd = getCommandSingleThread();
 		}
 		
+	}
+	
+	private GameCommand getCommandSingleThread() {
+		Command cmd;
+		
+		try {
+			cmd = scanner.next();
+		} catch (NoSuchCommandException e) {
+			System.out.println("Befehl \"" +  e.getMessage() + "\" nicht bekannt!");
+			return null;
+		}
+		
+		Object result = cmd.execute();
+		if (result instanceof GameCommand && result != null)
+			return (GameCommand) result;
+		return null;
 	}
 
 	@Override

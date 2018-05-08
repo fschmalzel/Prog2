@@ -7,9 +7,9 @@ public class GameImpl extends Game {
 	
 	private HandOperatedMasterSquirrel masterSquirrel;
 	
-	public GameImpl() {
+	public GameImpl(boolean synchron) {
 		
-		super(new State(),new ConsoleUI());	
+		super(new State(),new ConsoleUI( synchron ), synchron);	
 		masterSquirrel = new HandOperatedMasterSquirrel(
 				XY.getRandomCoordinates(state.getBoard().getConfig().getSize(), state.getBoard().getEntitys()));
 		state.insertMaster(masterSquirrel);

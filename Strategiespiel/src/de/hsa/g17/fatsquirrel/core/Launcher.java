@@ -6,9 +6,19 @@ import java.util.TimerTask;
 public class Launcher {
 
 	public static void main(String[] args) {
-		startGame(new GameImpl());
+		
+		if (args.length >= 1)
+			if (args[0].equalsIgnoreCase("singleThread=true")) {
+				startGameSingleThread(new GameImpl(true));
+				return;
+			}
+		startGame(new GameImpl(false));
+		
 	}
 	
+	private static void startGameSingleThread(Game game) {
+		game.run();
+	}
 	
 	private static void startGame(Game game) {
 		Timer t = new Timer();
