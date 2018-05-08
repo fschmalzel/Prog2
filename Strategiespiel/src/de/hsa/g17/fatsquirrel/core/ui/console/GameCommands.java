@@ -2,7 +2,7 @@ package de.hsa.g17.fatsquirrel.core.ui.console;
 
 import de.hsa.g17.fatsquirrel.core.GameCommand;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
-import de.hsa.g17.fatsquirrel.util.ui.console.AsCommand;
+import de.hsa.g17.fatsquirrel.core.SpawnCommand;
 
 public interface GameCommands {
 	

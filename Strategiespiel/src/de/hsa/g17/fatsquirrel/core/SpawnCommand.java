@@ -1,7 +1,4 @@
-package de.hsa.g17.fatsquirrel.core.ui.console;
-
-import de.hsa.g17.fatsquirrel.core.GameCommand;
-import de.hsa.g17.fatsquirrel.core.XY;
+package de.hsa.g17.fatsquirrel.core;
 
 public class SpawnCommand extends GameCommand {
 	

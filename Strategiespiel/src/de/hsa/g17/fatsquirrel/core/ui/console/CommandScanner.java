@@ -1,4 +1,4 @@
-package de.hsa.g17.fatsquirrel.util.ui.console;
+package de.hsa.g17.fatsquirrel.core.ui.console;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -47,7 +47,7 @@ public class CommandScanner {
 		}
 		
 		if (cmd == null)
-			throw new NoSuchCommandException();
+			throw new NoSuchCommandException(name);
 
 		Object[] params = new Object[cmd.getParamTypes().length];
 		

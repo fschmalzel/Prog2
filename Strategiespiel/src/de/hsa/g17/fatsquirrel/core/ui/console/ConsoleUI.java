@@ -7,12 +7,9 @@ import java.lang.reflect.Method;
 import de.hsa.g17.fatsquirrel.core.BoardView;
 import de.hsa.g17.fatsquirrel.core.GameCommand;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
+import de.hsa.g17.fatsquirrel.core.SpawnCommand;
 import de.hsa.g17.fatsquirrel.core.UI;
 import de.hsa.g17.fatsquirrel.core.XY;
-import de.hsa.g17.fatsquirrel.util.ui.console.AsCommand;
-import de.hsa.g17.fatsquirrel.util.ui.console.Command;
-import de.hsa.g17.fatsquirrel.util.ui.console.CommandScanner;
-import de.hsa.g17.fatsquirrel.util.ui.console.UniversalCommandProcessor;
 
 public class ConsoleUI implements UI, GameCommands {
 	
