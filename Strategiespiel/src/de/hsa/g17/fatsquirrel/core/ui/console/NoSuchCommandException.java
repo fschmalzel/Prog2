@@ -1,6 +1,7 @@
 package de.hsa.g17.fatsquirrel.core.ui.console;
 
 public class NoSuchCommandException extends ScanException {
+	
 	public NoSuchCommandException(String name) {
 		super(name);
 	}

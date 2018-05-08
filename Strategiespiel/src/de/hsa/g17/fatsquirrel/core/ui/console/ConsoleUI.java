@@ -19,7 +19,15 @@ public class ConsoleUI implements UI, GameCommands {
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		CommandScanner scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
 		do {
-			Command cmd = scanner.next();
+			Command cmd;
+			
+			try {
+				cmd = scanner.next();
+			} catch (NoSuchCommandException e) {
+				System.out.println("Befehl \"" +  e.getMessage() + "\" nicht bekannt!");
+				continue;
+			}
+			
 			Object result = cmd.execute();
 			if (result instanceof GameCommand && result != null)
 				return (GameCommand) result;

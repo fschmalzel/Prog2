@@ -1,7 +1,6 @@
 package de.hsa.g17.fatsquirrel.core;
 
 import de.hsa.g17.fatsquirrel.core.ui.console.ConsoleUI;
-import de.hsa.g17.fatsquirrel.core.ui.console.NoSuchCommandException;
 import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.g17.fatsquirrel.entities.MasterSquirrel;
 import de.hsa.g17.fatsquirrel.entities.MiniSquirrel;
@@ -24,12 +23,7 @@ public class GameImpl extends Game {
 		
 		do {
 			
-			try {
-				cmd = ui.getCommand();
-			} catch (NoSuchCommandException e) {
-				System.out.println("Befehl " +  e.getMessage() + " nicht bekannt!");
-				continue;
-			}
+			cmd = ui.getCommand();
 			
 			switch (cmd.getType()) {
 			case MASTERENERGY:
