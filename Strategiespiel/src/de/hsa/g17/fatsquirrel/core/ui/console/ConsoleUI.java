@@ -13,14 +13,22 @@ import de.hsa.g17.fatsquirrel.core.XY;
 
 public class ConsoleUI implements UI, GameCommands {
 	
-	
+	private GameCommand cmd;
 	
 	@Override
 	public GameCommand getCommand() {
+		GameCommand tmp = cmd;
+		cmd = null;
+		return tmp;
+	}
+	
+	
+	@Override
+	public void process() {
 		
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		CommandScanner scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
-		do {
+		while(true) {
 			Command cmd;
 			
 			try {
@@ -32,8 +40,8 @@ public class ConsoleUI implements UI, GameCommands {
 			
 			Object result = cmd.execute();
 			if (result instanceof GameCommand && result != null)
-				return (GameCommand) result;
-		} while (true);
+				this.cmd = (GameCommand) result;
+		}
 		
 	}
 

@@ -4,6 +4,7 @@ public abstract class Game {
 	
 	protected State state;
 	protected UI ui;
+	public static final int FPS = 10;
 	
 	Game(State state, UI ui) {
 		this.state = state;
@@ -13,6 +14,11 @@ public abstract class Game {
 	public void run() {
 	    while (true) {
 	        render();
+	        
+	        try {
+				Thread.sleep(1000/FPS);
+			} catch (InterruptedException e) {}
+	        
 	        processInput();
 	        update();
 	    }
