@@ -152,8 +152,7 @@ public class ConsoleUI implements UI, GameCommands {
 
 	@Override
 	public void message(String msg) {
-		// TODO Auto-generated method stub
-		
+		System.out.println(msg);
 	}
 
 }

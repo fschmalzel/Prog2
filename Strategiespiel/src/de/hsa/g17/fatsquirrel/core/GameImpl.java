@@ -10,7 +10,7 @@ public class GameImpl extends Game {
 		
 		super(boardConfig, ui, false);	
 		masterSquirrel = new HandOperatedMasterSquirrel(
-				XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys()));
+				XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys()), ui);
 		state.insertMaster(masterSquirrel);
 	}
 	

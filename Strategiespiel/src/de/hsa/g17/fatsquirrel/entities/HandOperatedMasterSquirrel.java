@@ -4,13 +4,15 @@ import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.GameCommand;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
 import de.hsa.g17.fatsquirrel.core.SpawnCommand;
+import de.hsa.g17.fatsquirrel.core.UI;
 import de.hsa.g17.fatsquirrel.core.XY;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
 	
 	private GameCommand gameCommand;
+	private UI ui;
 	
-	public HandOperatedMasterSquirrel(XY xy) {
+	public HandOperatedMasterSquirrel(XY xy, UI ui) {
 		super(xy);
 	}
 
@@ -25,7 +27,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 		
 		switch(gameCommand.getType()) {
 		case MASTERENERGY:
-			System.out.println("energy: " + getEnergy());
+			ui.message("Energy: " + getEnergy());
 			break;
 		case MOVE:
 			context.tryMove(this, ((MoveCommand) gameCommand).getMoveDirection());
@@ -33,22 +35,20 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 		case SPAWN:
 			SpawnCommand sCmd = (SpawnCommand) gameCommand;
 			if (sCmd.getEnergy() > getEnergy()) {
-				System.out.println("Not enough energy!");
+				ui.message("Not enough energy!");
 				break;
 			}
 			
 			XY xy = sCmd.getSpawnXY().add(getXY());
 			if (xy.distance(getXY()) >= 2 || xy.equals(getXY())) {
-				System.out.println("Invalid location!");
 				break;
 			}
 			
 			MiniSquirrel s = new MiniSquirrel(sCmd.getEnergy(), xy, getID());
-			if (!context.tryInsert(s)) {
-				System.out.println("Invalid location!");
-				break;
-			} else {
+			if (context.tryInsert(s)) {
 				updateEnergy(-sCmd.getEnergy());
+			} else {
+				ui.message("Invalid location!");
 			}
 			break;
 		default:
