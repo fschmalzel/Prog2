@@ -26,6 +26,10 @@ public class GameImpl extends Game {
 	@Override
 	protected void processInput() {
 		GameCommand cmd = ui.getCommand();
+		
+		if(cmd == null)
+			return;
+		
 		switch(cmd.getType()) {
 		case MASTERENERGY:
 			ui.message("master energy: " + masterSquirrel.getEnergy());

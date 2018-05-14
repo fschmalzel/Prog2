@@ -4,7 +4,6 @@ import de.hsa.g17.fatsquirrel.core.EntityContext;
 import de.hsa.g17.fatsquirrel.core.GameCommand;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
 import de.hsa.g17.fatsquirrel.core.SpawnCommand;
-import de.hsa.g17.fatsquirrel.core.UI;
 import de.hsa.g17.fatsquirrel.core.XY;
 
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
@@ -47,6 +46,8 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 		default:
 			break;
 		}
+		
+		gameCommand = null;
 		
 	}
 
