@@ -9,7 +9,7 @@ public interface ControllerContext {
 	 XY getViewUpperRight();
 	 EntityType getEntityAt(XY xy);
 	 void move(XY direction);
-	 void spawnMiniBot(XY direcetion, int energy);
+	 void spawnMiniBot(XY direction, int energy);
 	 int getEnergy();
 	 
 

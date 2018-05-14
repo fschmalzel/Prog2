@@ -1,5 +1,7 @@
 package de.hsa.g17.fatsquirrel.core;
 
+import de.hsa.g17.fatsquirrel.botapi.BotControllerFactory;
+import de.hsa.g17.fatsquirrel.bots.random.RandomBotControllerFactory;
 import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 
 public class GameImpl extends Game {
@@ -12,6 +14,11 @@ public class GameImpl extends Game {
 		masterSquirrel = new HandOperatedMasterSquirrel(
 				XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys()), ui);
 		state.insertMaster(masterSquirrel);
+		
+		BotControllerFactory factory = new RandomBotControllerFactory();
+		XY randCoords = XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys());
+		MasterSquirrelBot mBot = new MasterSquirrelBot(randCoords, factory.createMasterBotController(), factory);
+		state.getBoard().insert(mBot);
 	}
 	
 	@Override
