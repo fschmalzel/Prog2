@@ -7,8 +7,8 @@ public abstract class Game {
 	public static final int FPS = 10;
 	private boolean synchron;
 	
-	Game(State state, UI ui, boolean synchron) {
-		this.state = state;
+	Game(BoardConfig boardConfig, UI ui, boolean synchron) {
+		state = new State(boardConfig);
 		this.ui = ui;
 		this.synchron = synchron;
 	}

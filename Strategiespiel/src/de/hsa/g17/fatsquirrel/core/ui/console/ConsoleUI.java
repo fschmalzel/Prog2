@@ -21,6 +21,7 @@ public class ConsoleUI implements UI, GameCommands {
 		this.synchron = synchron;
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
+	
 	}
 	
 	@Override
@@ -32,15 +33,13 @@ public class ConsoleUI implements UI, GameCommands {
 		return tmp;
 	}
 	
-	
-//	@Override
-//	public void process() {
-//		
-//		while(true) {
-//			this.cmd = getCommandSingleThread();
-//		}
-//		
-//	}
+	private void process() {
+		
+		while(true) {
+			this.cmd = getCommandSingleThread();
+		}
+		
+	}
 	
 	private GameCommand getCommandSingleThread() {
 		Command cmd;

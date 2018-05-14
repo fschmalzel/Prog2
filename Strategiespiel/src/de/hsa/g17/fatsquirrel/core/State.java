@@ -7,9 +7,8 @@ public class State {
 	private Board board;
 	MasterSquirrel masterSquirrel;
 	
-	public State() {
-		BoardConfig bConfig = new BoardConfig();
-		board = new Board(bConfig);
+	public State(BoardConfig boardConfig) {
+		board = new Board(boardConfig);
 	}
 	
 	public void insertMaster(MasterSquirrel s) {

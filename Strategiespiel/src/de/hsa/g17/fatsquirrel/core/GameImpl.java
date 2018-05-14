@@ -1,17 +1,16 @@
 package de.hsa.g17.fatsquirrel.core;
 
-import de.hsa.g17.fatsquirrel.core.ui.console.ConsoleUI;
 import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 
 public class GameImpl extends Game {
 	
 	private HandOperatedMasterSquirrel masterSquirrel;
 	
-	public GameImpl(boolean synchron) {
+	public GameImpl(UI ui, BoardConfig boardConfig, boolean synchron) {
 		
-		super(new State(),new ConsoleUI( synchron ), synchron);	
+		super(boardConfig, ui, false);	
 		masterSquirrel = new HandOperatedMasterSquirrel(
-				XY.getRandomCoordinates(state.getBoard().getConfig().getSize(), state.getBoard().getEntitys()));
+				XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys()));
 		state.insertMaster(masterSquirrel);
 	}
 	
