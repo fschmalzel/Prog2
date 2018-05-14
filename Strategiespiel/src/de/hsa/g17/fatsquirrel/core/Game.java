@@ -14,17 +14,29 @@ public abstract class Game {
 	}
 	
 	public void run() {
-	    while (true) {
+	    if(synchron)
+	    	synchronizedRun();
+	    else
+	    	asynchronizedRun();
+	}
+	
+	private void asynchronizedRun() {
+		while (true) {
 	        render();
-	        
-	        if(!synchron)
-		        try {
-					Thread.sleep(1000/FPS);
-				} catch (InterruptedException e) {}
-	        
+            try {
+				Thread.sleep(1000/FPS);
+			} catch (InterruptedException e) {}
 	        processInput();
 	        update();
 	    }
+	}
+	
+	private void synchronizedRun() {
+		while(true) {
+			render();
+			processInput();
+			update();
+		}
 	}
 
 	protected void update() {

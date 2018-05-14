@@ -1,4 +1,4 @@
-package de.hsa.g17.fatsquirrel.core.ui.console;
+package de.hsa.g17.fatsquirrel.core.ui;
 
 public class NoSuchCommandException extends ScanException {
 	

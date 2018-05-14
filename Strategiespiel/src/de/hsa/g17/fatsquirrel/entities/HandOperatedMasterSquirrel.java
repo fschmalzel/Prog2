@@ -10,9 +10,8 @@ import de.hsa.g17.fatsquirrel.core.XY;
 public class HandOperatedMasterSquirrel extends MasterSquirrel {
 	
 	private GameCommand gameCommand;
-	private UI ui;
 	
-	public HandOperatedMasterSquirrel(XY xy, UI ui) {
+	public HandOperatedMasterSquirrel(XY xy) {
 		super(xy);
 	}
 
@@ -26,16 +25,12 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 			return;
 		
 		switch(gameCommand.getType()) {
-		case MASTERENERGY:
-			ui.message("Energy: " + getEnergy());
-			break;
 		case MOVE:
 			context.tryMove(this, ((MoveCommand) gameCommand).getMoveDirection());
 			break;
 		case SPAWN:
 			SpawnCommand sCmd = (SpawnCommand) gameCommand;
 			if (sCmd.getEnergy() > getEnergy()) {
-				ui.message("Not enough energy!");
 				break;
 			}
 			
@@ -47,8 +42,6 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 			MiniSquirrel s = new MiniSquirrel(sCmd.getEnergy(), xy, getID());
 			if (context.tryInsert(s)) {
 				updateEnergy(-sCmd.getEnergy());
-			} else {
-				ui.message("Invalid location!");
 			}
 			break;
 		default:

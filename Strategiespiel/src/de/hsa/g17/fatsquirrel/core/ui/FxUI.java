@@ -1,4 +1,4 @@
-package de.hsa.g17.fatsquirrel.core.ui.console;
+package de.hsa.g17.fatsquirrel.core.ui;
 
 import de.hsa.g17.fatsquirrel.core.BoardView;
 import de.hsa.g17.fatsquirrel.core.GameCommand;

@@ -1,4 +1,4 @@
-package de.hsa.g17.fatsquirrel.core.ui.console;
+package de.hsa.g17.fatsquirrel.core.ui;
 
 import de.hsa.g17.fatsquirrel.core.GameCommand;
 import de.hsa.g17.fatsquirrel.core.MoveCommand;
@@ -25,7 +25,7 @@ public interface GameCommands {
 	public MoveCommand down();
 	
 	@AsCommand(getName = "all", getHelpText = "  * ???")
-	public void all();
+	public GameCommand all();
 	
 	@AsCommand(getName = "masterenergy", getHelpText = "  * shows the energy level of the master")
 	public GameCommand masterenergy();

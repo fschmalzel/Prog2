@@ -1,4 +1,4 @@
-package de.hsa.g17.fatsquirrel.core.ui.console;
+package de.hsa.g17.fatsquirrel.core.ui;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -27,21 +27,21 @@ public class ConsoleUI implements UI, GameCommands {
 	@Override
 	public GameCommand getCommand() {
 		if (synchron)
-			return getCommandSingleThread();
+			return getCommandSynchronized();
 		GameCommand tmp = cmd;
 		cmd = null;
 		return tmp;
 	}
 	
-	private void process() {
+	public void process() {
 		
 		while(true) {
-			this.cmd = getCommandSingleThread();
+			this.cmd = getCommandSynchronized();
 		}
 		
 	}
 	
-	private GameCommand getCommandSingleThread() {
+	private GameCommand getCommandSynchronized() {
 		Command cmd;
 		
 		try {
@@ -136,8 +136,8 @@ public class ConsoleUI implements UI, GameCommands {
 	}
 
 	@Override
-	public void all() {
-		
+	public GameCommand all() {
+		return new GameCommand(GameCommand.Type.ALL);
 	}
 
 	@Override

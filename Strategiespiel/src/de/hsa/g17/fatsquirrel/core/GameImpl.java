@@ -1,7 +1,6 @@
 package de.hsa.g17.fatsquirrel.core;
 
 import de.hsa.g17.fatsquirrel.botapi.BotControllerFactory;
-import de.hsa.g17.fatsquirrel.bots.random.RandomBotControllerFactory;
 import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 
 public class GameImpl extends Game {
@@ -10,12 +9,15 @@ public class GameImpl extends Game {
 	
 	public GameImpl(UI ui, BoardConfig boardConfig, boolean synchron) {
 		
-		super(boardConfig, ui, false);	
+		super(boardConfig, ui, synchron);	
 		masterSquirrel = new HandOperatedMasterSquirrel(
-				XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys()), ui);
+				XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys()));
 		state.insertMaster(masterSquirrel);
 		
-		BotControllerFactory factory = new RandomBotControllerFactory();
+	}
+	
+	public GameImpl(UI ui, BoardConfig boardConfig, boolean synchron, BotControllerFactory factory) {
+		this(ui, boardConfig, synchron);
 		XY randCoords = XY.getRandomCoordinates(boardConfig.getSize(), state.getBoard().getEntitys());
 		MasterSquirrelBot mBot = new MasterSquirrelBot(randCoords, factory.createMasterBotController(), factory);
 		state.getBoard().insert(mBot);
@@ -23,7 +25,17 @@ public class GameImpl extends Game {
 	
 	@Override
 	protected void processInput() {
-		masterSquirrel.setCommand(ui.getCommand());
+		GameCommand cmd = ui.getCommand();
+		switch(cmd.getType()) {
+		case MASTERENERGY:
+			ui.message("master energy: " + masterSquirrel.getEnergy());
+			break;
+		case ALL:
+			ui.message(state.getBoard().toString());
+			break;
+		default:
+			masterSquirrel.setCommand(cmd);
+		}
 	}
 
 	@Override
