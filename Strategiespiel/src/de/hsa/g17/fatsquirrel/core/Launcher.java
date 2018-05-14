@@ -9,16 +9,13 @@ public class Launcher {
 		
 		if (args.length >= 1)
 			if (args[0].equalsIgnoreCase("singleThread=true")) {
-				startGameSingleThread(new GameImpl(true));
+				(new GameImpl(true)).run();
 				return;
 			}
 		startGame(new GameImpl(false));
 		
 	}
 	
-	private static void startGameSingleThread(Game game) {
-		game.run();
-	}
 	
 	private static void startGame(Game game) {
 		Timer t = new Timer();
