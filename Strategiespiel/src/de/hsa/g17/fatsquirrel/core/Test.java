@@ -8,12 +8,13 @@ package de.hsa.g17.fatsquirrel.core;
 //
 public class Test {
 //
-	private static BoardConfig BoardConfig = new BoardConfig();
+//	private static BoardConfig BoardConfig = new BoardConfig();
 
 	public static void main(String[] args) {
+			
 		
-		Board testBoard = new Board(BoardConfig);
-		System.out.println(testBoard.toString());
+//		Board testBoard = new Board(BoardConfig);
+//		System.out.println(testBoard.toString());
 		
 		
 //		System.out.println("randomMovementTest " + (randomMovementTest() ? "successful!" : "failed!"));
