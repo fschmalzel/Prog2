@@ -33,14 +33,14 @@ public class ConsoleUI implements UI, GameCommands {
 	}
 	
 	
-	@Override
-	public void process() {
-		
-		while(true) {
-			this.cmd = getCommandSingleThread();
-		}
-		
-	}
+//	@Override
+//	public void process() {
+//		
+//		while(true) {
+//			this.cmd = getCommandSingleThread();
+//		}
+//		
+//	}
 	
 	private GameCommand getCommandSingleThread() {
 		Command cmd;
@@ -149,6 +149,12 @@ public class ConsoleUI implements UI, GameCommands {
 	@Override
 	public SpawnCommand spawnmini(Integer energy, Integer xOffset, Integer yOffset) {
 		return new SpawnCommand(energy, new XY(xOffset, -yOffset));
+	}
+
+	@Override
+	public void message(String msg) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

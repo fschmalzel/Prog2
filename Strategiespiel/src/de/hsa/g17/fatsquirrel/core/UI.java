@@ -5,6 +5,6 @@ public interface UI {
 	
 	void render(BoardView view);
 
-	void process();
+	void message(String msg);
 	
 }
