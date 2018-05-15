@@ -3,6 +3,7 @@ package de.hsa.g17.fatsquirrel.core;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import de.hsa.g17.fatsquirrel.bots.random.RandomBotControllerFactory;
 import de.hsa.g17.fatsquirrel.core.ui.ConsoleUI;
 import de.hsa.g17.fatsquirrel.core.ui.FxUI;
 import javafx.application.Application;
@@ -15,8 +16,8 @@ public class Launcher extends Application{
 	private static BoardConfig boardConfig = new BoardConfig();
 	
 	public static void main(String[] args) {
-		if(args[0].equalsIgnoreCase("ui=console") && args.length >= 1) {
-			if (args[1].equalsIgnoreCase("singleThread=true") && args.length >= 2)
+		if(args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
+			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true"))
 				(new GameImpl(new ConsoleUI(true), boardConfig, false)).run();
 			else {
 				ConsoleUI ui = new ConsoleUI(false);
@@ -51,7 +52,7 @@ public class Launcher extends Application{
 	public void start(Stage primaryStage) throws Exception {
 		
         FxUI fxUI = FxUI.createInstance(boardConfig.getSize());
-        final Game game = new GameImpl(fxUI, boardConfig, false);
+        final Game game = new GameImpl(fxUI, boardConfig, false, new RandomBotControllerFactory());
          
         primaryStage.setScene(fxUI);
         primaryStage.setTitle("Diligent Squirrel");
