@@ -35,7 +35,7 @@ public class FxUI extends Scene implements UI {
 		VBox top = new VBox();
 		top.getChildren().add(boardCanvas);
 		top.getChildren().add(statusLabel);
-		statusLabel.setText("Hallo Welt");
+		statusLabel.setText("sample");
 		final FxUI fxUI = new FxUI(top, boardCanvas, statusLabel);
 		fxUI.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			@Override
@@ -52,6 +52,9 @@ public class FxUI extends Scene implements UI {
 					break;
 				case RIGHT:
 					fxUI.setCommand(new MoveCommand(new XY(1,0)));
+					break;
+				case I:
+					fxUI.setCommand(new GameCommand(GameCommand.Type.MASTERENERGY));
 					break;
 				default:
 					break;

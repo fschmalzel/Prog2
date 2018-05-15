@@ -11,6 +11,14 @@ public abstract class MasterSquirrel extends Squirrel {
 		super(DEFAULT_ENERGY, xy);
 	}
 	
+	@Override
+	public void updateEnergy(int energy) {
+		if (getEnergy() + energy <= 0)
+			super.updateEnergy(-getEnergy());
+		else
+			super.updateEnergy(energy);
+	}
+	
 	public boolean isChild(Entity e) {
 		
 		if(e instanceof MiniSquirrel) {
