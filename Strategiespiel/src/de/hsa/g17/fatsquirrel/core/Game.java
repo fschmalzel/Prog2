@@ -11,19 +11,7 @@ public abstract class Game {
 		this.ui = ui;
 	}
 	
-	
-	public void asynchronizedRun() {
-		while (true) {
-	        render();
-            try {
-				Thread.sleep(1000/FPS);
-			} catch (InterruptedException e) {}
-	        processInput();
-	        update();
-	    }
-	}
-	
-	public void synchronizedRun() {
+	public void run() {
 		while(true) {
 			render();
 			processInput();

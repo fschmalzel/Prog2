@@ -13,7 +13,6 @@ import de.hsa.g17.fatsquirrel.core.XY;
 
 public class ConsoleUI implements UI, GameCommands {
 	
-	private GameCommand cmd;
 	private CommandScanner scanner;
 	
 	public ConsoleUI() {
@@ -22,20 +21,6 @@ public class ConsoleUI implements UI, GameCommands {
 	
 	}
 	
-	public void process() {
-		
-		while(true) {
-			this.cmd = getCommand();
-		}
-		
-	}
-	
-	@Override
-	public GameCommand getCommandUnsyn() {
-		GameCommand tmp = cmd;
-		cmd = null;
-		return tmp;
-	}
 	@Override
 	public GameCommand getCommand() {
 		Command cmd;

@@ -6,7 +6,5 @@ public interface UI {
 	void render(BoardView view);
 
 	void message(String msg);
-
-	GameCommand getCommandUnsyn();
 	
 }
