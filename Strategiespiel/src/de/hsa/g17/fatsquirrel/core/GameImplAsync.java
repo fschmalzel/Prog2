@@ -10,6 +10,26 @@ public class GameImplAsync extends GameImpl {
 	}
 
 	@Override
+	protected void processInput() {
+		GameCommand cmd = ui.getCommand();
+		
+		if(cmd == null)
+			return;
+		
+		switch(cmd.getType()) {
+		case MASTERENERGY:
+			ui.message("master energy: " + masterSquirrel.getEnergy());
+			break;
+		case ALL:
+			ui.message(state.getBoard().toString());
+			break;
+		default:
+			masterSquirrel.setCommand(cmd);
+			return;
+		}
+	}
+	
+	@Override
 	public void run() {
 		
 		Timer t = new Timer();

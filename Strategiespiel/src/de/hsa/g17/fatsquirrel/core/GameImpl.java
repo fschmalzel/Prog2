@@ -4,7 +4,7 @@ import de.hsa.g17.fatsquirrel.entities.HandOperatedMasterSquirrel;
 
 public class GameImpl extends Game {
 	
-	private HandOperatedMasterSquirrel masterSquirrel;
+	protected HandOperatedMasterSquirrel masterSquirrel;
 	
 	public GameImpl(BoardConfig boardConfig, UI ui) {
 		super(boardConfig, ui);
@@ -18,21 +18,23 @@ public class GameImpl extends Game {
 	
 	@Override
 	protected void processInput() {
-		GameCommand cmd = ui.getCommand();
-		
-		if(cmd == null)
-			return;
-		
-		switch(cmd.getType()) {
-		case MASTERENERGY:
-			ui.message("master energy: " + masterSquirrel.getEnergy());
-			break;
-		case ALL:
-			ui.message(state.getBoard().toString());
-			break;
-		default:
-			masterSquirrel.setCommand(cmd);
-			return;
+		while(true) {
+			GameCommand cmd = ui.getCommand();
+			
+			if(cmd == null)
+				continue;
+			
+			switch(cmd.getType()) {
+			case MASTERENERGY:
+				ui.message("master energy: " + masterSquirrel.getEnergy());
+				break;
+			case ALL:
+				ui.message(state.getBoard().toString());
+				break;
+			default:
+				masterSquirrel.setCommand(cmd);
+				return;
+			}
 		}
 	}
 
