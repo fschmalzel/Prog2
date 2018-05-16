@@ -132,7 +132,7 @@ public class FxUI extends Scene implements UI {
 	}
 
 	@Override
-	public GameCommand getCommand() {
+	public GameCommand getCommandUnsyn() {
 		GameCommand tmp = gameCommand;
 		gameCommand = null;
 		return tmp;
@@ -140,5 +140,11 @@ public class FxUI extends Scene implements UI {
 	
 	private void setCommand(GameCommand gameCommand) {
 		this.gameCommand = gameCommand;
+	}
+
+	@Override
+	public GameCommand getCommand() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

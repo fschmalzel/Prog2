@@ -18,10 +18,10 @@ public class Launcher extends Application{
 	public static void main(String[] args) {
 		if(args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true"))
-				(new GameImpl(new ConsoleUI(true), boardConfig, false)).run();
+				(new SynGameImpl(boardConfig, new ConsoleUI())).synchronizedRun();
 			else {
-				ConsoleUI ui = new ConsoleUI(false);
-				startGame(new GameImpl(ui, boardConfig, false), ui);
+				ConsoleUI ui = new ConsoleUI();
+				startGame(new GameImpl(ui, boardConfig), ui);
 			}
 		} else
 			Application.launch(args);
@@ -36,7 +36,7 @@ public class Launcher extends Application{
 			
 			@Override
 			public void run() {
-				game.run();
+				game.asynchronizedRun();
 			}
 		}, 0);
 		

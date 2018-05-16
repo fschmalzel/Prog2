@@ -5,22 +5,14 @@ public abstract class Game {
 	protected State state;
 	protected UI ui;
 	public static final int FPS = 10;
-	private boolean synchron;
 	
-	Game(BoardConfig boardConfig, UI ui, boolean synchron) {
+	Game(BoardConfig boardConfig, UI ui) {
 		state = new State(boardConfig);
 		this.ui = ui;
-		this.synchron = synchron;
 	}
 	
-	public void run() {
-	    if(synchron)
-	    	synchronizedRun();
-	    else
-	    	asynchronizedRun();
-	}
 	
-	private void asynchronizedRun() {
+	public void asynchronizedRun() {
 		while (true) {
 	        render();
             try {
@@ -31,7 +23,7 @@ public abstract class Game {
 	    }
 	}
 	
-	private void synchronizedRun() {
+	public void synchronizedRun() {
 		while(true) {
 			render();
 			processInput();

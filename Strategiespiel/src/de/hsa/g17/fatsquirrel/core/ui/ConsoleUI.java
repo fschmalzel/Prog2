@@ -15,33 +15,29 @@ public class ConsoleUI implements UI, GameCommands {
 	
 	private GameCommand cmd;
 	private CommandScanner scanner;
-	private boolean synchron;
 	
-	public ConsoleUI(boolean synchron) {
-		this.synchron = synchron;
+	public ConsoleUI() {
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
 		scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
 	
 	}
 	
-	@Override
-	public GameCommand getCommand() {
-		if (synchron)
-			return getCommandSynchronized();
-		GameCommand tmp = cmd;
-		cmd = null;
-		return tmp;
-	}
-	
 	public void process() {
 		
 		while(true) {
-			this.cmd = getCommandSynchronized();
+			this.cmd = getCommand();
 		}
 		
 	}
 	
-	private GameCommand getCommandSynchronized() {
+	@Override
+	public GameCommand getCommandUnsyn() {
+		GameCommand tmp = cmd;
+		cmd = null;
+		return tmp;
+	}
+	@Override
+	public GameCommand getCommand() {
 		Command cmd;
 		
 		try {
