@@ -11,13 +11,13 @@ import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.core.SpawnCommand;
 import de.hsa.games.fatsquirrel.util.XY;
 
-public class ConsoleUI implements UI, GameCommands {
+public class ConsoleUI implements UI, CommandTypes {
 	
 	private CommandScanner scanner;
 	
 	public ConsoleUI() {
 		BufferedReader inputReader = new BufferedReader(new InputStreamReader(System.in));
-		scanner = new UniversalCommandProcessor(GameCommands.class, this, inputReader, System.out).getScanner();
+		scanner = new UniversalCommandProcessor(CommandTypes.class, this, inputReader, System.out).getScanner();
 	
 	}
 	
@@ -79,7 +79,7 @@ public class ConsoleUI implements UI, GameCommands {
 
 	@Override
 	public void help() {
-		Method[] methods = GameCommands.class.getDeclaredMethods();
+		Method[] methods = CommandTypes.class.getDeclaredMethods();
 		for (Method m : methods) {
 			AsCommand ac = m.getAnnotation(AsCommand.class);
 			if (ac != null)

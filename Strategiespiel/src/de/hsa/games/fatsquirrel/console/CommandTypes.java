@@ -4,7 +4,7 @@ import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.core.SpawnCommand;
 
-public interface GameCommands {
+public interface CommandTypes {
 	
 	@AsCommand(getName = "help", getHelpText = "  * list all commands")
 	public void help();
