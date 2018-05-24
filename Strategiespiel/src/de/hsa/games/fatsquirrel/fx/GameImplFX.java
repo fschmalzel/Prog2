@@ -2,8 +2,10 @@ package de.hsa.games.fatsquirrel.fx;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.Game;
+import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
@@ -44,6 +46,8 @@ public class GameImplFX extends Game {
 	
 	@Override
 	public void run() {
+		Logger logger = Logger.getLogger(Launcher.class.getName());
+		logger.fine("Game started!");
 		
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {

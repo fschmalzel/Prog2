@@ -1,6 +1,11 @@
 package de.hsa.games.fatsquirrel;
 
 import de.hsa.games.fatsquirrel.console.GameImplConsole;
+
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import de.hsa.games.fatsquirrel.console.GameImplAsyncConsole;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.fx.FxUI;
@@ -13,16 +18,22 @@ import javafx.stage.WindowEvent;
 public class Launcher extends Application{
 
 	private static BoardConfig boardConfig = new BoardConfig();
+	private static Logger logger = Logger.getLogger(Launcher.class.getName());
 	
 	public static void main(String[] args) {
+		logger.log(Level.INFO, "Launcher started!");
 		if(args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
-			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true"))
+			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true")) {
+				logger.log(Level.FINE, "Synchrounos ConsoleUI started");
 				(new GameImplConsole(boardConfig)).run();
-			else {
+			} else {
+				logger.log(Level.FINE, "Asynchrounos ConsoleUI started");
 				(new GameImplAsyncConsole(boardConfig)).run();
 			}
-		} else
+		} else {
+			logger.log(Level.FINE, "FXUI started");
 			Application.launch(args);
+		}
 		
 	}
 
