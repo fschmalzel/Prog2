@@ -2,6 +2,7 @@ package de.hsa.games.fatsquirrel.fx;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.Game;
@@ -27,7 +28,7 @@ public class GameImplFX extends Game {
 	@Override
 	protected void processInput() {
 		GameCommand cmd = ui.getCommand();
-		
+		Launcher.getLogger().log(Level.FINER, "process Input");
 		if(cmd == null)
 			return;
 		
@@ -46,8 +47,7 @@ public class GameImplFX extends Game {
 	
 	@Override
 	public void run() {
-		Logger logger = Logger.getLogger(Launcher.class.getName());
-		logger.fine("Game started!");
+		Launcher.getLogger().log(Level.FINE, "Game started");
 		
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {

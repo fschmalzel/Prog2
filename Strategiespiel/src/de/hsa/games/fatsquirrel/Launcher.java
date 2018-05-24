@@ -3,6 +3,7 @@ package de.hsa.games.fatsquirrel;
 import de.hsa.games.fatsquirrel.console.GameImplConsole;
 
 import java.util.logging.ConsoleHandler;
+import java.util.logging.Handler;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -21,7 +22,13 @@ public class Launcher extends Application{
 	private static Logger logger = Logger.getLogger(Launcher.class.getName());
 	
 	public static void main(String[] args) {
+		Handler handler = new ConsoleHandler();
+		handler.setLevel(Level.ALL);
+		logger.setUseParentHandlers(false);
+		logger.setLevel(Level.ALL);
+		logger.addHandler(handler);
 		logger.log(Level.INFO, "Launcher started!");
+		
 		if(args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true")) {
 				logger.log(Level.FINE, "Synchrounos ConsoleUI started");
@@ -54,6 +61,10 @@ public class Launcher extends Application{
         primaryStage.show();
         
         game.run();
+	}
+	
+	public static Logger getLogger() {
+		return logger;
 	}
 
 }
