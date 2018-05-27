@@ -4,6 +4,7 @@ import de.hsa.games.fatsquirrel.UI;
 import de.hsa.games.fatsquirrel.core.BoardView;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.core.MoveCommand;
+import de.hsa.games.fatsquirrel.core.State;
 import de.hsa.games.fatsquirrel.util.XY;
 import javafx.application.Platform;
 import javafx.event.EventHandler;

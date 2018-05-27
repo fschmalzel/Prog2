@@ -69,6 +69,7 @@ public class GameImplFX extends Game {
 	
 	@Override
 	protected void render() {
+		Launcher.getLogger().log(Level.FINER, "Board rendered");
 		ui.render(state.flattenedBoard());
 	}
 	

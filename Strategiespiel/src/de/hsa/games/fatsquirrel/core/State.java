@@ -1,5 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.util.logging.Level;
+
+import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 
 public class State {
@@ -12,6 +15,7 @@ public class State {
 	}
 	
 	public void insertMaster(MasterSquirrel s) {
+		Launcher.getLogger().log(Level.FINER, "spawn successfull");
 		masterSquirrel = s;
 		board.insert(s);
 	}

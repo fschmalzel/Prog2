@@ -1,5 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.util.logging.Level;
+
+import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.entities.BadBeast;
 import de.hsa.games.fatsquirrel.entities.BadPlant;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
@@ -34,7 +37,8 @@ public class FlattenedBoard implements BoardView, EntityContext {
 				newFlatBoard[x][y] = e;
 			}
 		}
-		
+		Launcher.getLogger().log(Level.FINE, "all moves done");
+
 		flatBoard = newFlatBoard;
 	}
 
