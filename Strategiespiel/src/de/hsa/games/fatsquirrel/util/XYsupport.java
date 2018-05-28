@@ -9,15 +9,10 @@ public class XYsupport {
 
 	public static XY getRandomVector() {
 		Random rand = new Random();
-		int x, y;
-		
-		do {
-			x = rand.nextInt(3) - 1;
-			y = rand.nextInt(3) - 1;
-		} while(x == 0 && y == 0);
+		int x = rand.nextInt(3) - 1;
+		int y = rand.nextInt(3) - 1;
 		
 		return new XY(x, y);
-		
 	}
 	
 	public static XY getRandomCoordinates(Board board) {

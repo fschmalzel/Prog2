@@ -49,7 +49,11 @@ public class XY {
 		return 0;
 	}
 	
-	public boolean equals(XY xy2) {
+	@Override
+	public boolean equals(Object obj) {
+		if (!(obj instanceof XY))
+			return false;
+		XY xy2 = (XY) obj;
 		return x == xy2.x && y == xy2.y;
 	}
 
