@@ -31,14 +31,14 @@ public class Launcher extends Application{
 		
 		if(args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true")) {
-				logger.log(Level.FINE, "Synchrounos ConsoleUI started");
+				logger.log(Level.FINER, "Synchrounos ConsoleUI started");
 				(new GameImplConsole(boardConfig)).run();
 			} else {
-				logger.log(Level.FINE, "Asynchrounos ConsoleUI started");
+				logger.log(Level.FINER, "Asynchrounos ConsoleUI started");
 				(new GameImplAsyncConsole(boardConfig)).run();
 			}
 		} else {
-			logger.log(Level.FINE, "FXUI started");
+			logger.log(Level.FINER, "FXUI started");
 			Application.launch(args);
 		}
 		
@@ -55,6 +55,7 @@ public class Launcher extends Application{
         fxUI.getWindow().setOnCloseRequest(new EventHandler<WindowEvent>() {
             @Override
             public void handle(WindowEvent evt) {
+        		Launcher.getLogger().info("Game ended!");
                 System.exit(-1);     
             }
         });

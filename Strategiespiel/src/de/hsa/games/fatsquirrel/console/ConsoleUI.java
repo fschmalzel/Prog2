@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 
+import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.UI;
 import de.hsa.games.fatsquirrel.core.BoardView;
 import de.hsa.games.fatsquirrel.core.GameCommand;
@@ -89,7 +90,7 @@ public class ConsoleUI implements UI, CommandTypes {
 
 	@Override
 	public void exit() {
-		System.out.println("Bye bye!");
+		Launcher.getLogger().info("Game ended!");
 		System.exit(0);
 	}
 

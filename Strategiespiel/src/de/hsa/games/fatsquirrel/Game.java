@@ -1,5 +1,7 @@
 package de.hsa.games.fatsquirrel;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.core.BoardConfig;
@@ -18,13 +20,39 @@ public abstract class Game {
 	
 	public void run() {
 		Logger logger = Logger.getLogger(Launcher.class.getName());
-		logger.fine("Game started!");
+		logger.info("Game started!");
 		while(true) {
-			
+			Launcher.getLogger().finer("Rendering");
 			render();
+			Launcher.getLogger().finer("Processing Input");
 			processInput();
+			Launcher.getLogger().finer("Updating state");
 			update();
 		}
+	}
+	
+	protected void asyncRun() {
+		Launcher.getLogger().info("Game started!");
+
+		Timer t = new Timer();
+		t.schedule(new TimerTask() {
+
+			@Override
+			public void run() {
+				while (true) {
+					Launcher.getLogger().finer("Rendering");
+					render();
+					try {
+						Thread.sleep(1000 / FPS);
+					} catch (InterruptedException e) {
+					}
+					Launcher.getLogger().finer("Processing Input");
+					processInput();
+					Launcher.getLogger().finer("Updating state");
+					update();
+				}
+			}
+		}, 0);
 	}
 
 	protected void update() {

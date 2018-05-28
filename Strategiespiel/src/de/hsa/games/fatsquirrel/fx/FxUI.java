@@ -4,7 +4,6 @@ import de.hsa.games.fatsquirrel.UI;
 import de.hsa.games.fatsquirrel.core.BoardView;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.core.MoveCommand;
-import de.hsa.games.fatsquirrel.core.State;
 import de.hsa.games.fatsquirrel.util.XY;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
@@ -43,16 +42,16 @@ public class FxUI extends Scene implements UI {
 			public void handle(KeyEvent keyEvent) {
 				switch (keyEvent.getCode()) {
 				case UP:
-					fxUI.setCommand(new MoveCommand(new XY(0,-1)));
+					fxUI.setCommand(new MoveCommand(new XY(0, -1)));
 					break;
 				case DOWN:
-					fxUI.setCommand(new MoveCommand(new XY(0,1)));
+					fxUI.setCommand(new MoveCommand(new XY(0, 1)));
 					break;
 				case LEFT:
-					fxUI.setCommand(new MoveCommand(new XY(-1,0)));
+					fxUI.setCommand(new MoveCommand(new XY(-1, 0)));
 					break;
 				case RIGHT:
-					fxUI.setCommand(new MoveCommand(new XY(1,0)));
+					fxUI.setCommand(new MoveCommand(new XY(1, 0)));
 					break;
 				case I:
 					fxUI.setCommand(new GameCommand(GameCommand.Type.MASTERENERGY));
@@ -136,9 +135,9 @@ public class FxUI extends Scene implements UI {
 		gameCommand = null;
 		return tmp;
 	}
-	
+
 	private void setCommand(GameCommand gameCommand) {
 		this.gameCommand = gameCommand;
 	}
-	
+
 }
