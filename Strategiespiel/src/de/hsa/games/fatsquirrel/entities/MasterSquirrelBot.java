@@ -3,6 +3,7 @@ package de.hsa.games.fatsquirrel.entities;
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
+import de.hsa.games.fatsquirrel.botapi.InvocationHandler;
 import de.hsa.games.fatsquirrel.botapi.OutOfViewException;
 import de.hsa.games.fatsquirrel.botapi.SpawnException;
 import de.hsa.games.fatsquirrel.core.EntityContext;
@@ -141,7 +142,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 		if (isStunned())
 			return;
 		
-		controller.nextStep(new ControllerContextImpl(context));
+		controller.nextStep(new InvocationHandler(new ControllerContextImpl(context)));
 		
 	}
 }
