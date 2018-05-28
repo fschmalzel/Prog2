@@ -1,8 +1,12 @@
 package de.hsa.games.fatsquirrel.entities;
 
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
-import de.hsa.games.fatsquirrel.botapi.InvocationHandler;
 import de.hsa.games.fatsquirrel.botapi.OutOfViewException;
 import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
@@ -198,8 +202,24 @@ public class MiniSquirrelBot extends MiniSquirrel {
 		super.nextStep(context);
 		if (isStunned())
 			return;
-
-		controller.nextStep(new InvocationHandler(new ControllerContextImpl(context)));
+		
+		ControllerContext view = new ControllerContextImpl(context);
+		
+		InvocationHandler handler = new InvocationHandler() {
+			
+			@Override
+			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+				
+				Launcher.getLogger().finer("MiniSquirrelBot with id " + getID() + " invoked method " + method.getName() + "!");
+				
+				return method.invoke(view, args);
+			}
+		};
+		
+		ControllerContext proxy = (ControllerContext) Proxy.newProxyInstance(ControllerContext.class.getClassLoader(),
+				new Class<?>[] {ControllerContext.class}, handler);
+		
+		controller.nextStep(proxy);
 
 	}
 }

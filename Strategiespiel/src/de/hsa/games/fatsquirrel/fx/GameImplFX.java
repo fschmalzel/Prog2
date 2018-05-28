@@ -1,9 +1,13 @@
 package de.hsa.games.fatsquirrel.fx;
 
 import de.hsa.games.fatsquirrel.Game;
+import de.hsa.games.fatsquirrel.bot.random.RandomBotControllerFactory;
+import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.MasterSquirrelBot;
 import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class GameImplFX extends Game {
@@ -15,6 +19,10 @@ public class GameImplFX extends Game {
 
 		// Temporary
 		masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.getRandomCoordinates(state.getBoard()));
+		
+		BotControllerFactory factory = new RandomBotControllerFactory();
+		MasterSquirrel masterSquirrel = new MasterSquirrelBot(XYsupport.getRandomCoordinates(state.getBoard()), factory);
+		
 		state.insertMaster(masterSquirrel);
 	}
 
