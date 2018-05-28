@@ -20,7 +20,6 @@ public abstract class MasterSquirrel extends Squirrel {
 	}
 	
 	public boolean isChild(Entity e) {
-		
 		if(e instanceof MiniSquirrel) {
 			MiniSquirrel child = (MiniSquirrel) e;
 			

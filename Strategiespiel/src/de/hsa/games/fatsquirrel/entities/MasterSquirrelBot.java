@@ -4,18 +4,16 @@ import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
 import de.hsa.games.fatsquirrel.botapi.OutOfViewException;
+import de.hsa.games.fatsquirrel.botapi.SpawnException;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.core.EntityType;
-import de.hsa.games.fatsquirrel.core.GameCommand;
-import de.hsa.games.fatsquirrel.core.MoveCommand;
-import de.hsa.games.fatsquirrel.core.SpawnCommand;
 import de.hsa.games.fatsquirrel.util.XY;
 
 public class MasterSquirrelBot extends MasterSquirrel {
 
 	private BotControllerFactory factory;
 	private BotController controller;
-	private GameCommand command;
+	private int VISIBILITY = 31;
 	
 	protected MasterSquirrelBot(XY xy, BotController contoller, BotControllerFactory factory) {
 		super(xy);
@@ -26,6 +24,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 	private class ControllerContextImpl implements ControllerContext {
 		
 		private EntityContext context;
+		private boolean commandExecuted = false;
 		
 		private ControllerContextImpl(EntityContext context) {
 			this.context = context;
@@ -33,35 +32,77 @@ public class MasterSquirrelBot extends MasterSquirrel {
 		
 		@Override
 		public XY getViewLowerLeft() {
-			return getXY().plus(new XY(-6,6));
+			int y = getXY().y + (VISIBILITY - 1) / 2;
+
+			int x = getXY().x - (VISIBILITY - 1) / 2;
+
+			if (x < 0)
+				x = 0;
+
+			if (y > context.getSize().y)
+				y = context.getSize().y;
+
+			return new XY(x, y);
 		}
 
 		@Override
 		public XY getViewUpperRight() {
-			return getXY().plus(new XY(6,-6));
+			int x = getXY().x + (VISIBILITY - 1) / 2;
+
+			int y = getXY().y - (VISIBILITY - 1) / 2;
+
+			if (y < 0)
+				y = 0;
+
+			if (x > context.getSize().x)
+				x = context.getSize().x;
+
+			return new XY(x, y);
 		}
 
 		@Override
 		public EntityType getEntityAt(XY xy) {
-			int x = Math.abs(getXY().x - xy.x);
-			int y = Math.abs(getXY().y - xy.y);
-			
-			if (x <= 6 && y <= 6)
-				return context.getEntityType(xy);
-			else
+			if (!isInView(xy))
 				throw new OutOfViewException();
-			
+
+			return context.getEntityType(xy);
+
+		}
+		
+		private boolean isInView(XY xy) {
+
+			if (Math.abs(getXY().x - xy.x) > (VISIBILITY - 1) / 2)
+				return false;
+			else if (Math.abs(getXY().y - xy.y) > (VISIBILITY - 1) / 2)
+				return false;
+
+			return true;
+
 		}
 
 		@Override
 		public void move(XY direction) {
-			command = new MoveCommand(direction);
+			if (commandExecuted)
+				return;
+			context.tryMove(MasterSquirrelBot.this, direction);
+			commandExecuted = true;
 		}
 
 		@Override
 		public void spawnMiniBot(XY direction, int energy) {
-			//TODO delete buffer, create flag
-			command = new SpawnCommand(energy, direction);
+			if (commandExecuted)
+				return;
+			
+			if (energy > getEnergy())
+				energy = getEnergy();
+			
+			MiniSquirrelBot s = new MiniSquirrelBot(energy, getXY().plus(direction), getID(), factory.createMiniBotController());
+			if (context.tryInsert(s)) {
+				updateEnergy(-energy);
+				commandExecuted = true;
+			} else {
+				throw new SpawnException();
+			}
 		}
 
 		@Override
@@ -71,31 +112,25 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
 		@Override
 		public XY locate() {
-			// TODO Auto-generated method stub
-			return null;
+			return getXY();
 		}
 
 		@Override
 		public boolean isMine(XY xy) {
-			// TODO Auto-generated method stub
-			return false;
+			return isChild(context.getEntity(xy));
 		}
 
 		@Override
-		public void implode(int impactRadius) {
-			// TODO Auto-generated method stub
-			
-		}
+		public void implode(int impactRadius) {}
 
 		@Override
 		public XY directionOfMaster() {
-			// TODO Auto-generated method stub
-			return null;
+			return XY.ZERO_ZERO;
 		}
 
 		@Override
 		public long getRemainingSteps() {
-			// TODO Auto-generated method stub
+			// TODO getRemainingSteps
 			return 0;
 		}
 		
@@ -107,20 +142,6 @@ public class MasterSquirrelBot extends MasterSquirrel {
 			return;
 		
 		controller.nextStep(new ControllerContextImpl(context));
-		
-		if (command == null)
-			return;
-		
-		if (command instanceof MoveCommand) {
-			context.tryMove(this, ((MoveCommand) command).getMoveDirection());
-		} else if (command instanceof SpawnCommand) {
-			SpawnCommand sC = (SpawnCommand) command;
-			MiniSquirrelBot s = new MiniSquirrelBot(sC.getEnergy(), sC.getSpawnXY().plus(getXY()), getID(), factory.createMiniBotController());
-			if (context.tryInsert(s)) {
-				updateEnergy(-sC.getEnergy());
-			}
-		}
-		command = null;
 		
 	}
 }

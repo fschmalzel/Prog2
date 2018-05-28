@@ -212,6 +212,10 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	}
 	
 	private void move(Entity entity, XY moveDirection) {
+		
+		if (XY.ZERO_ZERO.distanceFrom(moveDirection) >= 2)
+			return;
+		
 		XY xy = entity.getXY();
 		flatBoard[xy.x][xy.y] = null;
 		entity.move(moveDirection);
@@ -256,13 +260,21 @@ public class FlattenedBoard implements BoardView, EntityContext {
 
 	@Override
 	public EntityType getEntityType(XY xy) {
-		Entity e = flatBoard[xy.x][xy.y];
+		Entity e;
+		
+		try {
+			e = flatBoard[xy.x][xy.y];
+		} catch (ArrayIndexOutOfBoundsException exception) {
+			e = null;
+		}
+		
 		if (e == null)
 			return EntityType.NONE;
 		return e.getEntityType();
 	}
 	
-	private Entity getEntity(XY xy) {
+	@Override
+	public Entity getEntity(XY xy) {
 		return flatBoard[xy.x][xy.y];
 	}
 
@@ -270,5 +282,16 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	public XY getSize() {
 		return board.getConfig().getSize();
 	}
+	
+	@Override
+	public MasterSquirrel getMaster(MiniSquirrel s) {
+		for ( Entity e : board.getEntitys()) {
+			if (e instanceof MasterSquirrel && ((MasterSquirrel) e).isChild(s))
+				return (MasterSquirrel) e;
+		}
+		return null;
+	}
+	
+	
 
 }
