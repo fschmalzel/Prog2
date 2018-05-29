@@ -1,5 +1,7 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.util.logging.Logger;
+
 import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.entities.BadBeast;
 import de.hsa.games.fatsquirrel.entities.BadPlant;
@@ -27,7 +29,7 @@ public abstract class Entity {
 	}
 	
 	public void updateEnergy(int energy) {
-		Launcher.getLogger().fine("Entity " + ((energy < 0) ? "lost" : "got") + " " + energy);
+		Logger.getLogger(Launcher.class.getName()).finer("Entity " + ((energy < 0) ? "lost" : "got") + " " + energy);
 		this.energy += energy;
 	}
 	
@@ -36,7 +38,7 @@ public abstract class Entity {
 	}
 	
 	public void move(XY vector) {
-		Launcher.getLogger().finest("Entity " + getID() + " moved from " + xy + " to " + xy.plus(vector));
+		Logger.getLogger(Launcher.class.getName()).finest("Entity " + getID() + " moved from " + xy + " to " + xy.plus(vector));
 		xy = xy.plus(vector);
 	}
 	

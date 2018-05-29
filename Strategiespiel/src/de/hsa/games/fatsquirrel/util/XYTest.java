@@ -2,7 +2,6 @@ package de.hsa.games.fatsquirrel.util;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.Before;
 import org.junit.jupiter.api.Test;
 
 class XYTest {

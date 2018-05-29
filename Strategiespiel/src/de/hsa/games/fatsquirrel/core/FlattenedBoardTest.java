@@ -22,6 +22,7 @@ class FlattenedBoardTest {
 	@Test
 	void testTryMoveMiniSquirrelXY() {
 		fail("Not yet implemented");
+		
 	}
 
 	@Test

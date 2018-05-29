@@ -287,7 +287,5 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		}
 		return null;
 	}
-	
-	
 
 }

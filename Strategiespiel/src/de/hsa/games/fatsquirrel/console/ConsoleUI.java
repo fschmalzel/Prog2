@@ -3,6 +3,7 @@ package de.hsa.games.fatsquirrel.console;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.lang.reflect.Method;
+import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.UI;
@@ -90,7 +91,7 @@ public class ConsoleUI implements UI, CommandTypes {
 
 	@Override
 	public void exit() {
-		Launcher.getLogger().info("Game ended!");
+		Logger.getLogger(Launcher.class.getName()).info("Game ended!");
 		System.exit(0);
 	}
 

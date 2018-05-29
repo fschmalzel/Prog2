@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.bot.random;
+package de.hsa.games.fatsquirrel.bots.random;
 
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;

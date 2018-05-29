@@ -1,5 +1,7 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.util.logging.Logger;
+
 import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.entities.Character;
 
@@ -45,7 +47,7 @@ public class EntitySet {
 		// Einfügen
 		entityArray[index] = e;
 		size++;
-		Launcher.getLogger().fine("Spawned entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
+		Logger.getLogger(Launcher.class.getName()).fine("Spawned entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
 	}
 	
 	private void resize() {
@@ -67,7 +69,7 @@ public class EntitySet {
 				size--;
 				// Nachdem ersten gelöschten Element kann aufgehört werden,
 				// da wir keine Duplikate haben
-				Launcher.getLogger().fine("Killed entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
+				Logger.getLogger(Launcher.class.getName()).fine("Killed entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
 
 				break;
 			}

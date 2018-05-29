@@ -3,6 +3,7 @@ package de.hsa.games.fatsquirrel.entities;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
+import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.botapi.BotController;
@@ -205,12 +206,14 @@ public class MiniSquirrelBot extends MiniSquirrel {
 		
 		ControllerContext view = new ControllerContextImpl(context);
 		
+		final Logger logger = Logger.getLogger(Launcher.class.getName());
+		
 		InvocationHandler handler = new InvocationHandler() {
 			
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 				
-				Launcher.getLogger().finer("MiniSquirrelBot with id " + getID() + " invoked method " + method.getName() + "!");
+				logger.finer("MiniSquirrelBot with id " + getID() + " invoked method " + method.getName() + "!");
 				
 				return method.invoke(view, args);
 			}

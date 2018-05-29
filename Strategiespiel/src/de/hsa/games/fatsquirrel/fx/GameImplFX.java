@@ -1,8 +1,12 @@
 package de.hsa.games.fatsquirrel.fx;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import de.hsa.games.fatsquirrel.Game;
-import de.hsa.games.fatsquirrel.bot.random.RandomBotControllerFactory;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
+import de.hsa.games.fatsquirrel.bots.hunter.HunterBotControllerFactory;
+import de.hsa.games.fatsquirrel.bots.random.RandomBotControllerFactory;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
@@ -13,17 +17,23 @@ import de.hsa.games.fatsquirrel.util.XYsupport;
 public class GameImplFX extends Game {
 
 	private HandOperatedMasterSquirrel masterSquirrel;
+	private List<MasterSquirrel> squirrels = new LinkedList<>();
 
 	public GameImplFX(BoardConfig boardConfig, FxUI ui) {
 		super(boardConfig, ui);
 
 		// Temporary
 		masterSquirrel = new HandOperatedMasterSquirrel(XYsupport.getRandomCoordinates(state.getBoard()));
+		squirrels.add(masterSquirrel);
 		
-		BotControllerFactory factory = new RandomBotControllerFactory();
-		MasterSquirrel masterSquirrel = new MasterSquirrelBot(XYsupport.getRandomCoordinates(state.getBoard()), factory);
+		BotControllerFactory factory = new HunterBotControllerFactory();
+		squirrels.add(new MasterSquirrelBot(XYsupport.getRandomCoordinates(state.getBoard()), factory));
 		
-		state.insertMaster(masterSquirrel);
+		BotControllerFactory factory2 = new RandomBotControllerFactory();
+		squirrels.add(new MasterSquirrelBot(XYsupport.getRandomCoordinates(state.getBoard()), factory2));
+		
+		for (MasterSquirrel s : squirrels)
+			state.insertMaster(s);
 	}
 
 	@Override
@@ -31,7 +41,7 @@ public class GameImplFX extends Game {
 		GameCommand cmd = ui.getCommand();
 		if (cmd == null)
 			return;
-
+		
 		switch (cmd.getType()) {
 		case MASTERENERGY:
 			ui.message("master energy: " + masterSquirrel.getEnergy());
@@ -40,7 +50,8 @@ public class GameImplFX extends Game {
 			ui.message(state.getBoard().toString());
 			break;
 		default:
-			masterSquirrel.setCommand(cmd);
+			if (masterSquirrel != null)
+				masterSquirrel.setCommand(cmd);
 			return;
 		}
 	}
@@ -53,7 +64,13 @@ public class GameImplFX extends Game {
 	@Override
 	protected void render() {
 		ui.render(state.flattenedBoard());
-		ui.message("Energy: " + masterSquirrel.getEnergy());
+		
+		String s = "";
+
+		for (MasterSquirrel squirrel : squirrels)
+			s += "Energy: " + squirrel.getEnergy() + "\t\t";
+		
+		ui.message(s);
 	}
 
 }

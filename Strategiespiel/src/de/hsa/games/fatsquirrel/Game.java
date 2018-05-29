@@ -12,6 +12,7 @@ public abstract class Game {
 	protected State state;
 	protected UI ui;
 	public static final int FPS = 10;
+	private final static Logger logger = Logger.getLogger(Launcher.class.getName());
 	
 	protected Game(BoardConfig boardConfig, UI ui) {
 		state = new State(boardConfig);
@@ -22,17 +23,17 @@ public abstract class Game {
 		Logger logger = Logger.getLogger(Launcher.class.getName());
 		logger.info("Game started!");
 		while(true) {
-			Launcher.getLogger().finer("Rendering");
+			logger.finer("Rendering");
 			render();
-			Launcher.getLogger().finer("Processing Input");
+			logger.finer("Processing Input");
 			processInput();
-			Launcher.getLogger().finer("Updating state");
+			logger.finer("Updating state");
 			update();
 		}
 	}
 	
 	protected void asyncRun() {
-		Launcher.getLogger().info("Game started!");
+		logger.info("Game started!");
 
 		Timer t = new Timer();
 		t.schedule(new TimerTask() {
@@ -40,15 +41,15 @@ public abstract class Game {
 			@Override
 			public void run() {
 				while (true) {
-					Launcher.getLogger().finer("Rendering");
+					logger.finer("Rendering");
 					render();
 					try {
 						Thread.sleep(1000 / FPS);
 					} catch (InterruptedException e) {
 					}
-					Launcher.getLogger().finer("Processing Input");
+					logger.finer("Processing Input");
 					processInput();
-					Launcher.getLogger().finer("Updating state");
+					logger.finer("Updating state");
 					update();
 				}
 			}
