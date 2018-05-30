@@ -157,6 +157,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 			}
 			
 			context.getMaster(MiniSquirrelBot.this).updateEnergy(collectedEnergy);
+			context.kill(MiniSquirrelBot.this);
 
 		}
 

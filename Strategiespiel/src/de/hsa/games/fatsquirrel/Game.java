@@ -20,7 +20,6 @@ public abstract class Game {
 	}
 	
 	public void run() {
-		Logger logger = Logger.getLogger(Launcher.class.getName());
 		logger.info("Game started!");
 		while(true) {
 			logger.finer("Rendering");
