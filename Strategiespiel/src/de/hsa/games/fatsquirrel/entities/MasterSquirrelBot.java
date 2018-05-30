@@ -102,7 +102,8 @@ public class MasterSquirrelBot extends MasterSquirrel {
 			if (energy > getEnergy())
 				energy = getEnergy();
 			
-			MiniSquirrelBot s = new MiniSquirrelBot(energy, getXY().plus(direction), getID(), factory.createMiniBotController());
+			MiniSquirrelBot s = new MiniSquirrelBot(energy, getXY().plus(direction), 
+					MasterSquirrelBot.this, factory.createMiniBotController());
 			if (context.tryInsert(s)) {
 				updateEnergy(-energy);
 				commandExecuted = true;

@@ -1,19 +1,26 @@
 package de.hsa.games.fatsquirrel.entities;
 
+import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.util.XY;
 
 public class MiniSquirrel extends Squirrel {
 	
-	private final int masterID;
+	private final MasterSquirrel master;
 	
-	public MiniSquirrel(int energy, XY xy, int masterID) {
+	public MiniSquirrel(int energy, XY xy, MasterSquirrel master) {
 		super(energy, xy);
-		this.masterID = masterID;
+		this.master = master;
 	}
 
-	public int getMasterID() {
-		return masterID;
+	public MasterSquirrel getMaster() {
+		return master;
+	}
+	
+	public boolean hasSameMaster(Entity e) {
+		if (e == null || !(e instanceof MiniSquirrel))
+			return false;
+		return master.equals(((MiniSquirrel) e).getMaster());
 	}
 	
 	public String toString() {

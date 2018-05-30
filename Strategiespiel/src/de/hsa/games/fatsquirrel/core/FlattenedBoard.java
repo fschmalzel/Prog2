@@ -7,6 +7,7 @@ import de.hsa.games.fatsquirrel.entities.GoodPlant;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MiniSquirrel;
 import de.hsa.games.fatsquirrel.entities.Squirrel;
+import de.hsa.games.fatsquirrel.entities.Wall;
 import de.hsa.games.fatsquirrel.util.XY;
 import de.hsa.games.fatsquirrel.util.XYsupport;
 
@@ -74,7 +75,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 				break;
 			case MINI_SQUIRREL:
 				MiniSquirrel miniSquirrel2 = (MiniSquirrel) e;
-				if(miniSquirrel.getMasterID() != miniSquirrel2.getMasterID()) {
+				if (!miniSquirrel.hasSameMaster(miniSquirrel2)) {
 					kill(miniSquirrel);
 					kill(miniSquirrel2);
 				}
@@ -205,6 +206,71 @@ public class FlattenedBoard implements BoardView, EntityContext {
 			return false;
 		board.insert(e);
 		return true;
+	}
+	
+	@Override
+	public void implode(MiniSquirrel m, int impactRadius) {
+		if(!(impactRadius >= 2 && impactRadius <= 10))
+			return;
+
+		double impactArea = impactRadius * impactRadius * Math.PI;
+		int collectedEnergy = 0;
+		
+		XY xy = m.getXY();
+		
+		for (int x = xy.x - impactRadius; x < xy.x + impactRadius; x++)
+			for (int y = xy.y - impactRadius; y < xy.y + impactRadius; y++) {
+				XY temp = new XY(x, y);
+
+				double distance = xy.distanceFrom(temp);
+				
+				if (distance > impactRadius)
+					continue;
+				
+				Entity e = getEntity(xy);
+				if (e == null)
+					continue;
+				
+				if (e instanceof MasterSquirrel && ((MasterSquirrel) e).isChild(m))
+					continue;
+				else if (m.hasSameMaster(e))
+					continue;
+				else if (e instanceof Wall)
+					continue;
+				
+				int energyLoss = (int) (200 * (m.getEnergy() / impactArea) * (1 - distance / impactRadius));
+				
+				
+				
+				if (Math.abs(e.getEnergy()) < -energyLoss)
+					energyLoss = -Math.abs(e.getEnergy());
+				
+				switch(e.getEntityType()) {
+				case BAD_BEAST:
+				case BAD_PLANT:
+					e.updateEnergy(-energyLoss);
+					if (e.getEnergy() >= 0)
+						killAndReplace(e);
+					break;
+				case MASTER_SQUIRREL:
+					e.updateEnergy(energyLoss);
+					break;
+				case GOOD_PLANT:
+				case GOOD_BEAST:
+					e.updateEnergy(energyLoss);
+					if (e.getEnergy() <= 0)
+						killAndReplace(e);
+					break;
+				default:
+					continue;
+				}
+				
+				collectedEnergy -= energyLoss;
+				
+			}
+
+		m.getMaster().updateEnergy(collectedEnergy);
+		kill(m);
 	}
 	
 	private void move(Entity entity, XY moveDirection) {

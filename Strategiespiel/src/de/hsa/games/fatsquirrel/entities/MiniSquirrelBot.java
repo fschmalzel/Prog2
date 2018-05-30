@@ -19,8 +19,8 @@ public class MiniSquirrelBot extends MiniSquirrel {
 	private BotController controller;
 	private static final int VISIBILITY = 21;
 
-	protected MiniSquirrelBot(int energy, XY xy, int masterID, BotController contoller) {
-		super(energy, xy, masterID);
+	protected MiniSquirrelBot(int energy, XY xy, MasterSquirrel master, BotController contoller) {
+		super(energy, xy, master);
 		this.controller = contoller;
 	}
 
@@ -98,9 +98,9 @@ public class MiniSquirrelBot extends MiniSquirrel {
 		public boolean isMine(XY xy) {
 			Entity e = context.getEntity(xy);
 			
-			if (e instanceof MiniSquirrel && ((MiniSquirrel) e).getMasterID() == getMasterID()) {
+			if (hasSameMaster(e)) {
 				return true;
-			} else if (e instanceof MasterSquirrel && e.getID() == getMasterID()) {
+			} else if (e instanceof MasterSquirrel && ((MasterSquirrel) e).isChild(MiniSquirrelBot.this)) {
 				return true;
 			}
 			return false;
@@ -108,57 +108,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
 		@Override
 		public void implode(int impactRadius) {
-			if (!(impactRadius >= 2 && impactRadius <= 10))
-				return;
-
-			double impactArea = impactRadius * impactRadius * Math.PI;
-			
-			int collectedEnergy = 0;
-			
-			for (int i = -impactRadius; i < impactRadius; i++) {
-				for (int j = -impactRadius; j < impactRadius; j++) {
-					Entity e = context.getEntity(new XY(getXY().x + i, getXY().y + j));
-
-					if (e instanceof MasterSquirrel && e.getID() == getMasterID())
-						continue;
-					else if (e instanceof MiniSquirrel && ((MiniSquirrel) e).getMasterID() == getMasterID())
-						continue;
-					else if (e instanceof Wall)
-						continue;
-					
-					double distance = getXY().distanceFrom(e.getXY());
-					int energyLoss = (int) (200 * (getEnergy() / impactArea) * (1 - distance / impactRadius));
-					
-					switch(e.getEntityType()) {
-					case BAD_BEAST:
-					case BAD_PLANT:
-						e.updateEnergy(-energyLoss);
-						if (e.getEnergy() >= 0)
-							context.killAndReplace(e);
-						break;
-					case MASTER_SQUIRREL:
-						if (e.getEnergy() < - energyLoss)
-							energyLoss = -e.getEnergy();
-						e.updateEnergy(energyLoss);
-						break;
-					case GOOD_PLANT:
-					case GOOD_BEAST:
-						e.updateEnergy(energyLoss);
-						if (e.getEnergy() <= 0)
-							context.killAndReplace(e);
-						break;
-					default:
-						continue;
-					}
-					
-					collectedEnergy -= energyLoss;
-					
-				}
-			}
-			
-			context.getMaster(MiniSquirrelBot.this).updateEnergy(collectedEnergy);
-			context.kill(MiniSquirrelBot.this);
-
+			context.implode(MiniSquirrelBot.this, impactRadius);
 		}
 
 		private boolean isInView(XY xy) {

@@ -38,7 +38,7 @@ public class HandOperatedMasterSquirrel extends MasterSquirrel {
 				break;
 			}
 			
-			MiniSquirrel s = new MiniSquirrel(sCmd.getEnergy(), xy, getID());
+			MiniSquirrel s = new MiniSquirrel(sCmd.getEnergy(), xy, this);
 			if (context.tryInsert(s)) {
 				updateEnergy(-sCmd.getEnergy());
 			}
