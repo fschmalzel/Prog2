@@ -13,6 +13,7 @@ import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.core.EntityType;
 import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class MiniSquirrelBot extends MiniSquirrel {
 
@@ -65,7 +66,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
 		@Override
 		public EntityType getEntityAt(XY xy) {
-			if (!isInView(xy))
+			if (!XYsupport.isInView(getXY(),xy,VISIBILITY))
 				throw new OutOfViewException();
 
 			return context.getEntityType(xy);
@@ -111,16 +112,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 			context.implode(MiniSquirrelBot.this, impactRadius);
 		}
 
-		private boolean isInView(XY xy) {
 
-			if (Math.abs(getXY().x - xy.x) > (VISIBILITY - 1) / 2)
-				return false;
-			else if (Math.abs(getXY().y - xy.y) > (VISIBILITY - 1) / 2)
-				return false;
-
-			return true;
-
-		}
 
 		@Override
 		public XY directionOfMaster() {

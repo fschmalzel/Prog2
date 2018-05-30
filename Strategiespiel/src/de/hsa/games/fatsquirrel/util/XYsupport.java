@@ -37,5 +37,16 @@ public class XYsupport {
 		
 		return xy;
 	}
+	
+	public static boolean isInView(XY xy1, XY xy2, int visibilty) {
+
+		if (Math.abs(xy1.x - xy2.x) > (visibilty - 1) / 2)
+			return false;
+		else if (Math.abs(xy1.y - xy2.y) > (visibilty - 1) / 2)
+			return false;
+
+		return true;
+
+	}
 
 }
