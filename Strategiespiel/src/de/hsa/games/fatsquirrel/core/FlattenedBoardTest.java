@@ -8,6 +8,10 @@ import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class FlattenedBoardTest {
+	
+	class Board() {
+		
+	}
 
 	private final Board board = new Board(new BoardConfig());
 	

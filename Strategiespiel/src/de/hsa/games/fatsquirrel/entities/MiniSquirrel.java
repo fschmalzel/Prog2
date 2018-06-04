@@ -2,11 +2,13 @@ package de.hsa.games.fatsquirrel.entities;
 
 import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
+import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.util.XY;
 
 public class MiniSquirrel extends Squirrel {
 	
 	private final MasterSquirrel master;
+	private MoveCommand moveCommand;
 	
 	public MiniSquirrel(int energy, XY xy, MasterSquirrel master) {
 		super(energy, xy);
@@ -36,7 +38,15 @@ public class MiniSquirrel extends Squirrel {
 		updateEnergy(-1);
 		if(getEnergy() <= 0)
 			context.kill(this);
-			
+		
+		if(moveCommand == null)
+			return;
+		else
+			context.tryMove(this, moveCommand.getMoveDirection());
+	}
+	
+	public void setMoveCommand(MoveCommand moveCommand) {
+		this.moveCommand = moveCommand;
 	}
 	
 }
