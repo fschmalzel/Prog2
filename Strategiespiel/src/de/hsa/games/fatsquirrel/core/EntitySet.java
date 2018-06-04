@@ -2,7 +2,6 @@ package de.hsa.games.fatsquirrel.core;
 
 import java.util.logging.Logger;
 
-import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.entities.Character;
 
 public class EntitySet {

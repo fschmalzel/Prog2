@@ -5,7 +5,6 @@ import java.io.InputStreamReader;
 import java.lang.reflect.Method;
 import java.util.logging.Logger;
 
-import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.UI;
 import de.hsa.games.fatsquirrel.core.BoardView;
 import de.hsa.games.fatsquirrel.core.GameCommand;
