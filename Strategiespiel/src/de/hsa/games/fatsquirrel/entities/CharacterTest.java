@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.core.EntityType;
+import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class CharacterTest {
@@ -17,8 +18,8 @@ class CharacterTest {
 		public boolean removed = false; //probably useless !!!
 		public boolean added = false;
 		public boolean found = false;
-		public Object args1 = null;
-		public Object args2 = null;
+		public Object arg = null;
+		public Object arg2 = null;
 
 		@Override
 		public XY getSize() {
@@ -28,78 +29,78 @@ class CharacterTest {
 		@Override
 		public void tryMove(MiniSquirrel miniSquirrel, XY moveDirection) {
 			moved = true;
-			args1 = moveDirection;
+			arg = moveDirection;
 		}
 
 		@Override
 		public void tryMove(GoodBeast goodBeast, XY moveDirection) {
 			moved = true;
-			args1 = moveDirection;
+			arg = moveDirection;
 
 		}
 
 		@Override
 		public void tryMove(BadBeast badBeast, XY moveDirection) {
 			moved = true;
-			args1 = moveDirection;
+			arg = moveDirection;
 
 		}
 
 		@Override
 		public void tryMove(MasterSquirrel masterSquirrel, XY moveDirection) {
 			moved = true;
-			args1 = moveDirection;
+			arg = moveDirection;
 
 		}
 
 		@Override
 		public Squirrel nearestSquirrel(XY pos) {
 			found = true;
-			args1 = pos;
+			arg = pos;
 			return null;
 		}
 
 		@Override
 		public void kill(Entity entity) {
 			removed = true;
-			args1 = entity;
+			arg = entity;
 		}
 
 		@Override
 		public void killAndReplace(Entity entity) {
 			removed = true;
 			added = true;
-			args1 = entity;
+			arg = entity;
 		}
 
 		@Override
 		public EntityType getEntityType(XY xy) {
-			args1 = xy;
+			arg = xy;
 			return null;
 		}
 
 		@Override
 		public boolean tryInsert(Entity s) {
-			args1 = s;
+			arg = s;
 			return false;
 		}
 
 		@Override
 		public Entity getEntity(XY xy) {
-			args1 = xy;
+			arg = xy;
 			return null;
 		}
 
 		@Override
 		public MasterSquirrel getMaster(MiniSquirrel s) {
-			args1 = s;
+			arg = s;
 			return null;
 		}
 
 		@Override
 		public void implode(MiniSquirrel m, int impactRadius) {
-			args1 = m;
-			args2 = impactRadius;
+			arg = m;
+			arg2 = impactRadius;
 		}
 
 	}
@@ -108,15 +109,14 @@ class CharacterTest {
 	void testNextStepBadBeast() {
 		EntityContextImpl con = new EntityContextImpl();
 		BadBeast badBeast = new BadBeast(new XY(1, 2));
-		HandOperatedMasterSquirrel master = new HandOperatedMasterSquirrel(new XY(5,6));
 
 		badBeast.nextStep(con);
 
 		assertTrue(con.moved);
 		con.moved = false;
 		
-		if(con.args1 instanceof XY) {
-			assertTrue(((XY) con.args1).length() < 2);
+		if(con.arg instanceof XY) {
+			assertTrue(((XY) con.arg).length() < 2);
 			for (int i = 0; i < 3; i++)
 				badBeast.nextStep(con);
 			
@@ -127,24 +127,27 @@ class CharacterTest {
 		}else
 			fail("args aren't a instance of XY!!!!");
 		
+	}
+
+	@Test
+	void testNextStepMasterSquirrel() {
+		EntityContextImpl con = new EntityContextImpl();
+		HandOperatedMasterSquirrel master = new HandOperatedMasterSquirrel(new XY(5,6));
+		master.setCommand(new MoveCommand(new XY(1,1)));
 		master.nextStep(con);
 		
-		if(con.args1 instanceof XY) {
-			assertTrue(((XY) con.args1).length() < 2);
+		if(con.arg instanceof XY) {
+			assertTrue(((XY) con.arg).length() < 2);
 			master.stun();
 			
-			assertTrue(master.isStunned());
-			
-			for(int i = 0; i < 3; i++)
+			for(int i = 0; i < 3; i++) {
+				assertTrue(master.isStunned());
 				master.nextStep(con);
+			}
 			
 			assertFalse(master.isStunned());
 		}else
 			fail("args aren't a instance of XY!!!!");
-		
-		
-		
-		
 	}
 
 }

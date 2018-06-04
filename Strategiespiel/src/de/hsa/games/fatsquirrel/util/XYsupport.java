@@ -48,5 +48,23 @@ public class XYsupport {
 		return true;
 
 	}
+	
+	public static XY getDirection(XY from, XY to) {
+		int x = 0;
+		int y = 0;
+		
+		if (from.x < to.x)
+			x = 1;
+		else if (from.x > to.x)
+			x = -1;
+		
+		if (from.y < to.y)
+			y = 1;
+		else if (from.y > to.y)
+			y = -1;
+		
+		return new XY(x,y);
+		
+	}
 
 }

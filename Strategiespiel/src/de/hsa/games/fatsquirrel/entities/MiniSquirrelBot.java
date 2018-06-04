@@ -116,22 +116,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
 		@Override
 		public XY directionOfMaster() {
-			XY xy = context.getMaster(MiniSquirrelBot.this).getXY();
-			
-			int x = 0;
-			int y = 0;
-			
-			if( xy.x > 0)
-				x = 1;
-			else if ( xy.x < 0)
-				x = -1;
-			
-			if( xy.y > 0)
-				y = 1;
-			else if ( xy.y < 0)
-				y = -1;
-			
-			return new XY(x, y);
+			return XYsupport.getDirection(getXY(), getMaster().getXY());
 		}
 
 		@Override
