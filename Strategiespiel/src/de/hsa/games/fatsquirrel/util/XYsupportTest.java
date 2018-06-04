@@ -4,16 +4,25 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
+import de.hsa.games.fatsquirrel.core.Board;
+import de.hsa.games.fatsquirrel.core.BoardConfig;
+
 class XYsupportTest {
 
 	@Test
 	void testGetRandomVector() {
-		fail("Not yet implemented");
+		assertTrue(XYsupport.getRandomVector().length() < 2);
 	}
 
 	@Test
 	void testGetRandomCoordinates() {
-		fail("Not yet implemented");
+		Board board = new Board(new BoardConfig());
+		
+		XY xy = XYsupport.getRandomCoordinates(board);
+		
+		assertTrue(xy.x <= board.getConfig().getSize().x && xy.x >= 0);
+		assertTrue(xy.y <= board.getConfig().getSize().y && xy.y >= 0);
+		
 	}
 
 }
