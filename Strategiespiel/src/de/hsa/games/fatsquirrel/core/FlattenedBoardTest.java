@@ -11,10 +11,6 @@ import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class FlattenedBoardTest {
-	
-	class Board() {
-		
-	}
 
 	@Test
 	void testTryMoveMasterSquirrelXY() {
@@ -32,7 +28,7 @@ class FlattenedBoardTest {
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
 		when(board.getEntitys()).thenReturn(set.toArray());
-		when(board.remove(goodBeast)).then(set.remove(goodBeast))
+		when(board.remove(goodBeast)).then(set.remove(goodBeast));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
