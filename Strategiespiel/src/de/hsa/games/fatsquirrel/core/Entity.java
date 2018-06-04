@@ -45,10 +45,12 @@ public abstract class Entity {
 		return id;
 	}
 	
-	public boolean equals(Entity e) {
-		if (e != null)
-			return id == e.getID();
-		return false;
+	public boolean equals(Object obj) {
+		if (!(obj instanceof Entity))
+			return false;
+		
+		Entity e = (Entity) obj;
+		return id == e.getID();
 	}
 	
 	public boolean isSameType(Entity e) {
