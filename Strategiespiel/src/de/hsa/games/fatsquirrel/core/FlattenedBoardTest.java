@@ -11,6 +11,10 @@ import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class FlattenedBoardTest {
+	
+	class Board() {
+		
+	}
 
 	@Test
 	void testTryMoveMasterSquirrelXY() {

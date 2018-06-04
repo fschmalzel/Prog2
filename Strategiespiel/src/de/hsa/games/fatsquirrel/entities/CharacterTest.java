@@ -150,4 +150,41 @@ class CharacterTest {
 			fail("args aren't a instance of XY!!!!");
 	}
 
+	@Test
+	void testNextStepMiniSquirrel() {
+		EntityContextImpl con = new EntityContextImpl();
+		MiniSquirrel mini = new MiniSquirrel(100, new XY(5,6), new HandOperatedMasterSquirrel(new XY(2,3)));
+
+		mini.setMoveCommand(new MoveCommand(new XY(1,1)));
+		mini.nextStep(con);
+		
+		if(con.arg instanceof XY) {
+			assertTrue(((XY) con.arg).length() < 2);
+		}else
+			fail("args aren't a instance of XY!!!!");
+	}
+	
+	@Test
+	void testNextStepGoodBeast() {
+		EntityContextImpl con = new EntityContextImpl();
+		GoodBeast goodBeast = new GoodBeast(new XY(1, 2));
+
+		goodBeast.nextStep(con);
+
+		assertTrue(con.moved);
+		con.moved = false;
+		
+		if(con.arg instanceof XY) {
+			assertTrue(((XY) con.arg).length() < 2);
+			for (int i = 0; i < 3; i++)
+				goodBeast.nextStep(con);
+			
+			assertFalse(con.moved);
+			
+			goodBeast.nextStep(con);
+			assertTrue(con.moved);
+		}else
+			fail("args aren't a instance of XY!!!!");
+		
+	}
 }
