@@ -276,7 +276,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	private void move(Entity entity, XY moveDirection) {
 		
 		if (XY.ZERO_ZERO.distanceFrom(moveDirection) >= 2)
-			return;
+			throw new StepTooBigException();
 		
 		XY xy = entity.getXY();
 		flatBoard[xy.x][xy.y] = null;

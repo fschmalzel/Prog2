@@ -140,23 +140,38 @@ public class MasterSquirrelBot extends MasterSquirrel {
 		
 		ControllerContext view = new ControllerContextImpl(context);
 		
-		final Logger logger = Logger.getLogger(Launcher.class.getName());
+		final Logger logger = Logger.getLogger(MasterSquirrelBot.class.getName());
 		
 		InvocationHandler handler = new InvocationHandler() {
 			
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+				logger.fine("MasterSquirrelBot (" + getID() + ") called method " + method.getName());
 				
-				logger.finer("MasterSquirrelBot with id " + getID() + " invoked method " + method.getName() + "!");
+				if (args.length > 0) {
+					String s = "Arguments: ";
+					for (Object arg : args)
+						s += "\n\t" + arg.toString();
+					logger.finer(s);
+				}
 				
-				return method.invoke(view, args);
+				Object returnValue = method.invoke(view, args);
+				
+				if(returnValue != null)
+					logger.finer("Returned: \n\t" + returnValue.toString());
+				
+				return returnValue;
 			}
 		};
 		
 		ControllerContext proxy = (ControllerContext) Proxy.newProxyInstance(ControllerContext.class.getClassLoader(),
 				new Class<?>[] {ControllerContext.class}, handler);
 		
-		controller.nextStep(proxy);
+		try {
+			controller.nextStep(proxy);
+		} catch (Exception e) {
+			logger.warning("MasterSquirrelBot (" + getID() + ") throwed an exception: \t" + e.toString());
+		}
 		
 	}
 }

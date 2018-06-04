@@ -36,24 +36,7 @@ public class HunterBotController implements BotController {
 			return;
 		}
 		
-		int x, y;
-		int diff = xy.x - context.locate().x;
-		if (diff > 0)
-			x = 1;
-		else if (diff < 0)
-			x = -1;
-		else 
-			x = 0;
-		
-		diff = xy.y - context.locate().y;
-		if (diff > 0)
-			y = 1;
-		else if (diff < 0)
-			y = -1;
-		else 
-			y = 0;
-		
-		context.move(new XY(x, y));
+		context.move(XYsupport.getDirection(context.locate(), xy));
 		
 	}
 

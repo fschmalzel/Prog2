@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.logging.Logger;
 
-import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
 import de.hsa.games.fatsquirrel.botapi.OutOfViewException;
@@ -134,23 +133,41 @@ public class MiniSquirrelBot extends MiniSquirrel {
 		
 		ControllerContext view = new ControllerContextImpl(context);
 		
-		final Logger logger = Logger.getLogger(Launcher.class.getName());
+		final Logger logger = Logger.getLogger(MiniSquirrelBot.class.getName());
+		
+		logger.info("nextStep of MiniSquirrelBot with id " + getID());
 		
 		InvocationHandler handler = new InvocationHandler() {
 			
 			@Override
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 				
-				logger.finer("MiniSquirrelBot with id " + getID() + " invoked method " + method.getName() + "!");
+				logger.fine("MiniSquirrelBot (" + getID() + ") called method " + method.getName());
 				
-				return method.invoke(view, args);
+				if (args.length > 0) {
+					String s = "Arguments: ";
+					for (Object arg : args)
+						s += "\n\t" + arg.toString();
+					logger.finer(s);
+				}
+				
+				Object returnValue = method.invoke(view, args);
+				
+				if(returnValue != null)
+					logger.finer("Returned: \n\t" + returnValue.toString());
+				
+				return returnValue;
 			}
 		};
 		
 		ControllerContext proxy = (ControllerContext) Proxy.newProxyInstance(ControllerContext.class.getClassLoader(),
 				new Class<?>[] {ControllerContext.class}, handler);
 		
-		controller.nextStep(proxy);
+		try {
+			controller.nextStep(proxy);
+		} catch (Exception e) {
+			logger.warning("MiniSquirrelBot (" + getID() + ") throwed an exception: \t" + e.toString());
+		}
 
 	}
 }
