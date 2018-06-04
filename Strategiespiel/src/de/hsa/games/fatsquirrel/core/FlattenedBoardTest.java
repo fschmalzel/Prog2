@@ -13,6 +13,7 @@ import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.entities.GoodPlant;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MiniSquirrel;
+import de.hsa.games.fatsquirrel.entities.Squirrel;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class FlattenedBoardTest {
@@ -22,6 +23,7 @@ class FlattenedBoardTest {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
 		EntitySet set = new EntitySet();
+		
 		HandOperatedMasterSquirrel ms = new HandOperatedMasterSquirrel(new XY(5, 5));
 		BadBeast badBeast = new BadBeast(new XY(7,7));
 		GoodBeast goodBeast = new GoodBeast(new XY(6,7));
@@ -127,17 +129,34 @@ class FlattenedBoardTest {
 		assertEquals(250, s.getEnergy());
 		
 		flatBoard.tryMove(s, new XY(0,1));
+		
+		for(Entity e : set.toArray())
+			if(e.equals(s))
+				fail("Squirrel isn't dead");
+		
 		assertEquals(new XY(8,6), s.getXY());
 		assertEquals(250, s.getEnergy());
 		assertEquals(1250, masterSquirrel.getEnergy());
 		
+		set.insert(s);
+		
 		flatBoard.tryMove(s, new XY(0,2));
+		
+		for(Entity e : set.toArray())
+			if(e.equals(s))
+				fail("Squirrel isn't dead");
+		
 		assertEquals(new XY(8,6), s.getXY());
-		assertEquals(1000, evilMasterSquirrel.getEnergy());
+		
+		set.insert(s);
 		
 		flatBoard.tryMove(s, new XY(0,3));
+		
+		for(Entity e : set.toArray())
+			if(e.equals(s))
+				fail("Squirrel isn't dead");
+		
 		assertEquals(new XY(8,6), s.getXY());
-		assertEquals();
 		//TODO muss erst remove funktionieren
 	}
 
@@ -153,42 +172,170 @@ class FlattenedBoardTest {
 
 	@Test
 	void testNearestSquirrel() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		BadBeast badBeast = new BadBeast(new XY(3,3));
+		HandOperatedMasterSquirrel masterSquirrel = new HandOperatedMasterSquirrel(new XY(7,7));
+		MiniSquirrel s = new MiniSquirrel(200, new XY(5, 5), masterSquirrel);
+		
+		set.insert(badBeast);
+		set.insert(masterSquirrel);
+		set.insert(s);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+
+		Squirrel nearestSquirrel = flatBoard.nearestSquirrel(badBeast.getXY());
+		
+		assertEquals(s, nearestSquirrel);
+	
+		
 	}
 
 	@Test
 	void testTryInsert() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		HandOperatedMasterSquirrel masterSquirrel = new HandOperatedMasterSquirrel(new XY(7,7));
+
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		assertTrue(flatBoard.tryInsert(masterSquirrel));
 	}
 
 	@Test
 	void testKill() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
+
+		set.insert(goodBeast);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		flatBoard.kill(goodBeast);
+		
+		for(Entity e : set.toArray())
+			if(e.equals(goodBeast))
+				fail("GoodBeast isn't dead");
+
 	}
 
 	@Test
 	void testKillAndReplace() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
+
+		set.insert(goodBeast);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		flatBoard.kill(goodBeast);
+		
+		for(Entity e : set.toArray())
+			if(e.equals(goodBeast))
+				break;
+		assertEquals(new XY(7,7), goodBeast.getXY());
+		
 	}
+		
 
 	@Test
 	void testGetEntityType() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
+
+		set.insert(goodBeast);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		assertEquals(EntityType.GOOD_BEAST,flatBoard.getEntityType(goodBeast.getXY()));
 	}
 
 	@Test
 	void testGetEntity() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
+
+		set.insert(goodBeast);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		assertEquals(goodBeast, flatBoard.getEntity(goodBeast.getXY()));
 	}
 
 	@Test
 	void testGetSize() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());	
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		assertEquals(new XY(20,20),flatBoard.getSize());
 	}
 
 	@Test
 	void testGetMaster() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		HandOperatedMasterSquirrel ms = new HandOperatedMasterSquirrel(new XY(7,7));
+		MiniSquirrel miniSquirrel = new MiniSquirrel(100, new XY(5,5), ms);
+		
+		set.insert(ms);
+		set.insert(miniSquirrel);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		assertEquals(ms, flatBoard.getMaster(miniSquirrel));
 	}
 
 }
