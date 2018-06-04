@@ -5,7 +5,6 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.logging.Logger;
 
-import de.hsa.games.fatsquirrel.Launcher;
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
@@ -148,7 +147,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 			public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
 				logger.fine("MasterSquirrelBot (" + getID() + ") called method " + method.getName());
 				
-				if (args.length > 0) {
+				if (args != null && args.length > 0) {
 					String s = "Arguments: ";
 					for (Object arg : args)
 						s += "\n\t" + arg.toString();
@@ -169,8 +168,11 @@ public class MasterSquirrelBot extends MasterSquirrel {
 		
 		try {
 			controller.nextStep(proxy);
-		} catch (Exception e) {
-			logger.warning("MasterSquirrelBot (" + getID() + ") throwed an exception: \t" + e.toString());
+		} catch (Throwable e) {
+			String s = "MasterSquirrelBot (" + getID() + ") throwed an exception: \t" + e.toString();
+			for (StackTraceElement s2 : e.getStackTrace())
+				s += "\n\t" + s2;
+			logger.warning(s);
 		}
 		
 	}

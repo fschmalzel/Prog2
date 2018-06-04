@@ -29,7 +29,7 @@ public abstract class Entity {
 	}
 	
 	public void updateEnergy(int energy) {
-		Logger.getLogger(Launcher.class.getName()).finer("Entity " + ((energy < 0) ? "lost" : "got") + " " + energy);
+		Logger.getLogger(Entity.class.getName()).finer("Entity " + ((energy < 0) ? "lost" : "got") + " " + energy);
 		this.energy += energy;
 	}
 	
@@ -38,7 +38,7 @@ public abstract class Entity {
 	}
 	
 	public void move(XY vector) {
-		Logger.getLogger(Launcher.class.getName()).finest("Entity " + getID() + " moved from " + xy + " to " + xy.plus(vector));
+		Logger.getLogger(Entity.class.getName()).finest("Entity " + getID() + " moved from " + xy + " to " + xy.plus(vector));
 		xy = xy.plus(vector);
 	}
 	

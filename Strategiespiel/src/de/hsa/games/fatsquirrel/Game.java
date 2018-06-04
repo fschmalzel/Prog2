@@ -12,7 +12,7 @@ public abstract class Game {
 	protected State state;
 	protected UI ui;
 	public static final int FPS = 10;
-	private final static Logger logger = Logger.getLogger(Launcher.class.getName());
+	private final static Logger logger = Logger.getLogger(Game.class.getName());
 	
 	protected Game(BoardConfig boardConfig, UI ui) {
 		state = new State(boardConfig);

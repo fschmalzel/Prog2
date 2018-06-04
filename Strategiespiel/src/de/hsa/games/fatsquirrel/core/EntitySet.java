@@ -47,7 +47,7 @@ public class EntitySet {
 		// Einfügen
 		entityArray[index] = e;
 		size++;
-		Logger.getLogger(Launcher.class.getName()).fine("Spawned entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
+		Logger.getLogger(EntitySet.class.getName()).fine("Spawned entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
 	}
 	
 	private void resize() {
@@ -69,7 +69,7 @@ public class EntitySet {
 				size--;
 				// Nachdem ersten gelöschten Element kann aufgehört werden,
 				// da wir keine Duplikate haben
-				Logger.getLogger(Launcher.class.getName()).fine("Killed entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
+				Logger.getLogger(EntitySet.class.getName()).fine("Killed entity with id " + e.getID() + " of type " + e.getEntityType().toString() + " at position " + e.getXY());
 
 				break;
 			}

@@ -144,7 +144,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 				
 				logger.fine("MiniSquirrelBot (" + getID() + ") called method " + method.getName());
 				
-				if (args.length > 0) {
+				if (args != null && args.length > 0) {
 					String s = "Arguments: ";
 					for (Object arg : args)
 						s += "\n\t" + arg.toString();
@@ -165,8 +165,11 @@ public class MiniSquirrelBot extends MiniSquirrel {
 		
 		try {
 			controller.nextStep(proxy);
-		} catch (Exception e) {
-			logger.warning("MiniSquirrelBot (" + getID() + ") throwed an exception: \t" + e.toString());
+		} catch (Throwable e) {
+			String s = "MasterSquirrelBot (" + getID() + ") throwed an exception: \t" + e.toString();
+			for (StackTraceElement s2 : e.getStackTrace())
+				s += "\n\t" + s2;
+			logger.warning(s);
 		}
 
 	}

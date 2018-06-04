@@ -91,7 +91,7 @@ public class ConsoleUI implements UI, CommandTypes {
 
 	@Override
 	public void exit() {
-		Logger.getLogger(Launcher.class.getName()).info("Game ended!");
+		Logger.getLogger(ConsoleUI.class.getName()).info("Game ended!");
 		System.exit(0);
 	}
 
