@@ -3,12 +3,16 @@ package de.hsa.games.fatsquirrel.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
+
+import java.util.LinkedHashSet;
+import java.util.Set;
+
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import de.hsa.games.fatsquirrel.core.Board;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
-import de.hsa.games.fatsquirrel.core.EntitySet;
+import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityType;
 import de.hsa.games.fatsquirrel.core.FlattenedBoard;
 import de.hsa.games.fatsquirrel.entities.BadBeast;
@@ -28,7 +32,7 @@ class FlattenedBoardTest {
 	void testTryMoveMasterSquirrelXY() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		HandOperatedMasterSquirrel ms = new HandOperatedMasterSquirrel(new XY(5, 5));
 		BadBeast badBeast = new BadBeast(new XY(7,7));
@@ -37,15 +41,15 @@ class FlattenedBoardTest {
 		GoodPlant goodPlant = new GoodPlant(new XY(8,6));
 		
 		
-		set.insert(ms);
-		set.insert(badBeast);
-		set.insert(goodBeast);
-		set.insert(badPlant);
-		set.insert(goodPlant);
+		set.add(ms);
+		set.add(badBeast);
+		set.add(goodBeast);
+		set.add(badPlant);
+		set.add(goodPlant);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		//TODO
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
@@ -69,7 +73,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodBeast);
 		
 		set.remove(goodBeast);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		//Collision with BadPlant
 		flatBoard.tryMove(ms, new XY(1,-1));
@@ -78,7 +82,7 @@ class FlattenedBoardTest {
 		verify(board).remove(badPlant);
 		
 		set.remove(badPlant);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		//Collision with GoodPlant
 		flatBoard.tryMove(ms, new XY(1,0));
@@ -87,7 +91,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodPlant);
 
 		set.remove(goodPlant);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 
 	}
 
@@ -95,7 +99,7 @@ class FlattenedBoardTest {
 	void testTryMoveMiniSquirrelXY() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		HandOperatedMasterSquirrel masterSquirrel = new HandOperatedMasterSquirrel(new XY(8,7));
 		MiniSquirrel s = new MiniSquirrel(200, new XY(5, 5), masterSquirrel);
@@ -107,20 +111,20 @@ class FlattenedBoardTest {
 		HandOperatedMasterSquirrel evilMasterSquirrel = new HandOperatedMasterSquirrel(new XY(9,7));
 		MiniSquirrel evilMini = new MiniSquirrel(100, new XY(9,6), evilMasterSquirrel);
 		
-		set.insert(s);
-		set.insert(masterSquirrel);
-		set.insert(badBeast);
-		set.insert(goodBeast);
-		set.insert(badPlant);
-		set.insert(badPlant2);
+		set.add(s);
+		set.add(masterSquirrel);
+		set.add(badBeast);
+		set.add(goodBeast);
+		set.add(badPlant);
+		set.add(badPlant2);
 		
-		set.insert(goodPlant);
-		set.insert(evilMini);
-		set.insert(evilMasterSquirrel);
+		set.add(goodPlant);
+		set.add(evilMini);
+		set.add(evilMasterSquirrel);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -141,7 +145,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodBeast);
 		
 		set.remove(goodBeast);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		//Collision with BadPlant
 		flatBoard.tryMove(s, new XY(1,-1));
@@ -150,7 +154,7 @@ class FlattenedBoardTest {
 		verify(board).remove(badPlant);
 		
 		set.remove(badPlant);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		//Collision with GoodPlant
 		flatBoard.tryMove(s, new XY(1,0));
@@ -159,7 +163,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodPlant);
 		
 		set.remove(goodPlant);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		//Collision with own MasterSquirrel
 		flatBoard.tryMove(s, new XY(0,1));
@@ -190,19 +194,19 @@ class FlattenedBoardTest {
 	void testTryMoveGoodBeastXY() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		GoodBeast goodBeast = new GoodBeast(new XY(4,5));
 		Wall wall = new Wall(new XY(4, 4));
 		MasterSquirrel s = new HandOperatedMasterSquirrel(new XY(18,18));
 		MiniSquirrel miniSquirrel = new MiniSquirrel(200, new XY(6,6), s);
-		set.insert(wall);
-		set.insert(goodBeast);
-		set.insert(miniSquirrel);
+		set.add(wall);
+		set.add(goodBeast);
+		set.add(miniSquirrel);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -225,19 +229,19 @@ class FlattenedBoardTest {
 	void testTryMoveBadBeastXY() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		BadBeast badBeast = new BadBeast(new XY(4,5));
 		Wall wall = new Wall(new XY(4, 4));
 		MasterSquirrel s = new HandOperatedMasterSquirrel(new XY(18,18));
 		MiniSquirrel miniSquirrel = new MiniSquirrel(10000, new XY(6,6), s);
-		set.insert(wall);
-		set.insert(badBeast);
-		set.insert(miniSquirrel);
+		set.add(wall);
+		set.add(badBeast);
+		set.add(miniSquirrel);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -265,19 +269,19 @@ class FlattenedBoardTest {
 	void testNearestSquirrel() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		BadBeast badBeast = new BadBeast(new XY(3,3));
 		HandOperatedMasterSquirrel masterSquirrel = new HandOperatedMasterSquirrel(new XY(7,7));
 		MiniSquirrel s = new MiniSquirrel(200, new XY(5, 5), masterSquirrel);
 		
-		set.insert(badBeast);
-		set.insert(masterSquirrel);
-		set.insert(s);
+		set.add(badBeast);
+		set.add(masterSquirrel);
+		set.add(s);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 
@@ -292,21 +296,21 @@ class FlattenedBoardTest {
 	void testTryInsert() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		HandOperatedMasterSquirrel masterSquirrel = new HandOperatedMasterSquirrel(new XY(7,7));
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		assertTrue(flatBoard.tryInsert(masterSquirrel));
 		verify(board).insert(masterSquirrel);
-		set.insert(masterSquirrel);
+		set.add(masterSquirrel);
 		
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		assertFalse(flatBoard.tryInsert(goodBeast));
 		verify(board, never()).insert(goodBeast);
@@ -316,15 +320,15 @@ class FlattenedBoardTest {
 	void testKill() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 
-		set.insert(goodBeast);
+		set.add(goodBeast);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -337,15 +341,15 @@ class FlattenedBoardTest {
 	void testKillAndReplace() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 
-		set.insert(goodBeast);
+		set.add(goodBeast);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -360,15 +364,15 @@ class FlattenedBoardTest {
 	void testGetEntityType() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 
-		set.insert(goodBeast);
+		set.add(goodBeast);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -379,15 +383,15 @@ class FlattenedBoardTest {
 	void testGetEntity() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 
-		set.insert(goodBeast);
+		set.add(goodBeast);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -398,11 +402,11 @@ class FlattenedBoardTest {
 	void testGetSize() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());	
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -413,17 +417,17 @@ class FlattenedBoardTest {
 	void testGetMaster() {
 		Board board = mock(Board.class);
 		BoardConfig cfg = mock(BoardConfig.class);
-		EntitySet set = new EntitySet();
+		Set<Entity> set = new LinkedHashSet<>();
 		
 		HandOperatedMasterSquirrel ms = new HandOperatedMasterSquirrel(new XY(7,7));
 		MiniSquirrel miniSquirrel = new MiniSquirrel(100, new XY(5,5), ms);
 		
-		set.insert(ms);
-		set.insert(miniSquirrel);
+		set.add(ms);
+		set.add(miniSquirrel);
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn(set.toArray());
+		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
