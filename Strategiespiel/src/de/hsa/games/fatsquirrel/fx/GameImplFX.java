@@ -5,8 +5,8 @@ import java.util.List;
 
 import de.hsa.games.fatsquirrel.Game;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
-import de.hsa.games.fatsquirrel.bots.hunter.HunterBotControllerFactory;
-import de.hsa.games.fatsquirrel.bots.random.RandomBotControllerFactory;
+import de.hsa.games.fatsquirrel.botimpls.gruppe17.HunterBotControllerFactory;
+import de.hsa.games.fatsquirrel.botimpls.gruppe17.RandomBotControllerFactory;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;

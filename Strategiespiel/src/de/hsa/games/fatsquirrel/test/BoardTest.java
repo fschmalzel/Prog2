@@ -3,9 +3,13 @@ package de.hsa.games.fatsquirrel.test;
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
+
+import java.util.LinkedList;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.core.Board;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.Entity;
@@ -29,6 +33,7 @@ class BoardTest {
 		when(cfg.getNumGoodBeast()).thenReturn(3);
 		when(cfg.getNumGoodPlant()).thenReturn(4);
 		when(cfg.getNumWall()).thenReturn(5);
+		when(cfg.getBots()).thenReturn(new LinkedList<Class<? extends BotControllerFactory>>());
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		
 		cfgEmpty = mock(BoardConfig.class);
@@ -37,6 +42,7 @@ class BoardTest {
 		when(cfgEmpty.getNumGoodBeast()).thenReturn(0);
 		when(cfgEmpty.getNumGoodPlant()).thenReturn(0);
 		when(cfgEmpty.getNumWall()).thenReturn(0);
+		when(cfgEmpty.getBots()).thenReturn(new LinkedList<Class<? extends BotControllerFactory>>());
 		when(cfgEmpty.getSize()).thenReturn(new XY(20, 20));
 	}
 	

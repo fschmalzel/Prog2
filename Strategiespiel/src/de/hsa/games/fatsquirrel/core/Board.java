@@ -3,10 +3,12 @@ package de.hsa.games.fatsquirrel.core;
 import java.util.HashSet;
 import java.util.Set;
 
+import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.entities.BadBeast;
 import de.hsa.games.fatsquirrel.entities.BadPlant;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.entities.GoodPlant;
+import de.hsa.games.fatsquirrel.entities.MasterSquirrelBot;
 import de.hsa.games.fatsquirrel.entities.Character;
 import de.hsa.games.fatsquirrel.entities.Wall;
 import de.hsa.games.fatsquirrel.util.XY;
@@ -44,6 +46,15 @@ public class Board {
 		
 		for (int i = 0; i < config.getNumWall(); i++)
 			set.add(new Wall(XYsupport.getRandomCoordinates(this)));
+		
+		for (Class<? extends BotControllerFactory> clazz : config.getBots()) {
+			try {
+				BotControllerFactory factory = clazz.newInstance();
+				set.add(new MasterSquirrelBot(XYsupport.getRandomCoordinates(this), factory));
+			} catch (InstantiationException | IllegalAccessException e) {
+				e.printStackTrace();
+			}
+		}
 		
 	}
 	

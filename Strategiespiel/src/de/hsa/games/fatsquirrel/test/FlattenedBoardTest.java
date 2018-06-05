@@ -27,7 +27,7 @@ import de.hsa.games.fatsquirrel.entities.Wall;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class FlattenedBoardTest {
-
+	
 	@Test
 	void testTryMoveMasterSquirrelXY() {
 		Board board = mock(Board.class);

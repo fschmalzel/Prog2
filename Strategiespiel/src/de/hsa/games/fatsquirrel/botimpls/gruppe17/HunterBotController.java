@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.bots.hunter;
+package de.hsa.games.fatsquirrel.botimpls.gruppe17;
 
 import de.hsa.games.fatsquirrel.botapi.BotController;
 import de.hsa.games.fatsquirrel.botapi.ControllerContext;
