@@ -1,6 +1,7 @@
 package console.better.ui;
 
 import java.lang.reflect.InvocationTargetException;
+import java.util.logging.Logger;
 
 public class Command implements Executable {
 	
@@ -17,7 +18,7 @@ public class Command implements Executable {
 		try {
 			return cmdType.getMethod().invoke(cmdType.getTarget(), params);
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
-			// TODO Exception handling
+			Logger.getLogger(Command.class.getName()).warning("Error executing command \"" + cmdType.getName() + "\": " + e.toString());
 		}
 		return null;
 	}

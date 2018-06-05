@@ -8,6 +8,7 @@ import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class HunterBotController implements BotController {
 	
+	@SuppressWarnings("unused")
 	private EntityType type;
 	
 	public HunterBotController(EntityType type) {

@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.util;
+package de.hsa.games.fatsquirrel.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,8 @@ import org.junit.jupiter.api.Test;
 
 import de.hsa.games.fatsquirrel.core.Board;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
+import de.hsa.games.fatsquirrel.util.XY;
+import de.hsa.games.fatsquirrel.util.XYsupport;
 
 class XYsupportTest {
 

@@ -1,10 +1,12 @@
-package de.hsa.games.fatsquirrel.entities;
+package de.hsa.games.fatsquirrel.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
 import de.hsa.games.fatsquirrel.core.EntityType;
+import de.hsa.games.fatsquirrel.entities.BadBeast;
+import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class EntityTest {
@@ -39,8 +41,10 @@ class EntityTest {
 
 	@Test
 	void testGetID() {
-		assertTrue(0 == bb1.getID());
-		assertFalse(1 == bb1.getID());
+		final BadBeast bb3 = new BadBeast(new XY(1, 1));
+		final BadBeast bb4 = new BadBeast(new XY(1, 3));
+		assertEquals(bb3.getID()+1, bb4.getID());
+		assertFalse(bb3.getID() == bb4.getID());
 	}
 
 	@Test

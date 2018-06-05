@@ -72,12 +72,13 @@ public class FlattenedBoard implements BoardView, EntityContext {
 					masterSquirrel.updateEnergy(miniSquirrel.getEnergy());
 				
 				kill(miniSquirrel);
-				break;
+				return;
 			case MINI_SQUIRREL:
 				MiniSquirrel miniSquirrel2 = (MiniSquirrel) e;
 				if (!miniSquirrel.hasSameMaster(miniSquirrel2)) {
 					kill(miniSquirrel);
 					kill(miniSquirrel2);
+					return;
 				}
 				break;
 			default:
@@ -204,6 +205,7 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		XY xy = e.getXY();
 		if(flatBoard[xy.x][xy.y] != null)
 			return false;
+		flatBoard[xy.x][xy.y] = e;
 		board.insert(e);
 		return true;
 	}

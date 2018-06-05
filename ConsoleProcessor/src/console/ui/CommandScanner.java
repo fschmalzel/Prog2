@@ -99,11 +99,6 @@ public class CommandScanner {
 			// Mit unserem param String und speichern diesen in unserem
 			// letztlichen Parameter Array
 			
-			// TODO Funktioniert nur leider nicht ganz, außerdem muss z. B. für Echo 
-			// auch mehrere "Wörter" als ein String zurückgegeben werden
-			// Spezifisch Objekte erzeugen
-			// mit Integer.parseInt(param);
-			
 			Class<?> paramType = cmd.getParamTypes()[i];
 			try {
 				params[i] = paramType.getConstructor(String.class)

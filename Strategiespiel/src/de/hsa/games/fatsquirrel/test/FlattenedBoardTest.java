@@ -1,19 +1,25 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.Invocation;
 
+import de.hsa.games.fatsquirrel.core.Board;
+import de.hsa.games.fatsquirrel.core.BoardConfig;
+import de.hsa.games.fatsquirrel.core.EntitySet;
+import de.hsa.games.fatsquirrel.core.EntityType;
+import de.hsa.games.fatsquirrel.core.FlattenedBoard;
 import de.hsa.games.fatsquirrel.entities.BadBeast;
 import de.hsa.games.fatsquirrel.entities.BadPlant;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.entities.GoodPlant;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MiniSquirrel;
 import de.hsa.games.fatsquirrel.entities.Squirrel;
+import de.hsa.games.fatsquirrel.entities.Wall;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class FlattenedBoardTest {
@@ -40,35 +46,48 @@ class FlattenedBoardTest {
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
 		when(board.getEntitys()).thenReturn(set.toArray());
-
 		//TODO
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
+		//No collision
 		flatBoard.tryMove(ms, new XY(1, 1));
 		
 		assertEquals(new XY(6, 6),  ms.getXY());
-
 		assertEquals(1000, ms.getEnergy());
+		
+		//Collision with BadBeast
 		flatBoard.tryMove(ms, new XY(1,1));
 		
 		assertEquals(850, ms.getEnergy());
 		assertEquals(new XY(6, 6), ms.getXY());
 		
+		//Collision with GoodBeast
 		flatBoard.tryMove(ms, new XY(0, 1));
 		assertEquals(1050, ms.getEnergy());
 		assertEquals(new XY(6, 7), ms.getXY());
+		verify(board).remove(goodBeast);
 		
+		set.remove(goodBeast);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		//Collision with BadPlant
 		flatBoard.tryMove(ms, new XY(1,-1));
-		set.remove(badPlant);
 		assertEquals(950, ms.getEnergy());
 		assertEquals(new XY(7,6), ms.getXY());
+		verify(board).remove(badPlant);
 		
+		set.remove(badPlant);
+		when(board.getEntitys()).thenReturn(set.toArray());
 		
+		//Collision with GoodPlant
 		flatBoard.tryMove(ms, new XY(1,0));
-		set.remove(goodPlant);
 		assertEquals(new XY(8,6), ms.getXY());
 		assertEquals(1050, ms.getEnergy());
+		verify(board).remove(goodPlant);
+
+		set.remove(goodPlant);
+		when(board.getEntitys()).thenReturn(set.toArray());
 
 	}
 
@@ -83,16 +102,18 @@ class FlattenedBoardTest {
 		BadBeast badBeast = new BadBeast(new XY(7,7));
 		GoodBeast goodBeast = new GoodBeast(new XY(6,7));
 		BadPlant badPlant = new BadPlant(new XY(7,6));
+		BadPlant badPlant2 = new BadPlant(new XY (8, 5));
 		GoodPlant goodPlant = new GoodPlant(new XY(8,6));
-		HandOperatedMasterSquirrel evilMasterSquirrel = new HandOperatedMasterSquirrel(new XY(8,8));
-		MiniSquirrel evilMini = new MiniSquirrel(100, new XY(8,9), evilMasterSquirrel);
-		
+		HandOperatedMasterSquirrel evilMasterSquirrel = new HandOperatedMasterSquirrel(new XY(9,7));
+		MiniSquirrel evilMini = new MiniSquirrel(100, new XY(9,6), evilMasterSquirrel);
 		
 		set.insert(s);
 		set.insert(masterSquirrel);
 		set.insert(badBeast);
 		set.insert(goodBeast);
 		set.insert(badPlant);
+		set.insert(badPlant2);
+		
 		set.insert(goodPlant);
 		set.insert(evilMini);
 		set.insert(evilMasterSquirrel);
@@ -103,71 +124,141 @@ class FlattenedBoardTest {
 
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
+		//Collision with nothing
 		flatBoard.tryMove(s, new XY(1,1));
-		
 		assertEquals(new XY(6, 6),  s.getXY());
-
 		assertEquals(200, s.getEnergy());
-		flatBoard.tryMove(s, new XY(1,1));
 		
+		//Collision with BadBeast
+		flatBoard.tryMove(s, new XY(1,1));
 		assertEquals(50, s.getEnergy());
 		assertEquals(new XY(6, 6), s.getXY());
 		
+		//Collision with GoodBeast
 		flatBoard.tryMove(s, new XY(0, 1));
 		assertEquals(250, s.getEnergy());
 		assertEquals(new XY(6, 7), s.getXY());
+		verify(board).remove(goodBeast);
 		
+		set.remove(goodBeast);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		//Collision with BadPlant
 		flatBoard.tryMove(s, new XY(1,-1));
-		set.remove(badPlant);
 		assertEquals(150, s.getEnergy());
 		assertEquals(new XY(7,6), s.getXY());
+		verify(board).remove(badPlant);
 		
+		set.remove(badPlant);
+		when(board.getEntitys()).thenReturn(set.toArray());
 		
+		//Collision with GoodPlant
 		flatBoard.tryMove(s, new XY(1,0));
-		set.remove(goodPlant);
 		assertEquals(new XY(8,6), s.getXY());
 		assertEquals(250, s.getEnergy());
+		verify(board).remove(goodPlant);
 		
+		set.remove(goodPlant);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		//Collision with own MasterSquirrel
 		flatBoard.tryMove(s, new XY(0,1));
-		
-		for(Entity e : set.toArray())
-			if(e.equals(s))
-				fail("Squirrel isn't dead");
-		
 		assertEquals(new XY(8,6), s.getXY());
 		assertEquals(250, s.getEnergy());
 		assertEquals(1250, masterSquirrel.getEnergy());
+		verify(board).remove(s);
 		
-		set.insert(s);
-		
-		flatBoard.tryMove(s, new XY(0,2));
-		
-		for(Entity e : set.toArray())
-			if(e.equals(s))
-				fail("Squirrel isn't dead");
-		
+		//Collision with other MasterSquirrel
+		flatBoard.tryMove(s, new XY(1,1));
+		verify(board, times(2)).remove(s);
 		assertEquals(new XY(8,6), s.getXY());
 		
-		set.insert(s);
-		
-		flatBoard.tryMove(s, new XY(0,3));
-		
-		for(Entity e : set.toArray())
-			if(e.equals(s))
-				fail("Squirrel isn't dead");
-		
+		//Collision with other MiniSquirrel
+		flatBoard.tryMove(s, new XY(1,0));
+		verify(board, times(3)).remove(s);
+		verify(board).remove(evilMini);
 		assertEquals(new XY(8,6), s.getXY());
-		//TODO muss erst remove funktionieren
+		
+		//Death
+		s.updateEnergy(10-s.getEnergy());
+		flatBoard.tryMove(s, new XY(0, -1));
+		verify(board, times(4)).remove(s);
+		
 	}
 
 	@Test
 	void testTryMoveGoodBeastXY() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		GoodBeast goodBeast = new GoodBeast(new XY(4,5));
+		Wall wall = new Wall(new XY(4, 4));
+		MasterSquirrel s = new HandOperatedMasterSquirrel(new XY(18,18));
+		MiniSquirrel miniSquirrel = new MiniSquirrel(200, new XY(6,6), s);
+		set.insert(wall);
+		set.insert(goodBeast);
+		set.insert(miniSquirrel);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		//Collision with nothing
+		flatBoard.tryMove(goodBeast, new XY(1,0));
+		assertEquals(new XY(5,5), goodBeast.getXY());
+		
+		//Collision with Wall
+		flatBoard.tryMove(goodBeast, new XY(-1, -1));
+		assertEquals(new XY(5,5), goodBeast.getXY());
+		
+		//Collision with Squirrel
+		flatBoard.tryMove(goodBeast, new XY(1, 1));
+		verify(board).remove(goodBeast);
+		assertEquals(400, miniSquirrel.getEnergy());
+		
 	}
 
 	@Test
 	void testTryMoveBadBeastXY() {
-		fail("Not yet implemented");
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		EntitySet set = new EntitySet();
+		
+		BadBeast badBeast = new BadBeast(new XY(4,5));
+		Wall wall = new Wall(new XY(4, 4));
+		MasterSquirrel s = new HandOperatedMasterSquirrel(new XY(18,18));
+		MiniSquirrel miniSquirrel = new MiniSquirrel(10000, new XY(6,6), s);
+		set.insert(wall);
+		set.insert(badBeast);
+		set.insert(miniSquirrel);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		//Collision with nothing
+		flatBoard.tryMove(badBeast, new XY(1,0));
+		assertEquals(new XY(5,5), badBeast.getXY());
+		
+		//Collision with Wall
+		flatBoard.tryMove(badBeast, new XY(-1, -1));
+		assertEquals(new XY(5,5), badBeast.getXY());
+		
+		//Collision with Squirrel
+		for (int i = 1; i <= 6; i++) {
+			flatBoard.tryMove(badBeast, new XY(1, 1));
+			verify(board, never()).remove(badBeast);
+		}
+		
+		flatBoard.tryMove(badBeast, new XY(1, 1));
+		verify(board).remove(badBeast);
+		
+		assertEquals(10000-7*150, miniSquirrel.getEnergy());
 	}
 
 	@Test
@@ -204,14 +295,21 @@ class FlattenedBoardTest {
 		EntitySet set = new EntitySet();
 		
 		HandOperatedMasterSquirrel masterSquirrel = new HandOperatedMasterSquirrel(new XY(7,7));
-
+		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
+		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
 		when(board.getEntitys()).thenReturn(set.toArray());
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
-		
 		assertTrue(flatBoard.tryInsert(masterSquirrel));
+		verify(board).insert(masterSquirrel);
+		set.insert(masterSquirrel);
+		
+		when(board.getEntitys()).thenReturn(set.toArray());
+		
+		assertFalse(flatBoard.tryInsert(goodBeast));
+		verify(board, never()).insert(goodBeast);
 	}
 
 	@Test
@@ -231,10 +329,7 @@ class FlattenedBoardTest {
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
 		flatBoard.kill(goodBeast);
-		
-		for(Entity e : set.toArray())
-			if(e.equals(goodBeast))
-				fail("GoodBeast isn't dead");
+		verify(board).remove(goodBeast);
 
 	}
 
@@ -254,12 +349,9 @@ class FlattenedBoardTest {
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
-		flatBoard.kill(goodBeast);
-		
-		for(Entity e : set.toArray())
-			if(e.equals(goodBeast))
-				break;
-		assertEquals(new XY(7,7), goodBeast.getXY());
+		flatBoard.killAndReplace(goodBeast);
+		verify(board).remove(goodBeast);
+		verify(board).insert(Mockito.any(GoodBeast.class));
 		
 	}
 		

@@ -13,7 +13,6 @@ public class HunterBotControllerFactory implements BotControllerFactory {
 
 	@Override
 	public BotController createMiniBotController() {
-		// TODO Auto-generated method stub
 		return new HunterBotController(EntityType.MINI_SQUIRREL);
 	}
 

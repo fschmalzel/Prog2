@@ -1,8 +1,10 @@
-package de.hsa.games.fatsquirrel.util;
+package de.hsa.games.fatsquirrel.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
+
+import de.hsa.games.fatsquirrel.util.XY;
 
 class XYTest {
 

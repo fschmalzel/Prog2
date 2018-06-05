@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.core;
+package de.hsa.games.fatsquirrel.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -6,6 +6,12 @@ import static org.mockito.Mockito.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import de.hsa.games.fatsquirrel.core.Board;
+import de.hsa.games.fatsquirrel.core.BoardConfig;
+import de.hsa.games.fatsquirrel.core.Entity;
+import de.hsa.games.fatsquirrel.core.EntityContext;
+import de.hsa.games.fatsquirrel.core.EntityType;
+import de.hsa.games.fatsquirrel.core.FlattenedBoard;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.util.XY;
 import de.hsa.games.fatsquirrel.util.XYsupport;

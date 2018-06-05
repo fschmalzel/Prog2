@@ -1,4 +1,4 @@
-package de.hsa.games.fatsquirrel.entities;
+package de.hsa.games.fatsquirrel.test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -8,6 +8,12 @@ import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.core.EntityType;
 import de.hsa.games.fatsquirrel.core.MoveCommand;
+import de.hsa.games.fatsquirrel.entities.BadBeast;
+import de.hsa.games.fatsquirrel.entities.GoodBeast;
+import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.MiniSquirrel;
+import de.hsa.games.fatsquirrel.entities.Squirrel;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class CharacterTest {
@@ -15,11 +21,7 @@ class CharacterTest {
 	private class EntityContextImpl implements EntityContext {
 
 		public boolean moved = false;
-		public boolean removed = false; //probably useless !!!
-		public boolean added = false;
-		public boolean found = false;
 		public Object arg = null;
-		public Object arg2 = null;
 
 		@Override
 		public XY getSize() {
@@ -55,21 +57,17 @@ class CharacterTest {
 
 		@Override
 		public Squirrel nearestSquirrel(XY pos) {
-			found = true;
 			arg = pos;
 			return null;
 		}
 
 		@Override
 		public void kill(Entity entity) {
-			removed = true;
 			arg = entity;
 		}
 
 		@Override
 		public void killAndReplace(Entity entity) {
-			removed = true;
-			added = true;
 			arg = entity;
 		}
 
@@ -99,9 +97,7 @@ class CharacterTest {
 
 		@Override
 		public void implode(MiniSquirrel m, int impactRadius) {
-			arg = m;
-			arg2 = impactRadius;
-		}
+			arg = m;		}
 
 	}
 
