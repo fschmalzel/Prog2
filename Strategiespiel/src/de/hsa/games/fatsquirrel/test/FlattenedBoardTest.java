@@ -49,7 +49,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		//TODO
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
@@ -73,7 +73,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodBeast);
 		
 		set.remove(goodBeast);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		//Collision with BadPlant
 		flatBoard.tryMove(ms, new XY(1,-1));
@@ -82,7 +82,7 @@ class FlattenedBoardTest {
 		verify(board).remove(badPlant);
 		
 		set.remove(badPlant);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		//Collision with GoodPlant
 		flatBoard.tryMove(ms, new XY(1,0));
@@ -91,7 +91,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodPlant);
 
 		set.remove(goodPlant);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 
 	}
 
@@ -124,7 +124,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -145,7 +145,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodBeast);
 		
 		set.remove(goodBeast);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		//Collision with BadPlant
 		flatBoard.tryMove(s, new XY(1,-1));
@@ -154,7 +154,7 @@ class FlattenedBoardTest {
 		verify(board).remove(badPlant);
 		
 		set.remove(badPlant);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		//Collision with GoodPlant
 		flatBoard.tryMove(s, new XY(1,0));
@@ -163,7 +163,7 @@ class FlattenedBoardTest {
 		verify(board).remove(goodPlant);
 		
 		set.remove(goodPlant);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		//Collision with own MasterSquirrel
 		flatBoard.tryMove(s, new XY(0,1));
@@ -206,7 +206,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -241,7 +241,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -281,7 +281,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 
@@ -303,14 +303,14 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		assertTrue(flatBoard.tryInsert(masterSquirrel));
 		verify(board).insert(masterSquirrel);
 		set.add(masterSquirrel);
 		
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		assertFalse(flatBoard.tryInsert(goodBeast));
 		verify(board, never()).insert(goodBeast);
@@ -328,7 +328,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -349,7 +349,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -372,7 +372,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -391,7 +391,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -406,7 +406,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
@@ -427,7 +427,7 @@ class FlattenedBoardTest {
 		
 		when(cfg.getSize()).thenReturn(new XY(20, 20));
 		when(board.getConfig()).thenReturn(cfg);
-		when(board.getEntitys()).thenReturn((Entity[]) set.toArray());
+		when(board.getEntitys()).thenReturn(set.toArray(new Entity[set.size()]));
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		

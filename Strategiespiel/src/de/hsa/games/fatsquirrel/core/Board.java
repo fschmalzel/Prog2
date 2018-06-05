@@ -1,8 +1,7 @@
 package de.hsa.games.fatsquirrel.core;
 
-import java.util.LinkedHashSet;
+import java.util.HashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 
 import de.hsa.games.fatsquirrel.entities.BadBeast;
 import de.hsa.games.fatsquirrel.entities.BadPlant;
@@ -18,7 +17,7 @@ public class Board {
 	private BoardConfig config;
 	
 	public Board(BoardConfig config) {
-		set = new LinkedHashSet<Entity>();
+		set = new HashSet<Entity>();
 		this.config = config;
 		
 		for(int i = 0; i < config.getSize().x; i++) {
@@ -49,14 +48,10 @@ public class Board {
 	}
 	
 	public void update(EntityContext context) {
-		set.forEach(new Consumer<Entity>() {
-
-			@Override
-			public void accept(Entity e) {
-				if (e instanceof Character)
-					((Character) e).nextStep(context);
-			}
-		});
+		for (Entity e : set.toArray(new Entity[set.size()])) {
+			if (e instanceof Character)
+				((Character) e).nextStep(context);
+		}
 	}
 	
 	public FlattenedBoard flatten() {
@@ -72,7 +67,7 @@ public class Board {
 	}
 	
 	public Entity[] getEntitys() {
-		return (Entity[]) set.toArray();
+		return set.toArray(new Entity[set.size()]);
 	}
 	
 	public BoardConfig getConfig() {
