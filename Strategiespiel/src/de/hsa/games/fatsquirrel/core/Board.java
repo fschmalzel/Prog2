@@ -60,7 +60,7 @@ public class Board {
 	
 	public void update(EntityContext context) {
 		for (Entity e : set.toArray(new Entity[set.size()])) {
-			if (e instanceof Character)
+			if (e instanceof Character && set.contains(e))
 				((Character) e).nextStep(context);
 		}
 	}

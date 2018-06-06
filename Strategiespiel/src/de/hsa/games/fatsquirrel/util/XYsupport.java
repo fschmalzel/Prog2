@@ -20,8 +20,10 @@ public class XYsupport {
 		XY xy;
 		XY size = board.getConfig().getSize();
 		
+		boolean badPos;
+		
 		do {
-			
+			badPos = false;
 			int x = rnd.nextInt(size.x - 2) + 1;
 			int y = rnd.nextInt(size.y - 2) + 1;
 			
@@ -29,11 +31,10 @@ public class XYsupport {
 			
 			for (Entity e : board.getEntitys())
 				if (e.getXY().equals(xy)) {
-					continue;
+					badPos = true;
 				}
-			break;
 			
-		} while (true);
+		} while (badPos);
 		
 		return xy;
 	}
