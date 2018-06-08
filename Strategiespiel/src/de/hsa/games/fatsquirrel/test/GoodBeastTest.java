@@ -64,9 +64,6 @@ class GoodBeastTest {
 
 		@Override
 		public Entity getEntity(XY xy) { return null; }
-
-		@Override
-		public MasterSquirrel getMaster(MiniSquirrel s) { return null; }
 		
 		@Override
 		public void implode(MiniSquirrel m, int impactRadius) {}

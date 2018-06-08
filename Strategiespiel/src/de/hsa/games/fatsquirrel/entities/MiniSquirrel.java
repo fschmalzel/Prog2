@@ -4,7 +4,7 @@ import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.util.XY;
 
-public class MiniSquirrel extends Squirrel {
+public abstract class MiniSquirrel extends Squirrel {
 	
 	private final MasterSquirrel master;
 	

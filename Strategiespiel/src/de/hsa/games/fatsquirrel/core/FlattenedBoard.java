@@ -346,14 +346,5 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	public XY getSize() {
 		return board.getConfig().getSize();
 	}
-	
-	@Override
-	public MasterSquirrel getMaster(MiniSquirrel s) {
-		for ( Entity e : board.getEntitys()) {
-			if (e instanceof MasterSquirrel && ((MasterSquirrel) e).isChild(s))
-				return (MasterSquirrel) e;
-		}
-		return null;
-	}
 
 }

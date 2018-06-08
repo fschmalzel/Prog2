@@ -50,8 +50,14 @@ class BadBeastTest {
 	}
 	
 	@Test
-	void testDeathAfter7Bites() {
+	void testFalseBooleanAfter7Bites() {
 		//TODO Implement
+		
+		//for i = 1 .. 7 
+		// assertFalse(b)
+		// boolean b = bites()
+		
+		// assertTrue(b)
 	}
 	
 	@Test
