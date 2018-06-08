@@ -137,5 +137,10 @@ class FlattenedBoardTest {
 		
 		assertEquals(new XY(20,20),flatBoard.getSize());
 	}
+	
+	@Test
+	void testImplode() {
+		//TODO Implement
+	}
 
 }
