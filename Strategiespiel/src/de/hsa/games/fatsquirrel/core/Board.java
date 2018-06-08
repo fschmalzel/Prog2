@@ -33,29 +33,46 @@ public class Board {
 		}
 				
 		for (int i = 0; i < config.getNumBadBeast(); i++)
-			set.add(new BadBeast(XYsupport.getRandomCoordinates(this)));	
+			set.add(new BadBeast(getRandomValidCoordinates()));	
 		
 		for (int i = 0; i < config.getNumGoodBeast(); i++)
-			set.add(new GoodBeast(XYsupport.getRandomCoordinates(this)));
+			set.add(new GoodBeast(getRandomValidCoordinates()));
 		
 		for (int i = 0; i < config.getNumBadPlant(); i++)
-			set.add(new BadPlant(XYsupport.getRandomCoordinates(this)));
+			set.add(new BadPlant(getRandomValidCoordinates()));
 		
 		for (int i = 0; i < config.getNumGoodPlant(); i++)
-			set.add(new GoodPlant(XYsupport.getRandomCoordinates(this)));
+			set.add(new GoodPlant(getRandomValidCoordinates()));
 		
 		for (int i = 0; i < config.getNumWall(); i++)
-			set.add(new Wall(XYsupport.getRandomCoordinates(this)));
+			set.add(new Wall(getRandomValidCoordinates()));
 		
 		for (Class<? extends BotControllerFactory> clazz : config.getBots()) {
 			try {
 				BotControllerFactory factory = clazz.newInstance();
-				set.add(new MasterSquirrelBot(XYsupport.getRandomCoordinates(this), factory));
+				set.add(new MasterSquirrelBot(getRandomValidCoordinates(), factory));
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
 		}
 		
+	}
+	private XY getRandomValidCoordinates() {
+		do {
+			XY xy = XYsupport.getRandomCoordinates(new XY(1, 1), config.getSize().minus(new XY(1, 1)));
+			
+			boolean badPos = false;
+			
+			for (Entity e : getEntitys())
+				if (e.getXY().equals(xy)) {
+					badPos = true;
+					break;
+				}
+			
+			if(!badPos)
+				return xy;
+			
+		} while(true);
 	}
 	
 	public void update(EntityContext context) {

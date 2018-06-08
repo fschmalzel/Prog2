@@ -2,42 +2,26 @@ package de.hsa.games.fatsquirrel.util;
 
 import java.util.Random;
 
-import de.hsa.games.fatsquirrel.core.Board;
-import de.hsa.games.fatsquirrel.core.Entity;
-
 public class XYsupport {
-
+	
+	private static Random rnd = new Random();
+	
 	public static XY getRandomVector() {
-		Random rand = new Random();
-		int x = rand.nextInt(3) - 1;
-		int y = rand.nextInt(3) - 1;
+		int x = rnd.nextInt(3) - 1;
+		int y = rnd.nextInt(3) - 1;
 		
 		return new XY(x, y);
 	}
 	
-	public static XY getRandomCoordinates(Board board) {
-		Random rnd = new Random();
-		XY xy;
-		XY size = board.getConfig().getSize();
+	public static XY getRandomCoordinates(XY xy1, XY xy2) {
+		if (xy1.x > xy2.x || xy1.y > xy2.y)
+			return null;
 		
-		boolean badPos;
-		
-		do {
-			badPos = false;
-			int x = rnd.nextInt(size.x - 2) + 1;
-			int y = rnd.nextInt(size.y - 2) + 1;
-			
-			xy = new XY(x,y);
-			
-			for (Entity e : board.getEntitys())
-				if (e.getXY().equals(xy)) {
-					badPos = true;
-				}
-			
-		} while (badPos);
-		
-		return xy;
+		return new XY(
+				rnd.nextInt(xy2.x - xy1.x + 1) + xy1.x, 
+				rnd.nextInt(xy2.y - xy1.y + 1) + xy1.y);
 	}
+	
 	
 	public static boolean isInView(XY xy1, XY xy2, int visibilty) {
 

@@ -18,7 +18,6 @@ import de.hsa.games.fatsquirrel.core.EntityType;
 import de.hsa.games.fatsquirrel.core.FlattenedBoard;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.util.XY;
-import de.hsa.games.fatsquirrel.util.XYsupport;
 
 class BoardTest {
 	
@@ -72,7 +71,7 @@ class BoardTest {
 	void testInsert() {
 		Board board = new Board(cfg);
 		
-		GoodBeast goodBeast = new GoodBeast(XYsupport.getRandomCoordinates(board));
+		GoodBeast goodBeast = new GoodBeast(new XY(5, 5));
 		board.insert(goodBeast);
 		boolean found = false;
 		for (Entity e : board.getEntitys()) {
@@ -85,7 +84,7 @@ class BoardTest {
 	@Test
 	void testRemove() {
 		Board board = new Board(cfg);
-		GoodBeast goodBeast = new GoodBeast(XYsupport.getRandomCoordinates(board));
+		GoodBeast goodBeast = new GoodBeast(new XY(5, 5));
 		board.insert(goodBeast);
 		board.remove(goodBeast);
 		boolean found = false;

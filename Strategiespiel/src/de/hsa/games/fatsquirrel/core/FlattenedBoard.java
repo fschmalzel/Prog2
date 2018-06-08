@@ -300,7 +300,12 @@ public class FlattenedBoard implements BoardView, EntityContext {
 	public void killAndReplace(Entity entity) {
 		kill(entity);
 		
-		XY xy = XYsupport.getRandomCoordinates(board);
+		XY xy;
+		
+		do {
+			xy = XYsupport.getRandomCoordinates(new XY(1, 1), getSize().minus(new XY(1, 1)));
+		} while (getEntity(xy) != null);
+		
 		switch(entity.getEntityType()) {
 		case GOOD_PLANT:
 			entity = new GoodPlant(xy);
