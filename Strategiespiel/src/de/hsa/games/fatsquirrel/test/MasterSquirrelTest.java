@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import de.hsa.games.fatsquirrel.core.EntityContext;
 import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.HandOperatedMiniSquirrel;
 import de.hsa.games.fatsquirrel.util.XY;
 
 class MasterSquirrelTest {
@@ -43,12 +44,24 @@ class MasterSquirrelTest {
 	
 	@Test
 	void testNoNegativeEnergy() {
-		//TODO implement
+		HandOperatedMasterSquirrel master = new HandOperatedMasterSquirrel(new XY(5,6));
+		master.updateEnergy(-1000);
+		
+		assertEquals(master.getEnergy(), 0);
+		
+		master.updateEnergy(-100);
+		
+		assertEquals(master.getEnergy(), 0);
 	}
 	
 	@Test
 	void testIsChild() {
-		//TODO implement
+		HandOperatedMasterSquirrel master = new HandOperatedMasterSquirrel(new XY(5,6));
+		HandOperatedMiniSquirrel mini = new HandOperatedMiniSquirrel(100, new XY(3,5), master);
+		HandOperatedMiniSquirrel evilMini = new HandOperatedMiniSquirrel(100, new XY(2,5), new HandOperatedMasterSquirrel(new XY(7,1)));
+
+		assertTrue(master.isChild(mini));
+		assertFalse(master.isChild(evilMini));
 	}
 	
 }

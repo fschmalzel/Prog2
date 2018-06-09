@@ -17,10 +17,12 @@ import de.hsa.games.fatsquirrel.util.XYsupport;
 public class Board {
 	private Set<Entity> set;
 	private BoardConfig config;
+	private int steps;
 	
 	public Board(BoardConfig config) {
 		set = new HashSet<Entity>();
 		this.config = config;
+		this.steps = config.getSteps();
 		
 		for(int i = 0; i < config.getSize().x; i++) {
 			set.add(new Wall(new XY(i,0)));
@@ -76,6 +78,7 @@ public class Board {
 	}
 	
 	public void update(EntityContext context) {
+		steps--;
 		for (Entity e : set.toArray(new Entity[set.size()])) {
 			if (e instanceof Character && set.contains(e))
 				((Character) e).nextStep(context);

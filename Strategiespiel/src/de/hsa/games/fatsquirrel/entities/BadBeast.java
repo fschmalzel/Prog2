@@ -62,4 +62,8 @@ public class BadBeast extends Character {
 		return "BadBeast" + super.toString();
 	}
 	
+	public int getBites() {
+		return bites;
+	}
+	
 }

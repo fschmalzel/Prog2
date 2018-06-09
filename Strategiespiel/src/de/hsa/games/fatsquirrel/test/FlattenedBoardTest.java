@@ -140,7 +140,27 @@ class FlattenedBoardTest {
 	
 	@Test
 	void testImplode() {
-		//TODO Implement
+		Board board = mock(Board.class);
+		BoardConfig cfg = mock(BoardConfig.class);
+		
+		when(cfg.getSize()).thenReturn(new XY(20, 20));
+		when(board.getConfig()).thenReturn(cfg);
+		when(board.getEntitys()).thenReturn(new Entity[] {});
+		
+		FlattenedBoard flatBoard = new FlattenedBoard(board);
+		
+		HandOperatedMasterSquirrel master = new HandOperatedMasterSquirrel(new XY(3,3));
+		HandOperatedMiniSquirrel mini = new HandOperatedMiniSquirrel(100, new XY(2,2), master);
+		
+		assertEquals(master.getEnergy(), 1000);
+		
+		flatBoard.implode(mini, 2);
+		
+		verify(board).remove(mini);
+		
+		assertTrue(master.getEnergy() == 1000);
+		
+		
 	}
 
 }

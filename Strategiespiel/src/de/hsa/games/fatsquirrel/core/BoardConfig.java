@@ -10,6 +10,7 @@ import de.hsa.games.fatsquirrel.util.XY;
 
 public class BoardConfig {
 	private final XY size = new XY(30, 15);
+	private final int steps = 10;
 	private final int numBadBeast = 5;
 	private final int numGoodBeast = 5;
 	private final int numGoodPlant = 13;
@@ -18,6 +19,7 @@ public class BoardConfig {
 	private final int numEntity = numBadBeast + numGoodBeast + numGoodPlant + numBadBeast + numWall;
 	private List<String> botNames= new LinkedList<String>();
 	private List<Class<? extends BotControllerFactory>> botClasses = new LinkedList<Class<? extends BotControllerFactory>>();
+	private final boolean handOperated = false;
 	
 	public BoardConfig() {
 		//TODO loadConfig
@@ -71,6 +73,14 @@ public class BoardConfig {
 	
 	public int getEntity() {
 		return numEntity;
+	}
+	
+	public int getSteps() {
+		return steps;
+	}
+	
+	public boolean getHandOperated() {
+		return handOperated;
 	}
 	
 	

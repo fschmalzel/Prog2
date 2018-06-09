@@ -1,5 +1,8 @@
 package de.hsa.games.fatsquirrel.test;
 
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 import org.junit.jupiter.api.Test;
@@ -46,18 +49,30 @@ class BadBeastTest {
 	
 	@Test
 	void testBite() {
-		//TODO Implement
+		EntityContext con = mock(EntityContext.class);
+		when(con.getSize()).thenReturn(new XY(10, 10));
+		
+		BadBeast badBeast = new BadBeast(new XY(3, 3));
+		
+		assertEquals(badBeast.getBites(), 7);
+		
+		assertTrue(badBeast.bites(con));
+		
+		assertEquals(badBeast.getBites(), 6);
 	}
 	
 	@Test
 	void testFalseBooleanAfter7Bites() {
-		//TODO Implement
+		EntityContext con = mock(EntityContext.class);
+		when(con.getSize()).thenReturn(new XY(10, 10));
 		
-		//for i = 1 .. 7 
-		// assertFalse(b)
-		// boolean b = bites()
+		BadBeast badBeast = new BadBeast(new XY(3, 3));
 		
-		// assertTrue(b)
+		
+		for(int i = 0; i < 6; i++) {
+			assertTrue(badBeast.bites(con));
+		}
+		assertFalse(badBeast.bites(con));
 	}
 	
 	@Test
@@ -72,8 +87,7 @@ class BadBeastTest {
 		badBeast.nextStep(con);
 		
 		verify(con).tryMove(badBeast, new XY(1, 1));
-	}
-	
+	}	
 }
 
 
