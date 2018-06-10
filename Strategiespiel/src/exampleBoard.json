@@ -1,0 +1,16 @@
+{
+  "size": {
+    "x": 30,
+    "y": 15
+  },
+  "steps": 100,
+  "numGoodBeast": 10,
+  "numBadBeast": 10,
+  "numGoodPlant": 10,
+  "numBadPlant": 10,
+  "numWall": 10,
+  "bots": [
+    "gruppe17.HunterBotControllerFactory",
+    "gruppe17.RandomBotControllerFactory"],
+  "handOperatedMasterSquirrel": false  
+}
