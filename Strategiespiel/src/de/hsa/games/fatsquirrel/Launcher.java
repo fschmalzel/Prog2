@@ -17,12 +17,19 @@ import javafx.stage.WindowEvent;
 
 public class Launcher extends Application {
 
-	private static BoardConfig boardConfig = new BoardConfig();
+	private static BoardConfig boardConfig;
 	private static Logger logger = Logger.getLogger(Launcher.class.getName());
 
 	public static void main(String[] args) throws SecurityException, IOException {
 		logger.log(Level.INFO, "Launcher started!");
-
+		
+		try {
+			boardConfig = new BoardConfig("exampleBoard.json");
+		} catch(IOException e) {
+			logger.warning("Error loading config! Using default values!");
+			boardConfig = new BoardConfig();
+		}
+		
 		if (args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
 			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true")) {
 				logger.log(Level.FINER, "Synchrounos ConsoleUI started");

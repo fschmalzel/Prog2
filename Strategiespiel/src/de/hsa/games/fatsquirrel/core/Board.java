@@ -1,6 +1,8 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
@@ -18,13 +20,13 @@ import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class Board {
 	private Set<Entity> set;
-	private Set<MasterSquirrelBot> masters;
+	private Map<String, MasterSquirrel> masters;
 	private HandOperatedMasterSquirrel player;
 	private BoardConfig config;
 	
 	public Board(BoardConfig config) {
 		set = new HashSet<Entity>();
-		masters = new HashSet<MasterSquirrelBot>();
+		masters = new HashMap<>();
 		this.config = config;
 		
 		for(int i = 0; i < config.getSize().x; i++) {
@@ -57,7 +59,14 @@ public class Board {
 				BotControllerFactory factory = clazz.newInstance();
 				MasterSquirrelBot m = new MasterSquirrelBot(getRandomValidCoordinates(), factory);
 				set.add(m);
-				masters.add(m);
+				String name = clazz.getCanonicalName();
+				if (name.startsWith("de.hsa.games.fatsquirrel.botimpls.")) {
+					name = name.substring("de.hsa.games.fatsquirrel.botimpls.".length());
+				}
+				if (name.endsWith("ControllerFactory")) {
+					name = name.substring(0, name.length()-"ControllerFactory".length());
+				}
+				masters.put(name, m);
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
@@ -66,6 +75,7 @@ public class Board {
 		if (config.getHandOperated()) {
 			HandOperatedMasterSquirrel m = new HandOperatedMasterSquirrel(getRandomValidCoordinates());
 			set.add(m);
+			masters.put("HandOperated", m);
 			player = m;
 		}
 		
@@ -111,7 +121,7 @@ public class Board {
 		return set.toArray(new Entity[set.size()]);
 	}
 	
-	public Set<MasterSquirrelBot> getMasterSquirrelBots() {
+	public Map<String, MasterSquirrel> getMasterSquirrels() {
 		return masters;
 	}
 	

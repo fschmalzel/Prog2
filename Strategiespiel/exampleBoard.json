@@ -12,5 +12,5 @@
   "bots": [
     "gruppe17.HunterBotControllerFactory",
     "gruppe17.RandomBotControllerFactory"],
-  "handOperatedMasterSquirrel": false  
+  "handOperated": false  
 }
