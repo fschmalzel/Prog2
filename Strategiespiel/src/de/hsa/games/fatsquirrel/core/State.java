@@ -1,5 +1,9 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.nio.file.Files;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -9,6 +13,12 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.logging.Logger;
+
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonGenerator;
+import com.fasterxml.jackson.core.SerializableString;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
@@ -118,6 +128,63 @@ public class State {
 	public String getScore() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	protected void finalize() throws Throwable { 
+		save();
+	};
+	
+	private void save() {
+		JsonFactory factory = new JsonFactory () ;
+		try ( OutputStream os = Files.newOutputStream(path) ;
+				
+			JsonGenerator jg = factory.createGenerator (os) ) {
+			
+			for(Map.Entry<String, List<Integer>> entry : scores.entrySet()) {
+				jg.writeStartObject();
+				jg.writeStringField("Bot",entry.getKey());
+				jg.writeEndObject();
+				
+				jg.writeStartArray();
+				jg.writeArrayFieldStart("Score");
+				int i = 1;
+				for(Integer rounds : entry.getValue()) {
+					jg.writeNumberField("round " + i, rounds);
+					i++;
+				}
+				jg.writeEndArray();
+			}
+			
+			jg.close();
+			
+		} catch ( IOException e) {
+			e. printStackTrace () ;
+		}
+
+	}
+	
+	private void load() {
+		try ( InputStream is = Files.newInputStream(path) ) {
+			ObjectMapper mapper = new ObjectMapper () ;
+			JsonNode root = mapper . readTree (is);
+			
+			String botName = root.path("Bot").asText();
+			
+			List<Integer> botScores = new LinkedList<Integer>();
+			
+			JsonNode scoreNode = root.path("Score");
+			int i = 1
+					;
+			for(JsonNode node : scoreNode) {
+				botScores.add(node.path("round " + i).asInt());
+				i++;
+			}
+			
+			scores.put(botName, botScores);
+
+			} catch ( IOException e) {
+			e. printStackTrace () ;
+			}
 	}
 
 }
