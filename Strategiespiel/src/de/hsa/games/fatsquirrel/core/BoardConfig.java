@@ -1,8 +1,12 @@
 package de.hsa.games.fatsquirrel.core;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.prefs.Preferences;
 
 import de.hsa.games.fatsquirrel.Game;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
@@ -27,6 +31,13 @@ public class BoardConfig {
 //		botNames.add("gruppe17.RandomBotControllerFactory");
 		
 		loadClasses();
+	}
+	
+	public BoardConfig(String path) {
+		try (InputStream is = new FileInputStream(new File(path))) {
+
+			Preferences prefs = Preferences.importPreferences(is);
+		}
 	}
 	
 	@SuppressWarnings("unchecked")

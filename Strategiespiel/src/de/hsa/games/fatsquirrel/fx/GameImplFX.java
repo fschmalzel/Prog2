@@ -1,18 +1,12 @@
 package de.hsa.games.fatsquirrel.fx;
 
-import java.util.LinkedList;
-import java.util.List;
+import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.Game;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
-import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
-import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 
 public class GameImplFX extends Game {
-
-	private HandOperatedMasterSquirrel masterSquirrel;
-	private List<MasterSquirrel> squirrels = new LinkedList<>();
 
 	public GameImplFX(BoardConfig boardConfig, FxUI ui) {
 		super(boardConfig, ui);
@@ -26,14 +20,19 @@ public class GameImplFX extends Game {
 		
 		switch (cmd.getType()) {
 		case MASTERENERGY:
-			ui.message("master energy: " + masterSquirrel.getEnergy());
+			if (state.getPlayer() != null)
+				ui.message("master energy: " + state.getPlayer().getEnergy());
+			else {
+				ui.message("No HandOperatedMasterSquirrel in the game!");
+				Logger.getLogger(GameImplFX.class.getName()).warning("Player tried command \"masterenergy\" without any HandOperatedMasterSquirrel!");
+			}
 			break;
 		case ALL:
 			ui.message(state.getBoard().toString());
 			break;
 		default:
-			if (masterSquirrel != null)
-				masterSquirrel.setCommand(cmd);
+			if (state.getPlayer() != null)
+				state.getPlayer().setCommand(cmd);
 			return;
 		}
 	}
@@ -46,13 +45,7 @@ public class GameImplFX extends Game {
 	@Override
 	protected void render() {
 		ui.render(state.flattenedBoard());
-		
-		String s = "";
-
-		for (MasterSquirrel squirrel : squirrels)
-			s += "Energy: " + squirrel.getEnergy() + "\t\t";
-		
-		ui.message(s);
+		ui.message(state.getScore());
 	}
 
 }

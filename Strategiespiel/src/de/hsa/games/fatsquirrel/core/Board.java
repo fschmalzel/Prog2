@@ -8,6 +8,8 @@ import de.hsa.games.fatsquirrel.entities.BadBeast;
 import de.hsa.games.fatsquirrel.entities.BadPlant;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.entities.GoodPlant;
+import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
+import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrelBot;
 import de.hsa.games.fatsquirrel.entities.Character;
 import de.hsa.games.fatsquirrel.entities.Wall;
@@ -16,13 +18,14 @@ import de.hsa.games.fatsquirrel.util.XYsupport;
 
 public class Board {
 	private Set<Entity> set;
+	private Set<MasterSquirrelBot> masters;
+	private HandOperatedMasterSquirrel player;
 	private BoardConfig config;
-	private int steps;
 	
 	public Board(BoardConfig config) {
 		set = new HashSet<Entity>();
+		masters = new HashSet<MasterSquirrelBot>();
 		this.config = config;
-		this.steps = config.getSteps();
 		
 		for(int i = 0; i < config.getSize().x; i++) {
 			set.add(new Wall(new XY(i,0)));
@@ -52,10 +55,18 @@ public class Board {
 		for (Class<? extends BotControllerFactory> clazz : config.getBots()) {
 			try {
 				BotControllerFactory factory = clazz.newInstance();
-				set.add(new MasterSquirrelBot(getRandomValidCoordinates(), factory));
+				MasterSquirrelBot m = new MasterSquirrelBot(getRandomValidCoordinates(), factory);
+				set.add(m);
+				masters.add(m);
 			} catch (InstantiationException | IllegalAccessException e) {
 				e.printStackTrace();
 			}
+		}
+		
+		if (config.getHandOperated()) {
+			HandOperatedMasterSquirrel m = new HandOperatedMasterSquirrel(getRandomValidCoordinates());
+			set.add(m);
+			player = m;
 		}
 		
 	}
@@ -78,7 +89,6 @@ public class Board {
 	}
 	
 	public void update(EntityContext context) {
-		steps--;
 		for (Entity e : set.toArray(new Entity[set.size()])) {
 			if (e instanceof Character && set.contains(e))
 				((Character) e).nextStep(context);
@@ -99,6 +109,14 @@ public class Board {
 	
 	public Entity[] getEntitys() {
 		return set.toArray(new Entity[set.size()]);
+	}
+	
+	public Set<MasterSquirrelBot> getMasterSquirrelBots() {
+		return masters;
+	}
+	
+	public HandOperatedMasterSquirrel getPlayer() {
+		return player;
 	}
 	
 	public BoardConfig getConfig() {
