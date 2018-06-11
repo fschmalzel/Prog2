@@ -25,6 +25,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 
+/**
+ * Saves, loads & controls scores.
+ */
 public class State {
 	private Board board;
 	private Map<String, List<Integer>> scores;

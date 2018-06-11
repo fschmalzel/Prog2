@@ -16,6 +16,9 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 
+/**
+ * A {@link UI} implementation that uses JavaFX for a graphical user interface.
+ */
 public class FxUI extends Scene implements UI {
 
 	private static final int CELL_SIZE = 50;

@@ -18,6 +18,10 @@ import de.hsa.games.fatsquirrel.entities.Wall;
 import de.hsa.games.fatsquirrel.util.XY;
 import de.hsa.games.fatsquirrel.util.XYsupport;
 
+/**
+ * Holds all {@link Entity}s, {@link MasterSquirrel}s and the config.
+ * Generates the initial entities
+ */
 public class Board {
 	private Set<Entity> set;
 	private Map<String, MasterSquirrel> masters;
@@ -82,6 +86,7 @@ public class Board {
 		}
 		
 	}
+	
 	private XY getRandomValidCoordinates() {
 		do {
 			XY xy = XYsupport.getRandomCoordinates(new XY(1, 1), config.getSize().minus(new XY(1, 1)));
@@ -100,6 +105,11 @@ public class Board {
 		} while(true);
 	}
 	
+	/**
+	 * Updates the board using the supplied EntityContext
+	 * 
+	 * @param context
+	 */
 	public void update(EntityContext context) {
 		steps--;
 		for (Entity e : set.toArray(new Entity[set.size()])) {
@@ -108,38 +118,65 @@ public class Board {
 		}
 	}
 	
+	/**
+	 * @return  Generates a {@link FlattenedBoard} using this {@link Board}.
+	 */
 	public FlattenedBoard flatten() {
 		return new FlattenedBoard(this);
 	}
 	
+	/**
+	 * @param The {@link Entity} to be removed from this {@link Board}.
+	 */
 	public void remove(Entity e) {
 		set.remove(e);
 	}
 	
+	/**
+	 * @param The {@link Entity} to be added to this {@link Board}.
+	 */
 	public void insert(Entity e) {
 		set.add(e);
 	}
 	
+	/**
+	 * @return The remaining steps of this round.
+	 */
 	public int getSteps() {
 		return steps;
 	}
 	
+	/**
+	 * @return All {@link Entity}s in this {@link Board}.
+	 */
 	public Entity[] getEntitys() {
 		return set.toArray(new Entity[set.size()]);
 	}
 	
+	/**
+	 * @return All {@link MasterSquirrel} with their names.
+	 */
 	public Map<String, MasterSquirrel> getMasterSquirrels() {
 		return masters;
 	}
 	
+	/**
+	 * @return The {@link HandOperatedMasterSquirrel} that is controlled by the player.
+	 */
 	public HandOperatedMasterSquirrel getPlayer() {
 		return player;
 	}
 	
+	/**
+	 * @return The {@link BoardConfig} that this {@link Board}.
+	 */
 	public BoardConfig getConfig() {
 		return config;
 	}
 	
+	/**
+	 * @return All {@link Entity}s as {@link String}.
+	 */
 	public String toString() {
 		return "Num of Entitys: " + set.size() + "\n" + set;
 	}

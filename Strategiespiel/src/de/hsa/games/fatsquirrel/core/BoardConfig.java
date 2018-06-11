@@ -40,6 +40,9 @@ public class BoardConfig {
 	private List<String> botNames= new LinkedList<String>();
 	private List<Class<? extends BotControllerFactory>> botClasses = new LinkedList<Class<? extends BotControllerFactory>>();
 	
+	/**
+	 * Generates a {@link BoardConfig} with the default values.
+	 */
 	public BoardConfig() {
 		size = DEFAULT_SIZE;
 		steps = DEFAULT_STEPS;
@@ -51,7 +54,10 @@ public class BoardConfig {
 		handOperated = DEFAULT_HAND_OPERATED;
 		loadAllClasses();
 	}
-	
+
+	/**
+	 * Generates a {@link BoardConfig} with the values specified in the file.
+	 */
 	public BoardConfig(String path) throws IOException {
 		
 		logger.info("Loading config \"" + path + "\"!");
@@ -157,12 +163,18 @@ public class BoardConfig {
 		
 	}
 	
+	/**
+	 * Loads all classes in the botimpls package
+	 */
 	private void loadAllClasses() {
 		Reflections reflections = new Reflections("de.hsa.games.fatsquirrel.botimpls");
 		Set<Class<? extends BotControllerFactory>> allClasses = reflections.getSubTypesOf(BotControllerFactory.class);
 		botClasses.addAll(allClasses);
 	}
 	
+	/**
+	 * Loads all classes that are specified by the config file.
+	 */
 	@SuppressWarnings("unchecked")
 	private void loadClasses() {
 		logger.fine("Loading bots!");
@@ -179,6 +191,9 @@ public class BoardConfig {
 		}
 	}
 	
+	/**
+	 * @return The classes of all bots that are loaded.
+	 */
 	public List<Class<? extends BotControllerFactory>> getBots() {
 		return botClasses;
 	}

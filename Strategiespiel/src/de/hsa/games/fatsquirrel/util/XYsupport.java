@@ -18,6 +18,11 @@ public class XYsupport {
 		return new XY(x, y);
 	}
 	
+	/**
+	 * @param xy1 
+	 * @param xy2
+	 * @return A coordinate that is inside the coordinates from xy1 to xy2.
+	 */
 	public static XY getRandomCoordinates(XY xy1, XY xy2) {
 		if (xy1.x > xy2.x || xy1.y > xy2.y)
 			return null;
@@ -27,12 +32,17 @@ public class XYsupport {
 				rnd.nextInt(xy2.y - xy1.y + 1) + xy1.y);
 	}
 	
-	
-	public static boolean isInView(XY xy1, XY xy2, int visibilty) {
+	/**
+	 * @param xy1
+	 * @param xy2
+	 * @param visibility The range.
+	 * @return If xy2 is in range of xy1. 
+	 */
+	public static boolean isInView(XY xy1, XY xy2, int visibility) {
 
-		if (Math.abs(xy1.x - xy2.x) > (visibilty - 1) / 2)
+		if (Math.abs(xy1.x - xy2.x) > (visibility - 1) / 2)
 			return false;
-		else if (Math.abs(xy1.y - xy2.y) > (visibilty - 1) / 2)
+		else if (Math.abs(xy1.y - xy2.y) > (visibility - 1) / 2)
 			return false;
 
 		return true;
