@@ -7,7 +7,7 @@ import de.hsa.games.fatsquirrel.entities.GoodBeast;
 import de.hsa.games.fatsquirrel.entities.GoodPlant;
 
 /**
- * A simple bot that just runs towards {@link GoodBeast} & {@link GoodPlant} without path finding.
+ * A simple bot that just runs towards {@link GoodBeast} and {@link GoodPlant} without path finding.
  */
 public class HunterBotControllerFactory implements BotControllerFactory {
 

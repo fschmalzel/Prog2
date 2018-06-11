@@ -106,9 +106,9 @@ public class Board {
 	}
 	
 	/**
-	 * Updates the board using the supplied EntityContext
+	 * Updates the board using the supplied {@link EntityContext}
 	 * 
-	 * @param context
+	 * @param context The {@link EntityContext} to be used.
 	 */
 	public void update(EntityContext context) {
 		steps--;
@@ -126,14 +126,14 @@ public class Board {
 	}
 	
 	/**
-	 * @param The {@link Entity} to be removed from this {@link Board}.
+	 * @param e The {@link Entity} to be removed from this {@link Board}.
 	 */
 	public void remove(Entity e) {
 		set.remove(e);
 	}
 	
 	/**
-	 * @param The {@link Entity} to be added to this {@link Board}.
+	 * @param e The {@link Entity} to be added to this {@link Board}.
 	 */
 	public void insert(Entity e) {
 		set.add(e);

@@ -19,8 +19,8 @@ public class XYsupport {
 	}
 	
 	/**
-	 * @param xy1 
-	 * @param xy2
+	 * @param xy1 Top left coordinate
+	 * @param xy2 bottom right coordinate
 	 * @return A coordinate that is inside the coordinates from xy1 to xy2.
 	 */
 	public static XY getRandomCoordinates(XY xy1, XY xy2) {
@@ -33,8 +33,8 @@ public class XYsupport {
 	}
 	
 	/**
-	 * @param xy1
-	 * @param xy2
+	 * @param xy1 The top left coordinate.
+	 * @param xy2 The bottom right coordinate
 	 * @param visibility The range.
 	 * @return If xy2 is in range of xy1. 
 	 */

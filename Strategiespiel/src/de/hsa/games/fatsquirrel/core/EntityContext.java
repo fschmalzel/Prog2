@@ -39,7 +39,7 @@ public interface EntityContext {
 	void tryMove(MasterSquirrel masterSquirrel, XY moveDirection);
 	
 	/**
-	 * @param pos
+	 * @param pos Center position.
 	 * @return The {@link Squirrel} that is the nearest to the specified position.
 	 */
 	Squirrel nearestSquirrel(XY pos);
@@ -67,7 +67,7 @@ public interface EntityContext {
 	boolean tryInsert(Entity entity);
 	
 	/**
-	 * @param xy
+	 * @param xy The position.
 	 * @return The {@link Entity} at the specified position.
 	 */
 	Entity getEntity(XY xy);

@@ -26,7 +26,7 @@ import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 
 /**
- * Saves, loads & controls scores.
+ * Saves, loads and controls scores.
  */
 public class State {
 	private Board board;

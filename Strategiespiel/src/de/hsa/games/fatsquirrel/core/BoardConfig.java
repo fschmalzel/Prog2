@@ -57,6 +57,8 @@ public class BoardConfig {
 
 	/**
 	 * Generates a {@link BoardConfig} with the values specified in the file.
+	 * @param path The file to be loaded.
+	 * @throws IOException If there is a problem loading the config file.
 	 */
 	public BoardConfig(String path) throws IOException {
 		
