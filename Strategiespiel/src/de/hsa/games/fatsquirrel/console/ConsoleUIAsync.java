@@ -1,7 +1,12 @@
 package de.hsa.games.fatsquirrel.console;
 
+import de.hsa.games.fatsquirrel.UI;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 
+/**
+ * A {@link UI} that prints everything on the console and doesn't use any graphical interface / api.
+ * Is using asynchronous input.
+ */
 public class ConsoleUIAsync extends ConsoleUI {
 	
 	private GameCommand cmd;

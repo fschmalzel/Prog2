@@ -4,6 +4,9 @@ import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.core.SpawnCommand;
 
+/**
+ * Specifies all valid commands for the console.
+ */
 public interface CommandTypes {
 	
 	@AsCommand(getName = "help", getHelpText = "  * list all commands")

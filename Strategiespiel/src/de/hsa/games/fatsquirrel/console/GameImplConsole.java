@@ -5,6 +5,9 @@ import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 
+/**
+ * Synchronous implementation of the game with {@link ConsoleUIAsync}.
+ */
 public class GameImplConsole extends Game {
 	
 	protected HandOperatedMasterSquirrel masterSquirrel;

@@ -2,6 +2,9 @@ package de.hsa.games.fatsquirrel.console;
 
 import java.lang.reflect.InvocationTargetException;
 
+/**
+ * A command that has been read from the console and that is executabl.
+ */
 public class Command implements Executable {
 	
 	CommandType cmdType;
@@ -11,7 +14,12 @@ public class Command implements Executable {
 		this.cmdType = cmdType;
 		this.params = params;
 	}
-
+	
+	/**
+	 * Will invoke the underlying method with the parameters of the console and return the result.
+	 * 
+	 * @return An {@link Object} which represents the return value of the invoked method.
+	 */
 	@Override
 	public Object execute() {
 		try {

@@ -12,6 +12,10 @@ import de.hsa.games.fatsquirrel.core.MoveCommand;
 import de.hsa.games.fatsquirrel.core.SpawnCommand;
 import de.hsa.games.fatsquirrel.util.XY;
 
+/**
+ * A {@link UI} that prints everything on the console and doesn't use any graphical interface / api.
+ * Is using synchronous input.
+ */
 public class ConsoleUI implements UI, CommandTypes {
 	
 	private CommandScanner scanner;

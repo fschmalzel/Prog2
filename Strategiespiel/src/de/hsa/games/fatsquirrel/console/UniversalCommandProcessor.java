@@ -4,6 +4,9 @@ import java.io.BufferedReader;
 import java.io.OutputStream;
 import java.lang.reflect.Method;
 
+/**
+ * Creates the {@link CommandScanner} and can process asynchronously.
+ */
 public class UniversalCommandProcessor {
 	private OutputStream outputStream;
 	private BufferedReader inputReader;
@@ -36,10 +39,16 @@ public class UniversalCommandProcessor {
 		
 	}
 	
+	/**
+	 * @return A {@link CommandScanner} to use for synchronous scanning.
+	 */
 	public CommandScanner getScanner() {
 		return new CommandScanner(commandTypes, inputReader, outputStream);
 	}
 	
+	/**
+	 * Processes input indefinitely.
+	 */
 	public void process() {
 		
 		CommandScanner scanner = new CommandScanner(commandTypes, inputReader, outputStream);

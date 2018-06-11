@@ -19,6 +19,9 @@ public abstract class Game {
 		this.ui = ui;
 	}
 	
+	/**
+	 * Simple method to start the game
+	 */
 	public void run() {
 		logger.info("Game started!");
 		while(true) {
@@ -31,6 +34,9 @@ public abstract class Game {
 		}
 	}
 	
+	/**
+	 * Starts the game in a new thread
+	 */
 	protected void asyncRun() {
 		logger.info("Game started!");
 
@@ -54,11 +60,11 @@ public abstract class Game {
 			}
 		}, 0);
 	}
-
+	
 	protected void update() {
 		state.update();
 	}
-
+	
 	protected abstract void processInput();
 
 	protected abstract void render();

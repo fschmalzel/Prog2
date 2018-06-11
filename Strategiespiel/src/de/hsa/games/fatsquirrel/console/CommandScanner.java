@@ -16,7 +16,10 @@ public class CommandScanner {
 		this.outputStream = outputStream;
 		this.commandTypes = commandTypes;
 	}
-
+	
+	/**
+	 * @return Reads the next {@link Command} from the console.
+	 */
 	public Command next() {
 		
 		String input;
