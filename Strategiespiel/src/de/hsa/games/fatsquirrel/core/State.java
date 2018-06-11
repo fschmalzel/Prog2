@@ -58,20 +58,14 @@ public class State {
 			@Override
 			public int compare(Entry<String, List<Integer>> o1, Entry<String, List<Integer>> o2) {
 				int highest1 = 0;
-				ListIterator<Integer> i = o1.getValue().listIterator();
-				while (i.hasNext()) {
-					Integer val = i.next();
+				for (Integer val : o1.getValue())
 					if (val > highest1)
 						highest1 = val;
-				}
 
 				int highest2 = 0;
-				ListIterator<Integer> i2 = o2.getValue().listIterator();
-				while (i2.hasNext()) {
-					Integer val = i2.next();
+				for (Integer val : o2.getValue())
 					if (val > highest2)
 						highest2 = val;
-				}
 
 				return Integer.compare(highest1, highest2);
 			}
@@ -99,7 +93,7 @@ public class State {
 	public void update() {
 		board.update(flattenedBoard());
 
-		if (steps-- <= 0)
+		if (--steps <= 0)
 			endRound();
 
 	}
@@ -127,22 +121,25 @@ public class State {
 
 	private void save() {
 		JsonFactory factory = new JsonFactory();
+		
 		try (OutputStream os = Files.newOutputStream(Paths.get("highscores.json"))) {
 
 			JsonGenerator jg = factory.createGenerator(os);
-
+			
+			jg.writeStartArray();
 			for (Map.Entry<String, List<Integer>> entry : scores.entrySet()) {
-				jg.writeObjectFieldStart(entry.getKey());
-				jg.writeArrayFieldStart("Scores");
+				jg.writeStartObject();
+				jg.writeStringField("Name", entry.getKey());
+				jg.writeFieldName("Scores");
+				jg.writeStartArray();
 				
-				for (Integer points : entry.getValue()) {
+				for (Integer points : entry.getValue())
 					jg.writeNumber(points);
-				}
-
+				
 				jg.writeEndArray();
 				jg.writeEndObject();
 			}
-
+			jg.writeEndArray();
 			jg.close();
 
 		} catch (IOException e) {
@@ -154,27 +151,30 @@ public class State {
 	private void load() {
 		File file = new File("highscores.json");
 		
-		if (!file.exists())
+		if (file.exists())
 			try (InputStream is = new FileInputStream(file)) {
 				ObjectMapper mapper = new ObjectMapper();
 				JsonNode root = mapper.readTree(is);
 				
-				
-				
-				
-				String botName = root.path("Bot").asText();
-
-				List<Integer> botScores = new LinkedList<Integer>();
-
-				JsonNode scoreNode = root.path("Score");
-				int i = 1;
-				for (JsonNode node : scoreNode) {
-					botScores.add(node.path("round " + i).asInt());
-					i++;
+				if(root.isArray()) {
+					for (JsonNode node : root) {
+						if (node.has("Name") && node.has("Scores")) {
+							if (node.get("Name").isTextual() && node.get("Scores").isArray()) {
+								List<Integer> list = new LinkedList<>();
+								for (JsonNode val : node.get("Scores")) {
+									if (val.isInt())
+										list.add(val.asInt());
+								}
+								scores.put(node.get("Name").asText(), list);
+								
+							}
+							
+						}
+						
+					}
+					
 				}
-
-				scores.put(botName, botScores);
-
+				
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

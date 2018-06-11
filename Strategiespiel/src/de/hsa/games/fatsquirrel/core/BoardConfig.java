@@ -58,8 +58,6 @@ public class BoardConfig {
 		
 		JsonNode root = null;
 		
-		System.out.println(System.getProperty("user.dir"));
-		
 		try (InputStream is = new FileInputStream(new File(path))) {
 			
 			ObjectMapper mapper = new ObjectMapper();
