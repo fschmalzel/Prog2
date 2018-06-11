@@ -45,7 +45,7 @@ public class GameImplFX extends Game {
 	@Override
 	protected void render() {
 		ui.render(state.flattenedBoard());
-		ui.message(state.getScore());
+		ui.message(state.getCurrentScore());
 	}
 
 }

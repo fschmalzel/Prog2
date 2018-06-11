@@ -23,10 +23,12 @@ public class Board {
 	private Map<String, MasterSquirrel> masters;
 	private HandOperatedMasterSquirrel player;
 	private BoardConfig config;
+	private int steps;
 	
 	public Board(BoardConfig config) {
 		set = new HashSet<Entity>();
 		masters = new HashMap<>();
+		steps = config.getSteps();
 		this.config = config;
 		
 		for(int i = 0; i < config.getSize().x; i++) {
@@ -99,6 +101,7 @@ public class Board {
 	}
 	
 	public void update(EntityContext context) {
+		steps--;
 		for (Entity e : set.toArray(new Entity[set.size()])) {
 			if (e instanceof Character && set.contains(e))
 				((Character) e).nextStep(context);
@@ -115,6 +118,10 @@ public class Board {
 	
 	public void insert(Entity e) {
 		set.add(e);
+	}
+	
+	public int getSteps() {
+		return steps;
 	}
 	
 	public Entity[] getEntitys() {

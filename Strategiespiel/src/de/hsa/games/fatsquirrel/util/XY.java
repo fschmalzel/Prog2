@@ -45,8 +45,7 @@ public class XY {
 	}
 	
 	public int hashCode() {
-		//TODO Generate hash
-		return 0;
+		return super.hashCode();
 	}
 	
 	@Override

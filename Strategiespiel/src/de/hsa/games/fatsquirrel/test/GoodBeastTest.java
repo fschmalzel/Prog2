@@ -67,6 +67,9 @@ class GoodBeastTest {
 		
 		@Override
 		public void implode(MiniSquirrel m, int impactRadius) {}
+
+		@Override
+		public long getRemainingSteps() { return 0; }
 		
 	}
 	

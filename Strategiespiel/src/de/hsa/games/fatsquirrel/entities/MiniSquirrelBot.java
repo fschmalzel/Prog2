@@ -120,8 +120,7 @@ public class MiniSquirrelBot extends MiniSquirrel {
 
 		@Override
 		public long getRemainingSteps() {
-			// TODO getRemainingSteps
-			return 0;
+			return context.getRemainingSteps();
 		}
 
 	}

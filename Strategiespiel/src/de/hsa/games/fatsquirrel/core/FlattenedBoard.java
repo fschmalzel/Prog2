@@ -352,4 +352,10 @@ public class FlattenedBoard implements BoardView, EntityContext {
 		return board.getConfig().getSize();
 	}
 
+	@Override
+	public long getRemainingSteps() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

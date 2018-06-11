@@ -22,5 +22,6 @@ public interface EntityContext {
 	boolean tryInsert(Entity s);
 	Entity getEntity(XY xy);
 	void implode(MiniSquirrel m, int impactRadius);
+	long getRemainingSteps();
 	
 }

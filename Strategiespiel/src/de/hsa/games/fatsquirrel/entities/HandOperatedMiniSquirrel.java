@@ -10,7 +10,6 @@ public class HandOperatedMiniSquirrel extends MiniSquirrel {
 
 	public HandOperatedMiniSquirrel(int energy, XY xy, MasterSquirrel master) {
 		super(energy, xy, master);
-		// TODO Auto-generated constructor stub
 	}
 	
 	@Override

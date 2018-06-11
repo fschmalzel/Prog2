@@ -6,6 +6,11 @@ public class XYsupport {
 	
 	private static Random rnd = new Random();
 	
+	/**
+	 * Returns a randomVector ranging from (-1 | -1) to (1 | 1)
+	 * 
+	 * @return {@link XY} randomVector
+	 */
 	public static XY getRandomVector() {
 		int x = rnd.nextInt(3) - 1;
 		int y = rnd.nextInt(3) - 1;

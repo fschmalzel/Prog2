@@ -126,8 +126,7 @@ public class MasterSquirrelBot extends MasterSquirrel {
 
 		@Override
 		public long getRemainingSteps() {
-			// TODO getRemainingSteps
-			return 0;
+			return context.getRemainingSteps();
 		}
 		
 	}

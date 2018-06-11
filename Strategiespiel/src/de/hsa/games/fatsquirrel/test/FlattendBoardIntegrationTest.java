@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import de.hsa.games.fatsquirrel.botapi.BotControllerFactory;
 import de.hsa.games.fatsquirrel.core.Board;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
+import de.hsa.games.fatsquirrel.core.Entity;
 import de.hsa.games.fatsquirrel.core.EntityType;
 import de.hsa.games.fatsquirrel.core.FlattenedBoard;
 import de.hsa.games.fatsquirrel.entities.GoodBeast;
@@ -39,10 +40,6 @@ class FlattendBoardIntegrationTest {
 		board = new Board(cfg);
 		flatBoard = board.flatten();
 	}
-
-	//TODO Implement everything
-	//board is new for every function
-	//there are just walls in the board
 	
 	@Test
 	void testNearestSquirrel() {
@@ -97,18 +94,27 @@ class FlattendBoardIntegrationTest {
 	void testKillAndReplace() {
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 		
-//		board.insert(goodBeast);
+		board.insert(goodBeast);
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		
 		flatBoard.killAndReplace(goodBeast);
+		
+		boolean found = false;
+		
+		for (Entity e : board.getEntitys()) {
+			if (e instanceof GoodBeast)
+				found = true;
+		}
+		
+		assertTrue(found);
 	}
 
 	@Test
 	void testGetEntityType() {
 		GoodBeast goodBeast = new GoodBeast(new XY(7,7));
 		
-//		board.insert(goodBeast);
+		board.insert(goodBeast);
 		
 		FlattenedBoard flatBoard = new FlattenedBoard(board);
 		

@@ -27,15 +27,12 @@ import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
 
 public class State {
 	private Board board;
-	private int steps;
 	private Map<String, List<Integer>> scores;
 
 	MasterSquirrel masterSquirrel;
 
 	public State(BoardConfig boardConfig) {
 		scores = new HashMap<>();
-
-		steps = boardConfig.getSteps();
 		board = new Board(boardConfig);
 
 		load();
@@ -85,15 +82,13 @@ public class State {
 			System.out.println(s.toString());
 			logger.info(s.toString());
 		}
-
-		steps = board.getConfig().getSteps();
 		board = new Board(board.getConfig());
 	}
 
 	public void update() {
 		board.update(flattenedBoard());
 
-		if (--steps <= 0)
+		if (board.getSteps() <= 0)
 			endRound();
 
 	}
@@ -110,9 +105,12 @@ public class State {
 		return new FlattenedBoard(board);
 	}
 
-	public String getScore() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getCurrentScore() {
+		StringBuilder s = new StringBuilder();
+		for (Map.Entry<String, MasterSquirrel> e : board.getMasterSquirrels().entrySet()) {
+			s.append(e.getKey()).append(":\t").append(e.getValue().getEnergy()).append("\t|\t");
+		}
+		return s.toString();
 	}
 
 	protected void finalize() throws Throwable {
@@ -156,7 +154,7 @@ public class State {
 				ObjectMapper mapper = new ObjectMapper();
 				JsonNode root = mapper.readTree(is);
 				
-				if(root.isArray()) {
+				if(root != null && root.isArray()) {
 					for (JsonNode node : root) {
 						if (node.has("Name") && node.has("Scores")) {
 							if (node.get("Name").isTextual() && node.get("Scores").isArray()) {
