@@ -27,4 +27,7 @@ hs_err_pid*
 
 *.bak_*
 
+highscores.json
+exampleBoard.json
+logging.properties
 /Test/
