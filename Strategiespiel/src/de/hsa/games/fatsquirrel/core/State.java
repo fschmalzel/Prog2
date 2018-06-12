@@ -25,6 +25,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import de.hsa.games.fatsquirrel.entities.HandOperatedMasterSquirrel;
 import de.hsa.games.fatsquirrel.entities.MasterSquirrel;
+import de.hsa.games.fatsquirrel.web.WebServer;
 
 /**
  * Saves, loads and controls scores.
@@ -38,7 +39,12 @@ public class State {
 	public State(BoardConfig boardConfig) {
 		scores = new HashMap<>();
 		board = new Board(boardConfig);
-
+		
+		try {
+			WebServer.start(this);
+		} catch (InterruptedException e1) {
+		}
+		
 		for (Map.Entry<String, MasterSquirrel> e : board.getMasterSquirrels().entrySet()) {
 			if (!scores.containsKey(e.getKey())) {
 				List<Integer> list = new LinkedList<>();
@@ -73,6 +79,37 @@ public class State {
 			scores.get(e.getKey()).add(score);
 		}
 
+		save();
+
+		String s = getAllScores();
+		System.out.println(s);
+		final Logger logger = Logger.getLogger(State.class.getName());
+		logger.info("Scores:\n" + s);
+		
+		board = new Board(board.getConfig());
+	}
+
+	public void update() {
+		board.update(flattenedBoard());
+
+		if (board.getSteps() <= 0)
+			endRound();
+
+	}
+
+	public Board getBoard() {
+		return board;
+	}
+
+	public HandOperatedMasterSquirrel getPlayer() {
+		return board.getPlayer();
+	}
+
+	public FlattenedBoard flattenedBoard() {
+		return new FlattenedBoard(board);
+	}
+
+	public String getAllScores() {
 		List<Map.Entry<String, List<Integer>>> list = new LinkedList<Entry<String, List<Integer>>>(scores.entrySet());
 		Collections.sort(list, new Comparator<Map.Entry<String, List<Integer>>>() {
 
@@ -81,9 +118,7 @@ public class State {
 				return Integer.compare(o2.getValue().get(0), o1.getValue().get(0));
 			}
 		});
-
-		save();
-
+		
 		StringBuilder out = new StringBuilder();
 		Formatter formatter = new Formatter(out);
 		formatter.format("%1$20s", "Name").flush();
@@ -111,34 +146,9 @@ public class State {
 		}
 		
 		formatter.close();
-		
-		System.out.println(out.toString());
-		final Logger logger = Logger.getLogger(State.class.getName());
-		logger.info("Scores:\n" + out.toString());
-		
-		board = new Board(board.getConfig());
+		return out.toString();
 	}
-
-	public void update() {
-		board.update(flattenedBoard());
-
-		if (board.getSteps() <= 0)
-			endRound();
-
-	}
-
-	public Board getBoard() {
-		return board;
-	}
-
-	public HandOperatedMasterSquirrel getPlayer() {
-		return board.getPlayer();
-	}
-
-	public FlattenedBoard flattenedBoard() {
-		return new FlattenedBoard(board);
-	}
-
+	
 	public String getCurrentScore() {
 		StringBuilder s = new StringBuilder();
 		for (Map.Entry<String, MasterSquirrel> e : board.getMasterSquirrels().entrySet()) {
