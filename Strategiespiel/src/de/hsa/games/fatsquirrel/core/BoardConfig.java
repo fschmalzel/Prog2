@@ -72,10 +72,10 @@ public class BoardConfig {
 			root = mapper.readTree(is);
 					
 		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+			Logger.getLogger(BoardConfig.class.getName()).warning("Config file not found!");
+			throw e;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw e;
 		}
 		
 		int x, y;
@@ -156,10 +156,14 @@ public class BoardConfig {
 					logger.fine("Added bot \"" + node.asText() + "\" to loading list!");
 				}
 			}
-			
-			loadClasses();
+			if (botNames.isEmpty()) {
+				logger.warning("No bots specified in config, scanning for bots!");
+				loadAllClasses();
+			} else 
+				loadClasses();
 			
 		} else {
+			logger.warning("No bots specified in config, scanning for bots!");
 			loadAllClasses();
 		}
 		

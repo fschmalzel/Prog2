@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Formatter;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,15 +42,30 @@ public class State {
 		load();
 		
 		for (Map.Entry<String, MasterSquirrel> e : board.getMasterSquirrels().entrySet()) {
-			if (!scores.containsKey(e.getKey()))
-				scores.put(e.getKey(), new LinkedList<Integer>());
+			if (!scores.containsKey(e.getKey())) {
+				List<Integer> list = new LinkedList<>();
+				list.add(0);
+				scores.put(e.getKey(), list);
+			}
+			
 		}
 	}
 
 	private void endRound() {
+		
+		try {
+			Thread.sleep(2000);
+		} catch (InterruptedException e1) {
+			Logger.getLogger(State.class.getName()).warning("Error pausing thread after end of the round!");
+		}
 
 		for (Map.Entry<String, MasterSquirrel> e : board.getMasterSquirrels().entrySet()) {
-			scores.get(e.getKey()).add(e.getValue().getEnergy());
+			int score = e.getValue().getEnergy();
+			if (score > scores.get(e.getKey()).get(0)) {
+				scores.get(e.getKey()).remove(0);
+				scores.get(e.getKey()).add(0, score);
+			}
+			scores.get(e.getKey()).add(score);
 		}
 
 		List<Map.Entry<String, List<Integer>>> list = new LinkedList<Entry<String, List<Integer>>>(scores.entrySet());
@@ -57,34 +73,44 @@ public class State {
 
 			@Override
 			public int compare(Entry<String, List<Integer>> o1, Entry<String, List<Integer>> o2) {
-				int highest1 = 0;
-				for (Integer val : o1.getValue())
-					if (val > highest1)
-						highest1 = val;
-
-				int highest2 = 0;
-				for (Integer val : o2.getValue())
-					if (val > highest2)
-						highest2 = val;
-
-				return Integer.compare(highest1, highest2);
+				return Integer.compare(o2.getValue().get(0), o1.getValue().get(0));
 			}
 		});
 
 		save();
 
-		System.out.println();
-		final Logger logger = Logger.getLogger(State.class.getName());
-		logger.info("Scores:");
+		StringBuilder out = new StringBuilder();
+		Formatter formatter = new Formatter(out);
+		formatter.format("%1$20s", "Name").flush();
+		out.append("  |  ");
+		formatter.format("%1$9s", "Highscore");
+		
+		java.util.Iterator<List<Integer>> iter = scores.values().iterator();
+		if (iter.hasNext()) {
+			int size = iter.next().size()-1;
+			for (int i = 0; i < size; i++) {
+				out.append("  |  ");
+				formatter.format("%1$9s", "Round " + (i+1));
+			}
+		}
+		formatter.flush();
+		
 		for (Map.Entry<String, List<Integer>> entry : list) {
-			StringBuilder s = new StringBuilder(entry.getKey());
+			out.append('\n');
+			formatter.format("%1$20s", entry.getKey()).flush();
 			ListIterator<Integer> i = entry.getValue().listIterator();
 			while (i.hasNext()) {
-				s.append("\t|\t" + i.next());
+				out.append("  |  ");
+				formatter.format("%1$9d", i.next()).flush();
 			}
-			System.out.println(s.toString());
-			logger.info(s.toString());
 		}
+		
+		formatter.close();
+		
+		System.out.println(out.toString());
+		final Logger logger = Logger.getLogger(State.class.getName());
+		logger.info("Scores:\n" + out.toString());
+		
 		board = new Board(board.getConfig());
 	}
 
@@ -131,13 +157,14 @@ public class State {
 			for (Map.Entry<String, List<Integer>> entry : scores.entrySet()) {
 				jg.writeStartObject();
 				jg.writeStringField("Name", entry.getKey());
-				jg.writeFieldName("Scores");
-				jg.writeStartArray();
 				
-				for (Integer points : entry.getValue())
-					jg.writeNumber(points);
+				int highest = 0;
+				for (Integer val : entry.getValue()) {
+					if (val > highest)
+						highest = val;
+				}
+				jg.writeNumberField("Highscore", highest);
 				
-				jg.writeEndArray();
 				jg.writeEndObject();
 			}
 			jg.writeEndArray();
@@ -159,15 +186,11 @@ public class State {
 				
 				if(root != null && root.isArray()) {
 					for (JsonNode node : root) {
-						if (node.has("Name") && node.has("Scores")) {
-							if (node.get("Name").isTextual() && node.get("Scores").isArray()) {
+						if (node.has("Name") && node.has("Highscore")) {
+							if (node.get("Name").isTextual() && node.get("Highscore").isNumber()) {
 								List<Integer> list = new LinkedList<>();
-								for (JsonNode val : node.get("Scores")) {
-									if (val.isInt())
-										list.add(val.asInt());
-								}
+								list.add(node.get("Highscore").asInt());
 								scores.put(node.get("Name").asText(), list);
-								
 							}
 							
 						}

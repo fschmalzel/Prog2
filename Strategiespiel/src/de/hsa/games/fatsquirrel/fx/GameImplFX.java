@@ -3,7 +3,6 @@ package de.hsa.games.fatsquirrel.fx;
 import java.util.logging.Logger;
 
 import de.hsa.games.fatsquirrel.Game;
-import de.hsa.games.fatsquirrel.console.ConsoleUIAsync;
 import de.hsa.games.fatsquirrel.core.BoardConfig;
 import de.hsa.games.fatsquirrel.core.GameCommand;
 

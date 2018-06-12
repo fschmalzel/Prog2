@@ -23,22 +23,39 @@ public class Launcher extends Application {
 	public static void main(String[] args) throws SecurityException, IOException {
 		logger.log(Level.INFO, "Launcher started!");
 		
+		String configFile = "";
+		String ui = "fx";
+		Boolean singleThread = false;
+		
+		for (String s : args) {
+			if (s.startsWith("-ui=")) {
+				ui = s.substring("-ui=".length());
+			} else if (s.startsWith("-singleThread=")) {
+				if (s.equals("-singleThread=true")) {
+					singleThread = true;
+				} else if (s.equals("-singleThread=false")) {
+					singleThread = false;
+				}
+			} else if (s.startsWith("-config=")) {
+				configFile = s.substring("-config=".length());
+			}
+		}
+		
 		try {
-			boardConfig = new BoardConfig("exampleBoard.json");
+			logger.fine("Using config: " + configFile);
+			boardConfig = new BoardConfig(configFile);
 		} catch(IOException e) {
 			logger.warning("Error loading config! Using default values!");
 			boardConfig = new BoardConfig();
 		}
 		
-		if (args.length >= 1 && args[0].equalsIgnoreCase("ui=console")) {
-			if (args.length >= 2 && args[1].equalsIgnoreCase("singleThread=true")) {
-				logger.log(Level.FINER, "Synchrounos ConsoleUI started");
-				(new GameImplConsole(boardConfig)).run();
-			} else {
-				logger.log(Level.FINER, "Asynchrounos ConsoleUI started");
-				(new GameImplAsyncConsole(boardConfig)).run();
-			}
-		} else {
+		if (ui.equals("console") && singleThread) {
+			logger.log(Level.FINER, "Synchrounos ConsoleUI started");
+			(new GameImplConsole(boardConfig)).run();
+		} else if (ui.equals("console") && !singleThread) {
+			logger.log(Level.FINER, "Asynchrounos ConsoleUI started");
+			(new GameImplAsyncConsole(boardConfig)).run();
+		} else if (ui.equals("fx")) {
 			logger.log(Level.FINER, "FXUI started");
 			Application.launch(args);
 		}
