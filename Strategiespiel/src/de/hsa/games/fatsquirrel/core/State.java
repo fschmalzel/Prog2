@@ -39,16 +39,21 @@ public class State {
 		scores = new HashMap<>();
 		board = new Board(boardConfig);
 
-		load();
-		
 		for (Map.Entry<String, MasterSquirrel> e : board.getMasterSquirrels().entrySet()) {
 			if (!scores.containsKey(e.getKey())) {
 				List<Integer> list = new LinkedList<>();
-				list.add(0);
 				scores.put(e.getKey(), list);
 			}
 			
 		}
+
+		load();
+		
+		for(List<Integer> list : scores.values()) {
+			if (list.size() <= 0)
+				list.add(0);
+		}
+		
 	}
 
 	private void endRound() {
@@ -188,9 +193,10 @@ public class State {
 					for (JsonNode node : root) {
 						if (node.has("Name") && node.has("Highscore")) {
 							if (node.get("Name").isTextual() && node.get("Highscore").isNumber()) {
-								List<Integer> list = new LinkedList<>();
-								list.add(node.get("Highscore").asInt());
-								scores.put(node.get("Name").asText(), list);
+								
+								if (scores.containsKey(node.get("Name").asText())) {
+									scores.get(node.get("Name").asText()).add(node.get("Highscore").asInt());
+								}
 							}
 							
 						}
